@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+This scene models the TNO ARCF facility.
+
+A right handed coordinate system is used, with the origin at the center of surface of the diffuser.
+
+Distances are given in mm, angles in degrees.
+
+-->
+
+<scene version="0.5.0">
+  <!-- Just for debugging purposes -->
+<!--
+  <emitter type="constant">
+    <rgb name="radiance" value="0,0,1"/>
+  </emitter>
+
+  <shape type="rectangle">
+    <transform name="toWorld">
+      <scale value="100000"/>
+      <rotate x="1" angle="-90"/>
+      <translate y="-200"/>
+    </transform>
+  </shape>
+-->
+
+  <!-- The light source is modeled as a disk with a radius of 10 -->
+  <shape type="disk">
+    <transform name="toWorld">
+      <scale value="5"/>
+      <rotate x="1" angle="180"/>
+      <translate z="3e5"/>
+    </transform>
+
+    <emitter type="area">
+      <spectrum name="radiance" value="1e12"/>
+    </emitter>
+  </shape>
+
+  <!-- The cylinder is used to collimate light from the light source -->
+  <shape type="cylinder">
+    <point name="p0" x="0" y="0" z="2e3"/>
+    <point name="p1" x="0" y="0" z="3e5"/>
+    <float name="radius" value="10"/>
+    <bsdf type="diffuse"/>
+  </shape>
+
+  <!-- The diffuser is modeled as a cube of 100 x 100 x 10 -->
+  <shape type="cube" id="diffuser">
+    <transform name="toWorld">
+      <scale x="50" y="50" z="5"/>
+      <translate z="-5"/>
+      <rotate y="1" angle="45"/>
+    </transform>
+
+    <bsdf type="diffuse">
+      <rgb name="reflectance" value="1.0, 1.0, 1.0"/>
+    </bsdf>
+<!--
+    <bsdf type="diffuse">
+      <texture type="checkerboard" name="reflectance"/>
+    </bsdf>
+-->
+  </shape>
+
+  <!-- The light sensor is modeled as ... -->
+  <sensor type="perspective" id="side view">
+    <string name="fovAxis" value="x"/>
+    <float name="fov" value="60.0"/>
+
+    <transform name="toWorld">
+      <lookat target="0, 0, 1000" origin="2000, 0, 1000" up="0, 1, 0"/>
+    </transform>
+
+    <sampler type="independent">
+      <integer name="sampleCount" value="32"/>
+    </sampler>
+
+    <film type="hdrfilm">
+      <integer name="width"  value="1024"/>
+      <integer name="height" value="128"/>
+
+      <rfilter type="gaussian"/>
+    </film>
+  </sensor>
+
+  <!-- The light sensor is modeled as ... -->
+  <sensor type="perspective" id="sensor view">
+    <string name="fovAxis" value="x"/>
+    <float name="fov" value="8.0"/>
+
+    <transform name="toWorld">
+      <lookat target="0, 0, 0" origin="0, 0, 300" up="0, 1, 0"/>
+      <rotate y="1" angle="45"/>
+    </transform>
+
+    <sampler type="independent">
+      <integer name="sampleCount" value="32"/>
+    </sampler>
+
+    <film type="hdrfilm">
+      <integer name="width"  value="256"/>
+      <integer name="height" value="256"/>
+
+      <rfilter type="gaussian"/>
+    </film>
+  </sensor>
+
+  <integrator type="bdpt">
+    <integer name="maxDepth" value="8"/>
+  </integrator>
+</scene>
