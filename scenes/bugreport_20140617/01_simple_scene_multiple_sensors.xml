@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<scene version="0.5.0">
+  <shape type="cube"/>
+
+  <shape type="disk">
+    <transform name="toWorld">
+      <translate z="-10"/>
+    </transform>
+  </shape>
+
+  <sensor type="perspective" id="sensor view">
+    <transform name="toWorld">
+      <lookat target="0, 0, 0" origin="0, 0, -10" up="0, 1, 0"/>
+    </transform>
+
+    <sampler type="independent">
+      <integer name="sampleCount" value="128"/>
+    </sampler>
+
+    <film type="hdrfilm">
+      <integer name="width"  value="256"/>
+      <integer name="height" value="256"/>
+    </film>
+  </sensor>
+
+  <sensor type="perspective" id="side view">
+    <transform name="toWorld">
+      <lookat target="0, 0, -5" origin="20, 0, -5" up="0, 1, 0"/>
+    </transform>
+
+    <sampler type="independent">
+      <integer name="sampleCount" value="128"/>
+    </sampler>
+
+    <film type="hdrfilm">
+      <integer name="width"  value="512"/>
+      <integer name="height" value="128"/>
+    </film>
+  </sensor>
+</scene>
