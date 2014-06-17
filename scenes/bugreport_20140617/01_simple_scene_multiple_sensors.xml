@@ -9,13 +9,13 @@
     </transform>
   </shape>
 
-  <sensor type="perspective" id="sensor view">
+  <sensor type="perspective" id="Cam01">
     <transform name="toWorld">
       <lookat target="0, 0, 0" origin="0, 0, -10" up="0, 1, 0"/>
     </transform>
 
     <sampler type="independent">
-      <integer name="sampleCount" value="128"/>
+      <integer name="sampleCount" value="512"/>
     </sampler>
 
     <film type="hdrfilm">
@@ -24,13 +24,13 @@
     </film>
   </sensor>
 
-  <sensor type="perspective" id="side view">
+  <sensor type="perspective" id="Cam02">
     <transform name="toWorld">
       <lookat target="0, 0, -5" origin="20, 0, -5" up="0, 1, 0"/>
     </transform>
 
     <sampler type="independent">
-      <integer name="sampleCount" value="128"/>
+      <integer name="sampleCount" value="512"/>
     </sampler>
 
     <film type="hdrfilm">
