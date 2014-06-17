@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<scene version="0.5.0">
+  <emitter type="constant">
+    <spectrum name="radiance" value="0"/>
+  </emitter>
+
+  <emitter type="directional">
+    <vector name="direction" x="0" y="0" z="-1"/>
+    <spectrum name="irradiance" value="0"/>
+  </emitter>
+
+  <shape type="cube"/>
+
+  <shape type="disk">
+    <transform name="toWorld">
+      <translate z="-10"/>
+    </transform>
+  </shape>
+
+  <sensor type="perspective" id="side view">
+    <transform name="toWorld">
+      <lookat target="0, 0, -5" origin="20, 0, -5" up="0, 1, 0"/>
+    </transform>
+
+    <film type="hdrfilm">
+      <integer name="width"  value="512"/>
+      <integer name="height" value="128"/>
+    </film>
+  </sensor>
+
+  <integrator type="bdpt"/>
+</scene>
