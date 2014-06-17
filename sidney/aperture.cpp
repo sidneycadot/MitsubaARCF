@@ -5,7 +5,7 @@
 
 
 template <typename T>
-inline T stretch(      T x,
+inline T stretch(const T x,
                  const T sizeTotal,
                  const T sizeBar)
 {
