@@ -2,14 +2,12 @@
 
 <scene version="0.5.0">
 
-    <include filename="colors.xml"/>
     <!--
     <include filename="axes.xml"/>
     <include filename="detector.xml"/>
     -->
 
-    <integrator type="bdpt">
-    </integrator>
+    <integrator type="bdpt"/>
 
     <!--
     <sensor type="perspective">
@@ -83,11 +81,12 @@
     </emitter>
 
     <!-- monochromator hole -->
+    <!--
     <shape type="rectangle">
 
         <bsdf type="mask">
 
-            <ref id="bsdf-black"/>
+            <ref id="bsdf-white"/>
 
             <texture name="opacity" type="arcfshape">
                 <float name="ubar" value="0.0"/>
@@ -107,6 +106,7 @@
         </transform>
 
     </shape>
+    -->
 
     <!-- floor -->
 
@@ -140,19 +140,16 @@
         <sensor type="irradiancemeter">
             <film type="mfilm">
                 <integer name="digits" value="20"/>
-                <integer name="width" value="100"/>
-                <integer name="height" value="100"/>
-                <integer name="digits" value="20"/>
-                <string name="fileFormat" value="mathematica"/>
+                <string name="fileFormat" value="matlab"/>
                 <!--<boolean name="highQualityEdges" value="false"/>-->
-                <rfilter type="gaussian"/>
+                <!--<rfilter type="tent"/>-->
             </film>
             <sampler type="independent">
-                <integer name="sampleCount" value="10000"/>
+                <integer name="sampleCount" value="1048576"/>
             </sampler>
         </sensor>
         <transform name="toWorld">
-            <scale value="0.02"/>
+            <scale value="1"/>
         </transform>
     </shape>
 

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+   <bsdf type="diffuse" id="bsdf-detector-box">
+        <rgb name="reflectance" value="#000000"/>
+   </bsdf>
+
+   <shape type="shapegroup" id="detector">
+
+        <!-- (+z) side of detector; field limiter surface -->
+
+        <shape type="rectangle">
+
+            <bsdf type="thindielectric" />
+
+            <transform name="toWorld">
+                <scale value="0.01"/> <!-- 20mm x 20mm -->
+                <translate z="+0.002"/>
+            </transform>
+
+        </shape>
+
+        <!-- (+z) side of detector; detector front surface -->
+
+        <shape type="rectangle">
+
+            <bsdf type="mask">
+
+                <ref id="bsdf-detector-box"/>
+
+                <texture name="opacity" type="arcfshape">
+                    <float name="ubar" value="0.0"/>
+                    <float name="vbar" value="0.5"/>
+                    <float name="uoffset" value="-2.50"/>
+                    <float name="voffset" value="-1.25"/>
+                    <float name="uscale" value="5.00"/>
+                    <float name="vscale" value="2.50"/>
+                    <spectrum name="color0" value = "0"/>
+                    <spectrum name="color1" value = "1"/>
+                </texture>
+
+            </bsdf>
+
+            <transform name="toWorld">
+                <scale value="0.01"/> <!-- 20mm x 20mm -->
+            </transform>
+
+        </shape>
+
+        <!--irradiance detector surface -->
+
+        <shape type="rectangle">
+
+            <sensor type="irradiancemeter">
+
+                <film type="mfilm">
+                    <integer name="digits" value="20"/>
+                    <integer name="width"  value="256"/>
+                    <integer name="height" value="256"/>
+                    <string name="fileFormat" value="mathematica"/>
+                </film>
+
+                <sampler type="independent">
+                    <integer name="sampleCount" value="256"/>
+                </sampler>
+
+            </sensor>
+
+            <transform name="toWorld">
+                <scale value="0.01"/>
+                <translate z="-0.038"/>
+            </transform>
+
+        </shape>
+
+        <!-- (-z) side of detector; outer box -->
+
+        <shape type="rectangle">
+
+            <ref id="bsdf-detector-box"/>
+
+            <transform name="toWorld">
+                <rotate x="1" angle="180"/>
+                <scale value="0.01"/>
+                <translate z="-0.040"/>
+            </transform>
+
+        </shape>
+
+        <!-- (-x) side of detector -->
+
+        <shape type="rectangle">
+
+                <ref id="bsdf-detector-box"/>
+
+                <transform name="toWorld">
+                    <rotate y="1" angle="-90"/>
+                    <scale x="0.01" y="0.01" z="0.021"/>
+                    <translate x="-0.01" z="-0.019"/>
+                </transform>
+        </shape>
+
+        <!-- (+x) side of detector -->
+        <shape type="rectangle">
+
+                <ref id="bsdf-detector-box"/>
+
+                <transform name="toWorld">
+                    <rotate y="1" angle="+90"/>
+                    <scale x="0.01" y="0.01" z="0.021"/>
+                    <translate x="+0.01" z="-0.019"/>
+                </transform>
+        </shape>
+
+        <!-- (-y) side of detector -->
+        <shape type="rectangle">
+
+            <ref id="bsdf-detector-box"/>
+
+            <transform name="toWorld">
+                <rotate x="1" angle="+90"/>
+                <scale x="0.01" y="0.01" z="0.021"/>
+                <translate y="-0.01" z="-0.019"/>
+            </transform>
+        </shape>
+
+        <!-- (+y) side of detector -->
+        <shape type="rectangle">
+
+            <ref id="bsdf-detector-box"/>
+
+            <transform name="toWorld">
+                <rotate x="1" angle="-90"/>
+                <scale x="0.01" y="0.01" z="0.021"/>
+                <translate y="+0.01" z="-0.019"/>
+            </transform>
+        </shape>
+
+    </shape>
+
+</scene>

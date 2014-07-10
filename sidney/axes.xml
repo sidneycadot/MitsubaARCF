@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <include filename="colors.xml"/>
+
+    <shape type="shapegroup" id="axes">
+
+        <default name="axes_cylinder_radius" value="0.010"/>
+        <default name="axes_sphere_radius"   value="0.025"/>
+
+        <!-- origin sphere -->
+
+        <shape type="sphere">
+            <float name="radius" value="$axes_sphere_radius"/>
+            <point name="center" x="0" y="0" z="0" />
+            <ref id="bsdf-white"/>
+        </shape>
+
+        <!-- +x sphere and cylinder -->
+
+        <shape type="sphere">
+            <float name="radius" value="$axes_sphere_radius"/>
+            <point name="center" x="1" y="0" z="0" />
+            <ref id="bsdf-red"/>
+        </shape>
+
+        <shape type="cylinder">
+            <float name="radius" value="$axes_cylinder_radius"/>
+            <point name="p0" x="0" y="0" z="0" />
+            <point name="p1" x="1" y="0" z="0" />
+            <ref id="bsdf-red"/>
+        </shape>
+
+        <!-- +y sphere and cylinder -->
+
+        <shape type="sphere">
+            <float name="radius" value="$axes_sphere_radius"/>
+            <point name="center" x="0" y="1" z="0" />
+            <ref id="bsdf-green"/>
+        </shape>
+
+        <shape type="cylinder">
+            <float name="radius" value="$axes_cylinder_radius"/>
+            <point name="p0" x="0" y="0" z="0" />
+            <point name="p1" x="0" y="1" z="0" />
+            <ref id="bsdf-green"/>
+        </shape>
+
+        <!-- +z sphere and cylinder -->
+
+        <shape type="sphere">
+            <float name="radius" value="$axes_sphere_radius"/>
+            <point name="center" x="0" y="0" z="1" />
+            <ref id="bsdf-blue"/>
+        </shape>
+
+        <shape type="cylinder">
+            <float name="radius" value="$axes_cylinder_radius"/>
+            <point name="p0" x="0" y="0" z="0" />
+            <point name="p1" x="0" y="0" z="1" />
+            <ref id="bsdf-blue"/>
+        </shape>
+
+    </shape>
+
+</scene>

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <include filename="colors.xml"/>
+
+    <integrator type="bdpt"/>
+
+    <!-- monochromator light source -->
+    <emitter type="directional">
+        <vector name="direction" x="0" y="0" z="-1"/>
+    </emitter>
+
+    <!-- monochromator hole -->
+    <shape type="rectangle">
+
+        <bsdf type="mask">
+
+            <ref id="bsdf-black"/>
+
+            <texture name="opacity" type="arcfshape">
+                <float name="ubar" value="0.0"/>
+                <float name="vbar" value="0.0"/>
+                <float name="uoffset" value="-100.0"/>
+                <float name="voffset" value="-100.0"/>
+                <float name="uscale" value="200.00"/>
+                <float name="vscale" value="200.00"/>
+                <spectrum name="color0" value = "0"/>
+                <spectrum name="color1" value = "1"/>
+            </texture>
+
+        </bsdf>
+
+        <transform name="toWorld">
+            <translate z="+2.0"/>
+        </transform>
+
+    </shape>
+
+    <shape type="rectangle">
+        <sensor type="irradiancemeter">
+            <film type="mfilm">
+                <integer name="digits" value="20"/>
+                <integer name="width"  value="32"/>
+                <integer name="height" value="32"/>
+                <string name="fileFormat" value="mathematica"/>
+            </film>
+            <sampler type="independent">
+                <integer name="sampleCount" value="10000"/>
+            </sampler>
+        </sensor>
+        <transform name="toWorld">
+            <scale value="0.02"/>
+        </transform>
+    </shape>
+
+</scene>
