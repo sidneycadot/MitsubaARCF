@@ -1,24 +1,31 @@
 #! /bin/sh
 
+set -e
+
 TIMESTAMP=`date +%Y-%m-%d_%H:%M:%S`
 
-rm tip.zip
-wget https://www.mitsuba-renderer.org/repos/mitsuba/archive/tip.zip
-cp tip.zip tip-$TIMESTAMP.zip
+if [ ! -f tip.zip ] ; then
+    wget https://www.mitsuba-renderer.org/repos/mitsuba/archive/tip.zip
+fi
 
-rm -rf mitsuba-*
+# Unpack
 
-unzip tip-$TIMESTAMP.zip
-
-exit
-
-mv mitsuba-* mitsuba-$TIMESTAMP
+rm -rf tempdir
+mkdir tempdir
+cd tempdir
+unzip ../tip.zip
+mv mitsuba-* ../mitsuba-$TIMESTAMP
+cd ..
+rmdir tempdir
 
 ln -sf mitsuba-$TIMESTAMP mitsuba-current
 
+# Patch and build
+
 cd mitsuba-current
 
-patch -p1 < ../arcfshape.patch
+patch -p1 < ../../patches/arcfshape.patch
+patch -p1 < ../../patches/arcf_source.patch
 
 cp build/config-linux-gcc.py config.py
 
