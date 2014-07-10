@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+* integrator
+* geometry
+* sensor
+* film
+* sampler
+* emitter(s)
+-->
+
+<scene version="0.5.0">
+
+    <integrator type="bdpt"/>
+
+    <sensor type="perspective">
+
+        <float name="fov" value="45"/>
+
+        <transform name="toWorld">
+            <lookat origin="3,2,4" target="0,0,0" up="0,1,0"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="32"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <boolean name="banner" value="false"/>
+            <integer name="width" value="768"/>
+            <integer name="height" value="432"/>
+        </film>
+
+    </sensor>
+
+   <!-- diffuser -->
+
+   <shape type="rectangle">
+
+        <bsdf type="diffuse">
+            <texture name="reflectance" type="arcfshape">
+                <!-- note: given a fixed object,
+                     the texture is moved in the direction (-uoffset, -voffset);
+                     after that, the texture is scaled by (1/uscale, 1/vscale).
+                     In other words, everything is in the least convenient order
+                     when trying to move a texture in position...
+                -->
+                <float name="ubar" value="0.0"/>
+                <float name="vbar" value="0.5"/>
+                <float name="uoffset" value="-4"/>
+                <float name="voffset" value="-2"/>
+                <float name="uscale" value="8"/>
+                <float name="vscale" value="4"/>
+            </texture>
+        </bsdf>
+
+   </shape>
+
+   <!--
+   <shape type="rectangle">
+        <bsdf type="mask">
+
+            <bsdf type="twosided">
+                <bsdf type="diffuse">
+                    <rgb name="reflectance" value="#ff0000"/>
+                </bsdf>
+            </bsdf>
+
+            <texture name="opacity" type="bitmap">
+                <string name="filename" value="hello.jpg"/>
+                <float name="uscale" value="+8"/>
+                <float name="vscale" value="-8"/>
+                <float name="uoffset" value="-3.5"/>
+                <float name="voffset" value="+4.5"/>
+                <string name="wrapModeU" value="one"/>
+                <string name="wrapModeV" value="one"/>
+            </texture>
+        </bsdf>
+   </shape>
+   -->
+
+   <!-- floor -->
+
+   <shape type="rectangle">
+        <bsdf type="diffuse">
+            <texture type="checkerboard" name="reflectance">
+                <float name="uvscale" value="5"/>
+            </texture>
+        </bsdf>
+        <transform name="toWorld">
+            <scale value="5"/>
+            <rotate x="1" angle="-90"/>
+            <translate y="-1"/>
+        </transform>
+   </shape>
+
+   <!-- origin sphere -->
+
+   <default name="axis_cylinder_radius" value="0.010"/>
+   <default name="axis_sphere_radius"   value="0.025"/>
+
+    <shape type="sphere">
+        <float name="radius" value="$axis_sphere_radius"/>
+        <point name="center" x="0" y="0" z="0" />
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="#ffffff"/>
+        </bsdf>
+    </shape>
+
+   <!-- +x sphere and cylinder -->
+
+    <shape type="sphere">
+        <float name="radius" value="$axis_sphere_radius"/>
+        <point name="center" x="1" y="0" z="0" />
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="#ff0000"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder">
+        <float name="radius" value="$axis_cylinder_radius"/>
+        <point name="p0" x="0" y="0" z="0" />
+        <point name="p1" x="1" y="0" z="0" />
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="#ff0000"/>
+        </bsdf>
+    </shape>
+
+   <!-- +y sphere and cylinder -->
+
+    <shape type="sphere">
+        <float name="radius" value="$axis_sphere_radius"/>
+        <point name="center" x="0" y="1" z="0" />
+        <bsdf type="diffuse">
+            <srgb name="reflectance" value="#00ff00"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder">
+        <float name="radius" value="$axis_cylinder_radius"/>
+        <point name="p0" x="0" y="0" z="0" />
+        <point name="p1" x="0" y="1" z="0" />
+        <bsdf type="diffuse">
+            <srgb name="reflectance" value="#00ff00"/>
+        </bsdf>
+    </shape>
+
+   <!-- +z sphere and cylinder -->
+
+    <shape type="sphere">
+        <float name="radius" value="$axis_sphere_radius"/>
+        <point name="center" x="0" y="0" z="1" />
+        <bsdf type="diffuse">
+            <srgb name="reflectance" value="#0000ff"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder">
+        <float name="radius" value="$axis_cylinder_radius"/>
+        <point name="p0" x="0" y="0" z="0" />
+        <point name="p1" x="0" y="0" z="1" />
+        <bsdf type="diffuse">
+            <srgb name="reflectance" value="#0000ff"/>
+        </bsdf>
+    </shape>
+
+</scene>
