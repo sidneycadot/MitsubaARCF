@@ -10,6 +10,8 @@ rm -rf mitsuba-*
 
 unzip tip-$TIMESTAMP.zip
 
+exit
+
 mv mitsuba-* mitsuba-$TIMESTAMP
 
 ln -sf mitsuba-$TIMESTAMP mitsuba-current
