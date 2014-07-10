@@ -33,17 +33,17 @@
     </sensor>
 
    <!-- diffuser -->
-
+   <!--
    <shape type="rectangle">
 
         <bsdf type="diffuse">
             <texture name="reflectance" type="arcfshape">
-                <!-- note: given a fixed object,
+                <!- note: given a fixed object,
                      the texture is moved in the direction (-uoffset, -voffset);
                      after that, the texture is scaled by (1/uscale, 1/vscale).
                      In other words, everything is in the least convenient order
                      when trying to move a texture in position...
-                -->
+                ->
                 <float name="ubar" value="0.0"/>
                 <float name="vbar" value="0.5"/>
                 <float name="uoffset" value="-4"/>
@@ -54,29 +54,31 @@
         </bsdf>
 
    </shape>
+   -->
 
-   <!--
+   <!-- rect with aperture hole -->
+
    <shape type="rectangle">
         <bsdf type="mask">
 
             <bsdf type="twosided">
                 <bsdf type="diffuse">
-                    <rgb name="reflectance" value="#ff0000"/>
+                    <rgb name="reflectance" value="#ffff00"/>
                 </bsdf>
             </bsdf>
 
-            <texture name="opacity" type="bitmap">
-                <string name="filename" value="hello.jpg"/>
-                <float name="uscale" value="+8"/>
-                <float name="vscale" value="-8"/>
-                <float name="uoffset" value="-3.5"/>
-                <float name="voffset" value="+4.5"/>
-                <string name="wrapModeU" value="one"/>
-                <string name="wrapModeV" value="one"/>
+            <texture name="opacity" type="arcfshape">
+                <float name="ubar" value="0.0"/>
+                <float name="vbar" value="0.5"/>
+                <float name="uoffset" value="-4"/>
+                <float name="voffset" value="-2"/>
+                <float name="uscale" value="8"/>
+                <float name="vscale" value="4"/>
+                <spectrum name="color0" value = "0"/>
+                <spectrum name="color1" value = "1"/>
             </texture>
         </bsdf>
    </shape>
-   -->
 
    <!-- floor -->
 
