@@ -5,15 +5,24 @@
     <!-- monochromator light source (Erik's area_source) -->
 
     <shape type="disk" id="monochromator_frontside">
+
         <emitter type="arcf_source">
             <spectrum name="irradiance" value="$monochromator.intensity" />
         </emitter>
+
+        <!--
+        <emitter type="area">
+            <spectrum name="radiance" value="$monochromator.intensity" />
+        </emitter>
+        -->
+
         <transform name="toWorld">
             <scale value="$monochromator.radius"/>
             <!-- monochromator transform -->
             <rotate y="1" angle="180"/>
             <translate z="$monochromator.distance"/>
         </transform>
+
     </shape>
 
     <shape type="cylinder" id="monochromator cylinder">

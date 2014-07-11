@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <shape type="disk" id="monochromator_frontside">
+
+        <emitter type="area">
+            <spectrum name="radiance" value="$monochromator.intensity" />
+        </emitter>
+
+        <transform name="toWorld">
+            <scale value="$monochromator.radius"/>
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.tube_length"/>
+            <rotate y="1" angle="180"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </shape>
+
+    <shape type="cylinder" id="monochromator cylinder">
+
+        <point name="p0" x="0" y="0" z="0"/>
+        <point name="p1" x="0" y="0" z="$monochromator.tube_length"/>
+        <float name="radius" value="$monochromator.radius"/>
+
+        <ref id="monochromator.outside-bsdf"/>
+
+        <transform name="toWorld">
+            <rotate y="1" angle="180"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </shape>
+
+</scene>

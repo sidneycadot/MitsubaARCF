@@ -11,9 +11,9 @@
          <rgb name="reflectance" value="#ffff00"/>
     </bsdf>
 
-    <default name="monochromator.intensity"   value="1e0" />
+    <default name="monochromator.intensity"   value="1e1" />
     <default name="monochromator.radius"      value="0.010" />
-    <default name="monochromator.tube_length" value="0.040" />
+    <default name="monochromator.tube_length" value="10.040" />
     <default name="monochromator.distance"    value="0.600" />
 
     <bsdf type="diffuse" id="monochromator.outside-bsdf">
@@ -34,7 +34,7 @@
     <include filename="sample_under_test.xml"/>
     <include filename="environment.xml"/>
 
-    <integrator type="path" />
+    <integrator type="bdpt" />
 
     <sensor type="perspective" id="overview">
 
