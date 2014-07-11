@@ -4,45 +4,18 @@
 
     <integrator type="bdpt"/>
 
-    <!-- monochromator light source (Erik's areasource) -->
+    <!-- monochromator light source (Erik's area_source) -->
     <shape type="disk">
         <emitter type="arcf_source">
             <spectrum name="irradiance" value="1" />
         </emitter>
         <transform name="toWorld">
-            <scale value="0.01"/>
+            <scale value="0.01"/> <!-- radius: 1cm -->
             <rotate y="1" angle="180"/>
             <translate z="2.0"/>
         </transform>
     </shape>
 
-    <shape type="rectangle">
-
-        <bsdf type="mask">
-
-            <bsdf type="diffuse">
-                <rgb name="reflectance" value="#000000"/>
-            </bsdf>
-
-            <texture name="opacity" type="arcfshape">
-                <float name="ubar" value="0.0"/>
-                <float name="vbar" value="0.5"/>
-                <float name="uoffset" value="-2.50"/>
-                <float name="voffset" value="-1.25"/>
-                <float name="uscale" value="5.00"/>
-                <float name="vscale" value="2.50"/>
-                <spectrum name="color0" value = "0"/>
-                <spectrum name="color1" value = "1"/>
-            </texture>
-
-        </bsdf>
-
-        <transform name="toWorld">
-            <scale value="0.01"/> <!-- 20mm x 20mm -->
-            <translate z="0.01"/>
-        </transform>
-
-    </shape>
 
     <shape type="rectangle">
         <sensor type="irradiancemeter">

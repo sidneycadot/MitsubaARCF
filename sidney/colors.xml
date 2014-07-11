@@ -2,9 +2,11 @@
 
 <scene version="0.5.0">
 
-   <bsdf type="diffuse" id="bsdf-black">
+   <!--
+   <bsdf type="diffuse" id="bsdf-black2">
         <rgb name="reflectance" value="#000000"/>
    </bsdf>
+   -->
 
    <bsdf type="diffuse" id="bsdf-white">
         <rgb name="reflectance" value="#ffffff"/>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!-- sample_under_test -->
+
+    <shape type="cube" id="sample under test">
+
+        <bsdf type="roughdielectric">
+            <float name="alpha" value="0.001" />
+        </bsdf>
+
+        <transform name="toWorld">
+            <!-- make sure that the front surface is at (0,0,0) -->
+            <translate z="-1" />
+            <scale value="0.5"/>
+            <!-- object shape -->
+            <scale x="0.100" y="0.060" z="0.005"/> <!-- 100 x 60 x 5 mm -->
+            <!-- diffuser transformations -->
+            <rotate z="1" angle="$meris.high_motor_angle"   />
+            <rotate x="1" angle="$meris.middle_motor_angle" />
+            <rotate y="1" angle="$meris.low_motor_angle"    />
+        </transform>
+
+    </shape>
+
+</scene>
