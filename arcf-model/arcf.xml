@@ -2,16 +2,21 @@
 
 <scene version="0.5.0">
 
+    <!-- select models -->
+
+    <default name="sample-model"        value="spectralon" />
+    <default name="monochromator-model" value="hole"       />
+
    <!-- Geometry variables -->
 
-    <default name="detector.distance"    value="0.400"   />
+    <default name="detector.distance"    value="0.400"  />
     <default name="detector.motor_angle" value="45.000" />
 
     <bsdf type="diffuse" id="detector.outside-bsdf">
          <rgb name="reflectance" value="#ffff00"/>
     </bsdf>
 
-    <default name="monochromator.intensity"   value="1e1" />
+    <default name="monochromator.intensity"   value="1e6" />
     <default name="monochromator.radius"      value="0.010" />
     <default name="monochromator.tube_length" value="10.040" />
     <default name="monochromator.distance"    value="0.600" />
@@ -30,8 +35,8 @@
     <include filename="axes.xml"/>
 
     <include filename="detector.xml"/>
-    <include filename="monochromator.xml"/>
-    <include filename="sample_under_test.xml"/>
+    <include filename="monochromator-$monochromator-model.xml"/>
+    <include filename="sample-$sample-model.xml"/>
     <include filename="environment.xml"/>
 
     <integrator type="bdpt" />

@@ -9,7 +9,11 @@
    -->
 
    <bsdf type="diffuse" id="bsdf-white">
-        <rgb name="reflectance" value="#ffffff"/>
+        <spectrum name="reflectance" value="1"/>
+   </bsdf>
+
+   <bsdf type="diffuse" id="bsdf-black">
+        <spectrum name="reflectance" value="0"/>
    </bsdf>
 
    <bsdf type="diffuse" id="bsdf-red">

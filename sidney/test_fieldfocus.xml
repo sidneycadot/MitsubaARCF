@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+
+<scene version="0.5.0">
+
+    <integrator type="bdpt" />
+
+    <shape type="rectangle">
+
+        <!--
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        -->
+
+        <transform name="toWorld">
+            <scale value="10"/>
+        </transform>
+
+        <sensor type="irradiancemeter" id="irm">
+
+            <film type="mfilm">
+                <integer name="digits" value="20"/>
+                <integer name="width"  value="128"/>
+                <integer name="height" value="128"/>
+                <string name="fileFormat" value="mathematica"/>
+            </film>
+
+            <sampler type="independent">
+                <integer name="sampleCount" value="512"/>
+            </sampler>
+
+        </sensor>
+
+    </shape>
+
+    <shape type="disk">
+        <transform name="toWorld">
+            <translate x="2" z="1"/>
+        </transform>
+        <bsdf type="arcf_fieldfocus">
+            <float name="angle" value="170.0"/>
+        </bsdf>
+
+    </shape>
+
+    <!--
+    <shape type="rectangle">
+
+        <transform name="toWorld">
+            <scale value="10"/>
+            <translate z="0.125" />
+        </transform>
+
+        <sensor type="irradiancemeter" id="irm">
+
+            <film type="mfilm">
+                <integer name="digits" value="20"/>
+                <integer name="width"  value="256"/>
+                <integer name="height" value="256"/>
+                <string name="fileFormat" value="matlab"/>
+            </film>
+
+            <sampler type="independent">
+                <integer name="sampleCount" value="512"/>
+            </sampler>
+
+        </sensor>
+
+    </shape>
+    -->
+
+    <emitter type="spot">
+        <transform name="toWorld">
+            <lookat origin="0,0,5" target="1,0,0" up="0,1,0"/>
+        </transform>
+        <float name="cutoffAngle" value="20"/>
+        <float name="beamWidth"   value="20"/>
+        <spectrum name="intensity"   value="1"/>
+    </emitter>
+
+    <!--
+    <sensor type="perspective" id="overview">
+
+        <float name="fov" value="45"/>
+
+        <transform name="toWorld">
+            <lookat origin="0,0,10" target="0,0,0" up="0,1,0"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="32"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <boolean name="banner" value="false"/>
+            <integer name="width" value="640"/>
+            <integer name="height" value="480"/>
+        </film>
+
+    </sensor>
+    -->
+
+</scene>

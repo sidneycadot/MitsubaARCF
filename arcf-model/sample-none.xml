@@ -2,67 +2,6 @@
 
 <scene version="0.5.0">
 
-    <!-- sample_under_test -->
-
-    <!--
-    <shape type="rectangle" id="diffuser front surface">
-
-        <bsdf type="dielectric">
-            <float name="intIOR" value="1.45" />
-        </bsdf>
-
-        <transform name="toWorld">
-            <scale value="0.5"/>
-            <scale x="0.100" y="0.060"/>
-            <!- sample transformations ->
-            <rotate z="1" angle="$meris.high_motor_angle"   />
-            <rotate x="1" angle="$meris.middle_motor_angle" />
-            <rotate y="1" angle="$meris.low_motor_angle"    />
-        </transform>
-
-    </shape>
-    -->
-
-    <shape type="rectangle" id="diffuser back surface">
-
-        <bsdf type="diffuse">
-            <spectrum name="reflectance" value="1"/>
-        </bsdf>
-
-        <transform name="toWorld">
-            <scale value="0.5"/>
-            <scale x="0.100" y="0.060"/> <!-- 100 x 60 mm -->
-            <translate z="-0.05"/>
-            <!-- sample transformations -->
-            <rotate z="1" angle="$meris.high_motor_angle"   />
-            <rotate x="1" angle="$meris.middle_motor_angle" />
-            <rotate y="1" angle="$meris.low_motor_angle"    />
-        </transform>
-
-    </shape>
-
-    <sensor type="perspective" id="above sample">
-
-        <float name="fov" value="120"/>
-
-        <transform name="toWorld">
-            <lookat origin="0.0,0.0,0.001" target="0,0,1" up="0,1,0"/>
-            <!-- sample transformations -->
-            <rotate z="1" angle="$meris.high_motor_angle"   />
-            <rotate x="1" angle="$meris.middle_motor_angle" />
-            <rotate y="1" angle="$meris.low_motor_angle"    />
-        </transform>
-
-        <sampler type="independent">
-            <integer name="sampleCount" value="32"/>
-        </sampler>
-
-        <film type="hdrfilm">
-            <boolean name="banner" value="false"/>
-            <integer name="width"  value="960"/>
-            <integer name="height" value="640"/>
-        </film>
-
-    </sensor>
+    <!-- no sample -->
 
 </scene>
