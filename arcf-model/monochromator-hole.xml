@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <shape type="rectangle" id="monochromator-wall">
+
+        <bsdf type="mask">
+
+            <ref id="bsdf-black"/>
+
+            <texture name="opacity" type="arcfshape">
+                <float name="ubar" value="0.0"/>
+                <float name="vbar" value="0.0"/>
+                <float name="uoffset" value="-5.0"/>
+                <float name="voffset" value="-5.0"/>
+                <float name="uscale" value="10.00"/>
+                <float name="vscale" value="10.00"/>
+                <spectrum name="color0" value = "0"/>
+                <spectrum name="color1" value = "1"/>
+            </texture>
+
+        </bsdf>
+
+        <transform name="toWorld">
+            <rotate y="1" angle="180"/>
+            <translate z="5.0" />
+        </transform>
+
+    </shape>
+
+    <emitter type="directional">
+        <vector name="direction" x="0" y="0" z="-1"/>
+        <spectrum name="irradiance" value="1" />
+    </emitter>
+
+</scene>
