@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+This scene models the TNO ARCF facility.
+
+A right handed coordinate system is used, with the origin at the center of surface of the diffuser.
+
+Distances are given in mm, angles in degrees.
+
+-->
+
+<scene version="0.5.0">
+  <!-- Just for debugging purposes -->
+  <emitter type="directional">
+    <vector name="direction"  x="0" y="0" z="-1"/>
+    <rgb name="irradiance" value="1, 0, 0"/>
+  </emitter>
+
+  <!-- The light source is modeled as a disk with a radius of 5 -->
+<!--
+  <shape type="disk">
+    <transform name="toWorld">
+      <scale value="50"/>
+      <rotate x="1" angle="180"/>
+      <translate z="2000"/>
+    </transform>
+
+    <emitter type="arcf_source">
+      <spectrum name="irradiance" value="1"/>
+    </emitter>
+  </shape>
+-->
+
+  <!-- The diffuser is modeled as a cube of 100 x 100 x 10 -->
+  <shape type="cube" id="diffuser">
+    <transform name="toWorld">
+      <scale x="50" y="50" z="5"/>
+      <translate z="-5"/>
+      <rotate y="1" angle="0"/>
+    </transform>
+
+    <bsdf type="diffuse">
+      <spectrum name="reflectance" value="1"/>
+    </bsdf>
+  </shape>
+
+  <!-- Side view of the entire system ... -->
+  <sensor type="perspective" id="side view">
+    <string name="fovAxis" value="x"/>
+    <float name="fov" value="60.0"/>
+
+    <transform name="toWorld">
+      <lookat target="0, 0, 1000" origin="2000, 0, 1000" up="0, 1, 0"/>
+    </transform>
+
+    <sampler type="independent">
+      <integer name="sampleCount" value="32"/>
+    </sampler>
+
+    <film type="hdrfilm">
+      <integer name="width"  value="1024"/>
+      <integer name="height" value="128"/>
+
+      <rfilter type="gaussian"/>
+    </film>
+  </sensor>
+
+  <!-- The ARCF sensor -->
+  <sensor type="arcf_detector" id="detector view">
+    <float name="apertureSizeXTotal" value="8"/>
+    <float name="apertureSizeYTotal" value="16"/>
+    <float name="apertureSizeXRect" value="0"/>
+    <float name="apertureSizeYRect" value="8"/>
+
+    <string name="fovAxis" value="x"/>
+    <float name="fov" value="20.0"/>
+
+    <transform name="toWorld">
+      <lookat target="0, 0, 0" origin="0, 0, 300" up="0, 1, 0"/>
+      <rotate y="1" angle="0"/>
+    </transform>
+
+    <sampler type="independent">
+      <integer name="sampleCount" value="32"/>
+    </sampler>
+
+    <film type="hdrfilm">
+      <integer name="width"  value="256"/>
+      <integer name="height" value="256"/>
+
+      <rfilter type="gaussian"/>
+    </film>
+  </sensor>
+
+  <integrator type="path">
+    <integer name="maxDepth" value="8"/>
+  </integrator>
+</scene>
