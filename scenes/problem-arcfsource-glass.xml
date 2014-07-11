@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <integrator type="bdpt" />
+
+   <!-- camera -->
+
+    <sensor type="perspective" id="overview">
+
+        <float name="fov" value="45"/>
+
+        <transform name="toWorld">
+            <lookat origin="3,1,2" target="0,0,0" up="0,1,0"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="16"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <boolean name="banner" value="false"/>
+            <integer name="width" value="640"/>
+            <integer name="height" value="480"/>
+        </film>
+
+    </sensor>
+
+    <emitter type="sunsky" />
+
+    <!-- collimated light source =-->
+
+    <shape type="disk">
+
+        <emitter type="arcf_source">
+            <spectrum name="irradiance" value="1e1" />
+        </emitter>
+
+        <bsdf type="twosided">
+            <bsdf type="diffuse">
+                <rgb name="reflectance" value="#ff0000"/>
+            </bsdf>
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale value="0.2"/>
+            <rotate y="1" angle="180" />
+            <translate z="1"/>
+        </transform>
+
+   </shape>
+
+    <!-- glass object between source and target-->
+
+    <shape type="rectangle">
+        <bsdf type="dielectric">
+        </bsdf>
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1" />
+            <translate z="0.5"/>
+        </transform>
+    </shape>
+
+    <!-- diffuse target -->
+
+    <shape type="rectangle">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale value="0.5"/>
+            <translate z="0"/>
+        </transform>
+   </shape>
+
+</scene>
