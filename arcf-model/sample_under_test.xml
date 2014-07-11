@@ -4,18 +4,34 @@
 
     <!-- sample_under_test -->
 
-    <shape type="cube" id="sample under test">
+    <shape type="rectangle" id="diffuser front surface">
 
-        <bsdf type="roughdielectric">
-            <float name="alpha" value="0.001" />
+        <bsdf type="dielectric">
+            <!--<float name="alpha" value="0.001" />-->
+            <float name="intIOR" value="1.45" />
         </bsdf>
 
         <transform name="toWorld">
-            <!-- make sure that the front surface is at (0,0,0) -->
-            <translate z="-1" />
             <scale value="0.5"/>
-            <!-- object shape -->
-            <scale x="0.100" y="0.060" z="0.005"/> <!-- 100 x 60 x 5 mm -->
+            <scale x="0.100" y="0.060"/>
+            <!-- diffuser transformations -->
+            <rotate z="1" angle="$meris.high_motor_angle"   />
+            <rotate x="1" angle="$meris.middle_motor_angle" />
+            <rotate y="1" angle="$meris.low_motor_angle"    />
+        </transform>
+
+    </shape>
+
+    <shape type="rectangle" id="diffuser back surface">
+
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale value="0.5"/>
+            <scale x="0.100" y="0.060"/> <!-- 100 x 60 mm -->
+            <translate z="-0.5"/>
             <!-- diffuser transformations -->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />

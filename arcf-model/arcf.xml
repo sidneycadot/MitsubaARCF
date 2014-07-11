@@ -22,7 +22,7 @@
 
     <default name="meris.high_motor_angle"   value="0" />
     <default name="meris.middle_motor_angle" value="0" />
-    <default name="meris.low_motor_angle"    value="60" />
+    <default name="meris.low_motor_angle"    value="0" />
 
    <!-- include stuff -->
 
@@ -34,7 +34,7 @@
     <include filename="sample_under_test.xml"/>
     <include filename="environment.xml"/>
 
-    <integrator type="bdpt" />
+    <integrator type="path" />
 
     <sensor type="perspective" id="overview">
 
@@ -45,7 +45,7 @@
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="32"/>
+            <integer name="sampleCount" value="16"/>
         </sampler>
 
         <film type="hdrfilm">
