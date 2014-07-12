@@ -13,12 +13,13 @@ fi
 rm -rf tempdir
 mkdir tempdir
 cd tempdir
-unzip ../tip.zip
+unzip ../tip.zip > /dev/null
 mv mitsuba-* ../mitsuba-$TIMESTAMP
 cd ..
 rmdir tempdir
 
-ln -sf mitsuba-$TIMESTAMP mitsuba-current
+rm -f mitsuba-current
+ln -s mitsuba-$TIMESTAMP mitsuba-current
 
 # Patch and build
 
@@ -26,6 +27,7 @@ cd mitsuba-current
 
 patch -p1 < ../../patches/arcfshape.patch
 patch -p1 < ../../patches/arcf_source.patch
+patch -p1 < ../../patches/arcf_fieldfocus.patch
 
 cp build/config-linux-gcc.py config.py
 
