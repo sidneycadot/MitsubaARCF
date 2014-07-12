@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!-- This simple scene demonstrates that mtsgui does not correctly identify shapes by their 'id'
+     attribute. Shapes other than "cube-1" are displayed as "Unnamed", which is not correct.
+
+     To reproduce the issue, load this scene in mtsgui, click each of the five objects, and
+     note the name displayed.
+-->
+
+<scene version="0.5.0">
+
+    <integrator type="bdpt" />
+
+    <emitter type="sunsky" />
+
+    <sensor type="perspective" id="overview">
+
+        <float name="fov" value="45"/>
+
+        <transform name="toWorld">
+            <lookat origin="2,0,4" target="0,0,0" up="0,1,0"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="16"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <boolean name="banner" value="false"/>
+            <integer name="width"  value="640"/>
+            <integer name="height" value="480"/>
+        </film>
+
+    </sensor>
+
+    <shape type="sphere" id="sphere-1">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        <transform name="toWorld">
+            <scale value="0.25"/>
+            <translate x="-0.5" y="-0.5"/>
+        </transform>
+    </shape>
+
+    <shape type="disk" id="disk-1">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        <transform name="toWorld">
+            <scale value="0.25"/>
+            <translate x="-0.5" y="+0.5"/>
+        </transform>
+    </shape>
+
+    <shape type="cube" id="cube-1">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        <transform name="toWorld">
+            <scale value="0.25"/>
+            <translate x="+0.5" y="-0.5"/>
+        </transform>
+    </shape>
+
+    <shape type="rectangle" id="rectangle-1">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        <transform name="toWorld">
+            <scale value="0.25"/>
+            <translate x="+0.5" y="+0.5"/>
+        </transform>
+    </shape>
+
+    <shape type="cylinder" id="cylinder-1">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        <transform name="toWorld">
+            <scale value="0.25"/>
+            <translate x="+0.0" y="+0.0"/>
+        </transform>
+    </shape>
+
+</scene>
