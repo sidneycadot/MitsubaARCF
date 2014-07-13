@@ -1,0 +1,19 @@
+
+We must add three plugins to Mitsuba to use it for ARCF simulations:
+
+* arcf_source.cpp
+
+  An 'emitter' plugin that casts rays perpendicular to the surface to which it is attached.
+
+* arcf_aperture.cpp
+
+  A 'texture' plugin that distinguishes a region with a square, circular, or rounded-square shape.
+
+* arcf_fieldfocus.cpp
+
+  A 'bsdf' plugin that collects light from one side of a surface and sends it to the direction
+  of the negative surface normal.
+
+Run the  'patch-mutsuba.sh' script inside the toplevel directory of a Mitsuba checkout
+to copy the source files to their correct locations, and to patch the SCons/CMake configuration
+files to include the new plugins.

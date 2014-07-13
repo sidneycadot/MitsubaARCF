@@ -2,8 +2,6 @@
 
 set -e
 
-TIMESTAMP=`date +%Y-%m-%d_%H:%M:%S`
-
 if [ ! -f tip.zip ] ; then
     wget https://www.mitsuba-renderer.org/repos/mitsuba/archive/tip.zip
 fi
@@ -14,24 +12,20 @@ rm -rf tempdir
 mkdir tempdir
 cd tempdir
 unzip ../tip.zip > /dev/null
-mv mitsuba-* ../mitsuba-$TIMESTAMP
+mv mitsuba-* ../mitsuba
 cd ..
 rmdir tempdir
 
-rm -f mitsuba-current
-ln -s mitsuba-$TIMESTAMP mitsuba-current
-
 # Patch and build
 
-cd mitsuba-current
+cd mitsuba
 
-patch -p1 < ../../patches/arcfshape.patch
-patch -p1 < ../../patches/arcf_source.patch
-patch -p1 < ../../patches/arcf_fieldfocus.patch
+../patches/patch-mitsuba.sh
 
 cp build/config-linux-gcc.py config.py
 
-# Do double precision build by default
+# Do double-precision build instead of default single-precision build
+
 sed -i 's/-DSINGLE_PRECISION/-DDOUBLE_PRECISION/;s/-DMTS_SSE//;s/-DMTS_HAS_COHERENT_RT//' config.py
 
 scons -j 8

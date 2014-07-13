@@ -4,7 +4,6 @@
 
     <!-- sample_under_test -->
 
-    <!--
     <shape type="rectangle" id="diffuser front surface">
 
         <bsdf type="dielectric">
@@ -14,14 +13,13 @@
         <transform name="toWorld">
             <scale value="0.5"/>
             <scale x="0.100" y="0.060"/>
-            <!- sample transformations ->
+            <!-- sample transformations -->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />
             <rotate y="1" angle="$meris.low_motor_angle"    />
         </transform>
 
     </shape>
-    -->
 
     <shape type="rectangle" id="diffuser back surface">
 

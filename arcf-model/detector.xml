@@ -35,7 +35,7 @@
                     In other words, everything is in the least convenient order
                     when trying to move a texture in position. -->
 
-            <texture name="opacity" type="arcfshape">
+            <texture name="opacity" type="arcf_aperture">
                 <float name="ubar" value="0.0"/>
                 <float name="vbar" value="0.5"/>
                 <float name="uoffset" value="-2.50"/>
@@ -87,6 +87,8 @@
         </transform>
 
     </shape>
+
+    <!-- camera inside the detector housing, looking out through the aperture hole. -->
 
     <sensor type="perspective" id="inside detector">
 
@@ -149,6 +151,7 @@
     </shape>
 
     <!-- (+x) side of detector -->
+
     <shape type="rectangle">
 
         <ref id="detector.outside-bsdf"/>
@@ -166,6 +169,7 @@
     </shape>
 
     <!-- (-y) side of detector -->
+
     <shape type="rectangle">
 
         <ref id="detector.outside-bsdf"/>
@@ -183,6 +187,7 @@
     </shape>
 
     <!-- (+y) side of detector -->
+
     <shape type="rectangle">
 
         <ref id="detector.outside-bsdf"/>

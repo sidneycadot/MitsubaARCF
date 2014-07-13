@@ -8,7 +8,7 @@
 
             <ref id="bsdf-black"/>
 
-            <texture name="opacity" type="arcfshape">
+            <texture name="opacity" type="arcf_aperture">
                 <float name="ubar" value="0.0"/>
                 <float name="vbar" value="0.0"/>
                 <float name="uoffset" value="-5.0"/>

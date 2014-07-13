@@ -23,7 +23,7 @@
 
 MTS_NAMESPACE_BEGIN
 
-/*!\plugin{arcfshape}{ARCFShape}
+/*!\plugin{arcf_aperture}{ARCFAperture}
  * \order{2}
  * \parameters{
  *     \parameter{color0, color1}{\Spectrum}{
@@ -40,12 +40,11 @@ MTS_NAMESPACE_BEGIN
  *       Fraction of UV bars. Make these 0 for a circular texture shape; 1 for a square texture shape.
  *     }
  * }
- * This plugin implements a simple procedural ARCFShape texture with
- * customizable colors.
+ * This plugin implements a procedural ARCFAperture texture with customizable colors.
  */
-class ARCFShape : public Texture2D {
+class ARCFAperture : public Texture2D {
 public:
-	ARCFShape(const Properties &props) : Texture2D(props) {
+	ARCFAperture(const Properties &props) : Texture2D(props) {
 		m_color0 = props.getSpectrum("color0", Spectrum(.4f));
 		m_color1 = props.getSpectrum("color1", Spectrum(.2f));
 		m_uvBar = Point2(
@@ -54,7 +53,7 @@ public:
 		);
 	}
 
-	ARCFShape(Stream *stream, InstanceManager *manager)
+	ARCFAperture(Stream *stream, InstanceManager *manager)
 	 : Texture2D(stream, manager) {
 		m_color0 = Spectrum(stream);
 		m_color1 = Spectrum(stream);
@@ -86,7 +85,7 @@ public:
 	Spectrum eval(const Point2 &uv,
 			const Vector2 &d0, const Vector2 &d1) const {
 		/* Filtering is currently not supported */
-		return ARCFShape::eval(uv);
+		return ARCFAperture::eval(uv);
 	}
 
 	bool usesRayDifferentials() const {
@@ -122,7 +121,7 @@ public:
 
 	std::string toString() const {
 		std::ostringstream oss;
-		oss << "ARCFShape[" << endl
+		oss << "ARCFAperture[" << endl
 			<< "    color1 = " << m_color1.toString() << "," << endl
 			<< "    color0 = " << m_color0.toString() << "," << endl
 			<< "    uvBar = " << m_uvBar.toString() << endl
@@ -141,9 +140,9 @@ protected:
 
 // ================ Hardware shader implementation ================
 
-class ARCFShapeShader : public Shader {
+class ARCFApertureShader : public Shader {
 public:
-	ARCFShapeShader(Renderer *renderer,
+	ARCFApertureShader(Renderer *renderer,
 		const Spectrum &color0, const Spectrum &color1, const Point2 &uvBar,
 		const Point2 &uvOffset, const Vector2 &uvScale) : Shader(renderer, ETextureShader),
 		m_color0(color0), m_color1(color1), m_uvBar(uvBar),
@@ -198,12 +197,12 @@ private:
 	Vector2  m_uvScale;
 };
 
-Shader *ARCFShape::createShader(Renderer *renderer) const {
-	return new ARCFShapeShader(renderer, m_color0, m_color1, m_uvBar,
+Shader *ARCFAperture::createShader(Renderer *renderer) const {
+	return new ARCFApertureShader(renderer, m_color0, m_color1, m_uvBar,
 		m_uvOffset, m_uvScale);
 }
 
-MTS_IMPLEMENT_CLASS(ARCFShapeShader, false, Shader)
-MTS_IMPLEMENT_CLASS_S(ARCFShape, false, Texture2D)
-MTS_EXPORT_PLUGIN(ARCFShape, "ARCFShape texture");
+MTS_IMPLEMENT_CLASS(ARCFApertureShader, false, Shader)
+MTS_IMPLEMENT_CLASS_S(ARCFAperture, false, Texture2D)
+MTS_EXPORT_PLUGIN(ARCFAperture, "ARCFAperture texture");
 MTS_NAMESPACE_END
