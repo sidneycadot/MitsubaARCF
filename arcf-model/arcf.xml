@@ -4,8 +4,8 @@
 
     <!-- select models -->
 
-    <default name="sample-model"        value="qvd"  />
-    <default name="monochromator-model" value="erik" />
+    <default name="sample-model"        value="spectralon" />
+    <default name="monochromator-model" value="erik"       />
 
    <!-- Geometry variables -->
 
@@ -16,9 +16,9 @@
          <rgb name="reflectance" value="#ffff00"/>
     </bsdf>
 
-    <default name="monochromator.intensity"   value="1e0" />
+    <default name="monochromator.intensity"   value="1.00" />
     <default name="monochromator.radius"      value="0.010" />
-    <default name="monochromator.tube_length" value="10.040" />
+    <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
     <bsdf type="diffuse" id="monochromator.outside-bsdf">

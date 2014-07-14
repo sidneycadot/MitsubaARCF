@@ -30,6 +30,7 @@
 
     <!-- light source =-->
 
+    <!--
     <emitter type="spot">
         <spectrum name="intensity" value="1e2" />
         <float name="beamWidth"    value="20"/>
@@ -39,17 +40,39 @@
             <lookat origin="0,0,1" target="0,0,0"/>
         </transform>
     </emitter>
+    -->
 
+    <emitter type="spot">
+        <spectrum name="intensity" value="1e2" />
+        <float name="beamWidth"    value="20"/>
+        <float name="cutoffAngle"  value="20"/>
+
+        <transform name="toWorld">
+            <lookat origin="0,0,0.25" target="0,0,0"/>
+        </transform>
+    </emitter>
+
+    <!--
+    <shape type="sphere">
+        <emitter type="area">
+            <spectrum name="radiance" value="1e1"/>
+        </emitter>
+        <transform name="toWorld">
+            <scale value="0.05" />
+            <translate z="0.25"/>
+        </transform>
+    </shape>
+    -->
 
     <!-- glass object between source and target-->
 
     <shape type="cube">
         <bsdf type="dielectric">
-            <float name="intIOR" value="1.4" />
+            <float name="intIOR" value="1.5" />
             <float name="extIOR" value="1" />
         </bsdf>
         <transform name="toWorld">
-            <scale x="2" y="2" z="0.001" />
+            <scale x="2" y="2" z="0.01" />
             <translate z="0.5"/>
         </transform>
     </shape>

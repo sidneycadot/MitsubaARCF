@@ -6,7 +6,9 @@ if [ ! -f tip.zip ] ; then
     wget https://www.mitsuba-renderer.org/repos/mitsuba/archive/tip.zip
 fi
 
-# Unpack
+# Unpack "mitsuba" directory.
+
+rm -rf mutsuba
 
 rm -rf tempdir
 mkdir tempdir
