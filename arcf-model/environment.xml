@@ -65,7 +65,7 @@
                 <string name="filename" value="jigsaw.jpg"/>
                 <string name="wrapMode" value="repeat"/>
                 <float name="uscale" value="1"/>
-                <float name="vscale" value="1"/>
+                <float name="vscale" value="-1"/>
                 <float name="uoffset" value="0"/>
                 <float name="voffset" value="0"/>
             </texture>
@@ -74,7 +74,7 @@
         <transform name="toWorld">
             <scale x="2272" y="1704" z="1"/>
             <scale value="0.0004" />
-            <translate x="0" y="0.10" z="-4.995"/>
+            <translate x="0" y="0" z="-4.995"/>
             <rotate y="1" angle="90"/>
         </transform>
     </shape>

@@ -11,12 +11,6 @@
             <spectrum name="irradiance" value="1"/>
         </emitter>
 
-        <!--
-        <emitter type="area">
-            <spectrum name="radiance" value="$monochromator.intensity" />
-        </emitter>
-        -->
-
         <transform name="toWorld">
             <scale value="$monochromator.radius"/>
             <!-- monochromator transform -->
@@ -56,7 +50,9 @@
         <transform name="toWorld">
             <scale value="$monochromator.radius"/>
             <translate z="$monochromator.tube_length"/>
+            <rotate y="1" angle="180"/>
             <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
             <translate z="$monochromator.distance"/>
         </transform>
 

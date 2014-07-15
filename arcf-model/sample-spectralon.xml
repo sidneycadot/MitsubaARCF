@@ -4,7 +4,7 @@
 
     <!-- spectralon diffuser model -->
 
-    <shape type="rectangle" id="spectralon diffuser">
+    <shape type="cube" id="spectralon diffuser">
 
         <bsdf type="diffuse">
             <!-- we model spectralon as a perfect diffuser -->
@@ -22,6 +22,19 @@
         </transform>
 
     </shape>
+
+    <!--
+    <shape type="instance">
+        <ref id="axes"/>
+        <transform name="toWorld">
+            <scale value="0.1"/>
+            <!- sample transformations ->
+            <rotate z="1" angle="$meris.high_motor_angle"   />
+            <rotate x="1" angle="$meris.middle_motor_angle" />
+            <rotate y="1" angle="$meris.low_motor_angle"    />
+        </transform>
+    </shape>
+    -->
 
     <!--
     <sensor type="perspective" id="above sample">

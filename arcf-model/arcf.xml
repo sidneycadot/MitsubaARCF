@@ -10,7 +10,7 @@
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
-    <default name="detector.motor_angle" value="45.000" />
+    <default name="detector.motor_angle" value="90.000" />
 
     <bsdf type="diffuse" id="detector.outside-bsdf.old">
         <!--<spectrum name="reflectance" value="0"/>-->
@@ -43,7 +43,7 @@
 
     <default name="meris.high_motor_angle"   value="0" />
     <default name="meris.middle_motor_angle" value="0" />
-    <default name="meris.low_motor_angle"    value="70" />
+    <default name="meris.low_motor_angle"    value="+75" />
 
     <!-- include stuff -->
 
