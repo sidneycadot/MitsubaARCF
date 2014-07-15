@@ -7,29 +7,31 @@
     <default name="sample-model"        value="spectralon" />
     <default name="monochromator-model" value="erik"       />
 
-   <!-- Geometry variables -->
+    <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
     <default name="detector.motor_angle" value="45.000" />
 
     <bsdf type="diffuse" id="detector.outside-bsdf">
-         <rgb name="reflectance" value="#ffff00"/>
+        <spectrum name="reflectance" value="0"/>
+        <!--<rgb name="reflectance" value="#ffff00"/>-->
     </bsdf>
 
-    <default name="monochromator.intensity"   value="1.00" />
+    <default name="monochromator.intensity"   value="1e0" />
     <default name="monochromator.radius"      value="0.010" />
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
     <bsdf type="diffuse" id="monochromator.outside-bsdf">
-        <rgb name="reflectance" value="#ff00ff"/>
+        <spectrum name="reflectance" value="0"/>
+        <!--<rgb name="reflectance" value="#ff00ff"/>-->
     </bsdf>
 
-    <default name="meris.high_motor_angle"   value="0" />
-    <default name="meris.middle_motor_angle" value="0" />
-    <default name="meris.low_motor_angle"    value="0" />
+    <default name="meris.high_motor_angle"   value="5" />
+    <default name="meris.middle_motor_angle" value="6" />
+    <default name="meris.low_motor_angle"    value="7" />
 
-   <!-- include stuff -->
+    <!-- include stuff -->
 
     <include filename="colors.xml"/>
     <include filename="axes.xml"/>
@@ -38,6 +40,34 @@
     <include filename="monochromator-$monochromator-model.xml"/>
     <include filename="sample-$sample-model.xml"/>
     <include filename="environment.xml"/>
+
+    <!-- monochromator beam inhomogeneity mask -->
+    <!--
+    <shape type="rectangle">
+
+        <bsdf type="mask">
+
+            <texture name="opacity" type="bitmap">
+                <string name="filename" value="testmask-negated.png"/>
+                <string name="wrapMode" value="zero"/>
+                <float name="uscale" value="-1"/>
+                <float name="vscale" value="-1"/>
+                <float name="uoffset" value="1"/>
+                <float name="voffset" value="+1"/>
+            </texture>
+
+            <bsdf type="diffuse">
+                <spectrum name="reflectance" value="0"/>
+            </bsdf>
+
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale value="0.01"/>
+            <translate z="0.55"/>
+        </transform>
+    </shape>
+    -->
 
     <integrator type="bdpt" />
 
