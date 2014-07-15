@@ -64,6 +64,9 @@ public:
 
         m_usesRayDifferentials = false;
 
+        // TODO: [SC] it seems more natural if the BSDF is configured first (abnalogous to constructor ordering).
+        //            Are we sure this is ok?
+
         BSDF::configure();
     }
 
@@ -194,6 +197,7 @@ public:
     std::string toString() const
     {
         std::ostringstream oss;
+        // TODO: [SC]: note that we show cos(angle/2) here rather than the specified 'angle'. This may be confusing for a user.
         oss << "ARCF Field Focus BSDF"           << endl
             << "["                               << endl
             << "  id = \""  << getID() << "\","  << endl
