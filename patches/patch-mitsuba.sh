@@ -10,6 +10,10 @@ if [ ! -f ${MITSUBADIR}/SConstruct ] ; then
     exit 1
 fi
 
+### Patch the "mfilm" implementation for Mathematica output.
+
+patch -p1 < ${PATCHDIR}/mfilm_mathematica_fix.patch
+
 ### Add arcf_source emitter.
 
 # Copy the source file
