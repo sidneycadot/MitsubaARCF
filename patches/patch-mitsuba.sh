@@ -38,5 +38,5 @@ cp ${PATCHDIR}/arcf_fieldfocus.cpp ${MITSUBADIR}/src/bsdfs
 
 # In the CMake and SCons build files, copy the line for the "null" bsdf and add a line that replaces "null" with 'arcf_fieldfocus'.
 
-sed -i 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
-sed -i 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/emitters/SConscript
+sed -i 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/CMakeLists.txt
+sed -i 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/SConscript
