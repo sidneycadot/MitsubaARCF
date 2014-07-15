@@ -8,7 +8,7 @@ fi
 
 # Unpack "mitsuba" directory.
 
-rm -rf mutsuba
+rm -rf mitsuba
 
 rm -rf tempdir
 mkdir tempdir
