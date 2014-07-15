@@ -29,6 +29,7 @@
     <!-- for some reason, uoffset/uscale etc. are not propagated to the arcf_aperture texture implementation.
     -->
 
+    <!--
     <shape type="rectangle" id="rectangle-1">
         <bsdf type="diffuse">
             <texture name="reflectance" type="arcf_aperture">
@@ -49,13 +50,14 @@
         </transform>
 
     </shape>
+    -->
 
     <shape type="heightfield" id="heightfield-1">
         <bsdf type="diffuse">
             <spectrum name="reflectance" value="1"/>
         </bsdf>
-        <integer name="width" value="512" />
-        <integer name="height" value="512" />
+        <integer name="width" value="256" />
+        <integer name="height" value="256" />
         <texture type="arcf_aperture">
             <float name="ubar" value="0.0"/>
             <float name="vbar" value="0.5"/>

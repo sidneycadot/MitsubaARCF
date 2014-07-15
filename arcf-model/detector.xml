@@ -4,26 +4,26 @@
 
     <!-- (+z) side of detector; field limiter surface -->
 
-    <!--
-    <shape type="rectangle">
+    <shape type="rectangle" id="detector field limiter">
 
-        <bsdf type="thindielectric" />
+        <bsdf type="arcf_fieldfocus">
+            <float name="angle" value="2"/>
+        </bsdf>
 
         <transform name="toWorld">
-            <scale value="0.01"/> <!- 20mm x 20mm ->
+            <scale value="0.01"/> <!-- 20mm x 20mm -->
             <translate z="+0.002"/>
-            <!- detector transform ->
+            <!-- detector transform -->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
         </transform>
 
     </shape>
-    -->
 
-    <!-- (+z) side of detector; detector front surface -->
+    <!-- (+z) side of detector; detector front surface (aperture) -->
 
-    <shape type="rectangle">
+    <shape type="rectangle" id="detector front surface (with aperture)">
 
         <bsdf type="mask">
 
@@ -78,7 +78,7 @@
         </sensor>
 
         <transform name="toWorld">
-            <scale value="0.01"/>
+            <scale value="0.01"/> <!-- 20mm x 20mm -->
             <translate z="-0.038"/>
             <!-- detector transform -->
             <rotate y="1" angle="180"/>
