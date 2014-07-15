@@ -2,13 +2,30 @@
 
 <scene version="0.5.0">
 
+    <!--
+    <shape type="rectangle" id="detector front surface (thin dielectric)">
+
+        <bsdf type="thindielectric" />
+
+        <transform name="toWorld">
+            <scale value="0.01"/> <!- 20mm x 20mm ->
+            <!- detector transform ->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+    -->
+
+
     <!-- (+z) side of detector; field limiter surface -->
 
     <!--
     <shape type="rectangle" id="detector field limiter">
 
         <bsdf type="arcf_fieldfocus">
-            <float name="angle" value="2"/>
+            <float name="angle" value="2.0"/>
         </bsdf>
 
         <transform name="toWorld">
@@ -22,6 +39,7 @@
 
     </shape>
     -->
+
     <!-- (+z) side of detector; detector front surface (aperture) -->
 
     <shape type="rectangle" id="detector front surface (with aperture)">
@@ -30,11 +48,11 @@
 
             <ref id="detector.outside-bsdf"/>
 
-            <!-- note: given a fixed object,
-                    the texture is moved in the direction (-uoffset, -voffset);
-                    after that, the texture is scaled by (1/uscale, 1/vscale).
-                    In other words, everything is in the least convenient order
-                    when trying to move a texture in position. -->
+            <!-- NOTE: given a fixed object,
+                 the texture is moved in the direction (-uoffset, -voffset);
+                 after that, the texture is scaled by (1/uscale, 1/vscale).
+                 In other words, everything is in the least convenient order
+                 when trying to move a texture in position. -->
 
             <texture name="opacity" type="arcf_aperture">
                 <float name="ubar" value="0.0"/>
@@ -58,22 +76,6 @@
         </transform>
 
     </shape>
-
-    <!--
-    <shape type="rectangle" id="detector front surface (thin dielectric)">
-
-        <bsdf type="thindielectric" />
-
-        <transform name="toWorld">
-            <scale value="0.01"/> <!- 20mm x 20mm ->
-            <!- detector transform ->
-            <rotate y="1" angle="180"/>
-            <translate z="$detector.distance"/>
-            <rotate y="1" angle="$detector.motor_angle"/>
-        </transform>
-
-    </shape>
-    -->
 
     <!--irradiance detector surface -->
 

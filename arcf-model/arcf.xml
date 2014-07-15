@@ -5,19 +5,27 @@
     <!-- select models -->
 
     <default name="sample-model"        value="spectralon" />
-    <default name="monochromator-model" value="erik"       />
+    <default name="monochromator-model" value="erik" />
 
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
     <default name="detector.motor_angle" value="45.000" />
 
-    <bsdf type="diffuse" id="detector.outside-bsdf">
+    <bsdf type="diffuse" id="detector.outside-bsdf.old">
         <!--<spectrum name="reflectance" value="0"/>-->
-        <!-- peculiar: if I make this thing black, we don't see the spot anymore from inside the diffuser.
+        <!-- peculiar: if I make this black, we don't see the scene anymore from inside the diffuser.
              TODO: figure out why this is the case.
         -->
         <rgb name="reflectance" value="#ffff00"/>
+    </bsdf>
+
+    <bsdf type="roughconductor" id="detector.outside-bsdf">
+        <!--<spectrum name="reflectance" value="0"/>-->
+        <!-- peculiar: if I make this black, we don't see the scene anymore from inside the diffuser.
+             TODO: figure out why this is the case.
+        -->
+        <string name="material" value="Au"/>
     </bsdf>
 
     <default name="monochromator.intensity"   value="1" />
@@ -25,14 +33,17 @@
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
-    <bsdf type="diffuse" id="monochromator.outside-bsdf">
-        <spectrum name="reflectance" value="0"/>
-        <!--<rgb name="reflectance" value="#ff00ff"/>-->
+    <bsdf type="diffuse" id="monochromator.outside-bsdf.old">
+        <rgb name="reflectance" value="#ff00ff"/>
+    </bsdf>
+
+    <bsdf type="roughconductor" id="monochromator.outside-bsdf">
+        <string name="material" value="Ag"/>
     </bsdf>
 
     <default name="meris.high_motor_angle"   value="0" />
     <default name="meris.middle_motor_angle" value="0" />
-    <default name="meris.low_motor_angle"    value="0" />
+    <default name="meris.low_motor_angle"    value="70" />
 
     <!-- include stuff -->
 
@@ -81,7 +92,7 @@
         <float name="fov" value="45"/>
 
         <transform name="toWorld">
-            <lookat origin="0.20,0.20,1" target="0,0,0" up="0,1,0"/>
+            <lookat origin="0.20,0.20,1.20" target="0,0,0" up="0,1,0"/>
         </transform>
 
         <sampler type="independent">
@@ -90,8 +101,8 @@
 
         <film type="hdrfilm">
             <boolean name="banner" value="false"/>
-            <integer name="width" value="640"/>
-            <integer name="height" value="480"/>
+            <integer name="width" value="960"/>
+            <integer name="height" value="540"/>
         </film>
 
     </sensor>
