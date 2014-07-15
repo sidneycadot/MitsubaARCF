@@ -10,7 +10,7 @@
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
-    <default name="detector.motor_angle" value="90.000" />
+    <default name="detector.motor_angle" value="100.000" />
 
     <bsdf type="diffuse" id="detector.outside-bsdf.old">
         <!--<spectrum name="reflectance" value="0"/>-->
@@ -28,7 +28,7 @@
         <string name="material" value="Au"/>
     </bsdf>
 
-    <default name="monochromator.intensity"   value="1" />
+    <default name="monochromator.irradiance"  value="5,5,0" />
     <default name="monochromator.radius"      value="0.010" />
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
@@ -56,7 +56,6 @@
     <include filename="environment.xml"/>
 
     <!-- monochromator beam inhomogeneity mask -->
-    <!--
     <shape type="rectangle">
 
         <bsdf type="mask">
@@ -81,7 +80,6 @@
             <translate z="0.55"/>
         </transform>
     </shape>
-    -->
 
     <integrator type="bdpt">
         <!--<integer name="rrDepth" value="12"/>-->
@@ -92,7 +90,8 @@
         <float name="fov" value="45"/>
 
         <transform name="toWorld">
-            <lookat origin="0.20,0.20,1.20" target="0,0,0" up="0,1,0"/>
+            <!--<lookat origin="0.20,0.20,1.20" target="0,0,0" up="0,1,0"/>-->
+            <lookat origin="0.25,0.015,-0.01" target="5,-0,-3" up="0,1,0"/>
         </transform>
 
         <sampler type="independent">

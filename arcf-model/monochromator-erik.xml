@@ -7,8 +7,7 @@
     <shape type="disk" id="monochromator_frontside">
 
         <emitter type="arcf_source">
-            <!--<spectrum name="irradiance" value="$monochromator.intensity" />-->
-            <spectrum name="irradiance" value="1"/>
+            <spectrum name="irradiance" value="$monochromator.irradiance" />
         </emitter>
 
         <transform name="toWorld">

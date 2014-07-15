@@ -5,7 +5,7 @@
     <!-- environment light -->
 
     <emitter type="constant">
-        <spectrum name="radiance" value="0.1"/>
+        <spectrum name="radiance" value="1.0"/>
     </emitter>
 
     <!-- floor -->
@@ -59,7 +59,7 @@
         </shape>
     </shape>
 
-    <shape type="rectangle">
+    <shape type="rectangle" id="painting">
         <bsdf type="diffuse">
             <texture name="reflectance" type="bitmap">
                 <string name="filename" value="jigsaw.jpg"/>
@@ -73,9 +73,29 @@
 
         <transform name="toWorld">
             <scale x="2272" y="1704" z="1"/>
-            <scale value="0.0004" />
+            <scale value="0.0002651848591549295774647887323943661" /><!-- real-life painting is 1205 mm wide-->
             <translate x="0" y="0" z="-4.995"/>
             <rotate y="1" angle="90"/>
+        </transform>
+    </shape>
+
+    <shape type="rectangle" id="door">
+        <bsdf type="diffuse">
+            <texture name="reflectance" type="bitmap">
+                <string name="filename" value="door.jpg"/>
+                <string name="wrapMode" value="repeat"/>
+                <float name="uscale" value="1"/>
+                <float name="vscale" value="-1"/>
+                <float name="uoffset" value="0"/>
+                <float name="voffset" value="0"/>
+            </texture>
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale x="496" y="1024" z="1"/>
+            <scale value="0.00087890625" /><!-- door is 180 cm high-->
+            <translate x="-3" y="-0.10" z="-4.995"/>
+            <rotate y="1" angle="-90"/>
         </transform>
     </shape>
 
