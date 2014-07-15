@@ -10,12 +10,13 @@
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
-    <default name="detector.motor_angle" value="180.000" />
-    <!--<default name="detector.motor_angle" value="45.000" />-->
+    <default name="detector.motor_angle" value="45.000" />
 
     <bsdf type="diffuse" id="detector.outside-bsdf">
         <!--<spectrum name="reflectance" value="0"/>-->
-            <!-- peculiar: if I make this thing black, we don't see the spot anymore.-->
+        <!-- peculiar: if I make this thing black, we don't see the spot anymore from inside the diffuser.
+             TODO: figure out why this is the case.
+        -->
         <rgb name="reflectance" value="#ffff00"/>
     </bsdf>
 
@@ -40,9 +41,7 @@
 
     <include filename="detector.xml"/>
     <include filename="monochromator-$monochromator-model.xml"/>
-    <!--
     <include filename="sample-$sample-model.xml"/>
-    -->
     <include filename="environment.xml"/>
 
     <!-- monochromator beam inhomogeneity mask -->
@@ -77,7 +76,6 @@
         <!--<integer name="rrDepth" value="12"/>-->
     </integrator>
 
-    <!--
     <sensor type="perspective" id="overview">
 
         <float name="fov" value="45"/>
@@ -97,7 +95,6 @@
         </film>
 
     </sensor>
-    -->
 
     <!--
     <shape type="instance">
