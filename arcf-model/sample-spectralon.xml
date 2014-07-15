@@ -23,13 +23,14 @@
 
     </shape>
 
+    <!--
     <sensor type="perspective" id="above sample">
 
         <float name="fov" value="120"/>
 
         <transform name="toWorld">
             <lookat origin="0.0,0.0,0.001" target="0,0,1" up="0,1,0"/>
-            <!-- sample transformations -->
+            <!- sample transformations ->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />
             <rotate y="1" angle="$meris.low_motor_angle"    />
@@ -46,5 +47,6 @@
         </film>
 
     </sensor>
+    -->
 
 </scene>

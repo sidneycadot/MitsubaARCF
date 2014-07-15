@@ -58,6 +58,22 @@
 
     </shape>
 
+    <!--
+    <shape type="rectangle" id="detector front surface (thin dielectric)">
+
+        <bsdf type="thindielectric" />
+
+        <transform name="toWorld">
+            <scale value="0.01"/> <!- 20mm x 20mm ->
+            <!- detector transform ->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+    -->
+
     <!--irradiance detector surface -->
 
     <shape type="rectangle">
@@ -90,13 +106,14 @@
 
     <!-- camera inside the detector housing, looking out through the aperture hole. -->
 
+    <!--
     <sensor type="perspective" id="inside detector">
 
-        <!--<float name="fov" value="60"/>-->
+        <float name="fov" value="60"/>
 
         <transform name="toWorld">
             <translate z="-0.038"/>
-            <!-- detector transform -->
+            <!- detector transform ->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
@@ -113,6 +130,7 @@
         </film>
 
     </sensor>
+    -->
 
     <!-- (-z) side of detector; outer box -->
 

@@ -7,7 +7,6 @@
     <emitter type="sunsky" />
 
     <!-- floor -->
-
     <shape type="rectangle" id="floor">
         <bsdf type="diffuse">
             <texture type="checkerboard" name="reflectance">

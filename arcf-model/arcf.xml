@@ -10,14 +10,16 @@
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
-    <default name="detector.motor_angle" value="45.000" />
+    <default name="detector.motor_angle" value="180.000" />
+    <!--<default name="detector.motor_angle" value="45.000" />-->
 
     <bsdf type="diffuse" id="detector.outside-bsdf">
-        <spectrum name="reflectance" value="0"/>
-        <!--<rgb name="reflectance" value="#ffff00"/>-->
+        <!--<spectrum name="reflectance" value="0"/>-->
+            <!-- peculiar: if I make this thing black, we don't see the spot anymore.-->
+        <rgb name="reflectance" value="#ffff00"/>
     </bsdf>
 
-    <default name="monochromator.intensity"   value="1e0" />
+    <default name="monochromator.intensity"   value="1" />
     <default name="monochromator.radius"      value="0.010" />
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
@@ -27,9 +29,9 @@
         <!--<rgb name="reflectance" value="#ff00ff"/>-->
     </bsdf>
 
-    <default name="meris.high_motor_angle"   value="5" />
-    <default name="meris.middle_motor_angle" value="6" />
-    <default name="meris.low_motor_angle"    value="7" />
+    <default name="meris.high_motor_angle"   value="0" />
+    <default name="meris.middle_motor_angle" value="0" />
+    <default name="meris.low_motor_angle"    value="0" />
 
     <!-- include stuff -->
 
@@ -38,7 +40,9 @@
 
     <include filename="detector.xml"/>
     <include filename="monochromator-$monochromator-model.xml"/>
+    <!--
     <include filename="sample-$sample-model.xml"/>
+    -->
     <include filename="environment.xml"/>
 
     <!-- monochromator beam inhomogeneity mask -->
@@ -69,8 +73,11 @@
     </shape>
     -->
 
-    <integrator type="bdpt" />
+    <integrator type="bdpt">
+        <!--<integer name="rrDepth" value="12"/>-->
+    </integrator>
 
+    <!--
     <sensor type="perspective" id="overview">
 
         <float name="fov" value="45"/>
@@ -90,6 +97,7 @@
         </film>
 
     </sensor>
+    -->
 
     <!--
     <shape type="instance">
