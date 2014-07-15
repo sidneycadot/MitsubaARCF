@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!-- check what happens with glass, a diffuser, and a spherical area light source. -->
+    <!-- the sphere is put in a cylinder to get a pseudo directional light field. -->
+
+    <integrator type="bdpt" />
+
+    <!-- camera -->
+
+    <sensor type="perspective" id="overview">
+
+        <float name="fov" value="45"/>
+
+        <transform name="toWorld">
+            <lookat origin="3,1,2" target="0,0,0" up="0,1,0"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="512"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <boolean name="banner" value="false"/>
+            <integer name="width" value="640"/>
+            <integer name="height" value="480"/>
+        </film>
+
+    </sensor>
+
+    <!--<emitter type="sunsky" />-->
+
+    <!-- light source =-->
+
+    <shape type="sphere">
+        <point name="center" x="0" y="0" z="2" />
+        <float name="radius" value="0.1" />
+        <emitter type="area">
+            <spectrum name="radiance" value="1e3" />
+        </emitter>
+    </shape>
+
+    <shape type="cylinder">
+        <point name="p0" x="0" y="0" z="1" />
+        <point name="p1" x="0" y="0" z="10" />
+        <float name="radius" value="0.2" />
+    </shape>
+
+    <!-- glass object between source and target-->
+
+    <shape type="cube">
+        <bsdf type="dielectric">
+            <float name="intIOR" value="1.4" />
+            <float name="extIOR" value="1" />
+        </bsdf>
+        <transform name="toWorld">
+            <scale x="2" y="2" z="0.001" />
+            <translate z="0.5"/>
+        </transform>
+    </shape>
+
+    <!-- diffuse target -->
+
+    <shape type="rectangle">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale value="2"/>
+            <translate z="0"/>
+        </transform>
+   </shape>
+
+</scene>

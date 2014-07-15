@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <integrator type="bdpt" />
+
+    <emitter type="sunsky" />
+
+    <sensor type="perspective" id="overview">
+
+        <float name="fov" value="45"/>
+
+        <transform name="toWorld">
+            <lookat origin="2,2,10" target="0,0,0" up="0,1,0"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="16"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <boolean name="banner" value="false"/>
+            <integer name="width" value="640"/>
+            <integer name="height" value="480"/>
+        </film>
+
+    </sensor>
+
+    <!-- for some reason, uoffset/uscale etc. are not propagated to the arcf_aperture texture implementation.
+    -->
+
+    <shape type="rectangle" id="rectangle-1">
+        <bsdf type="diffuse">
+            <texture name="reflectance" type="checkerboard">
+                <spectrum name="color0" value="0.5" />
+                <spectrum name="color1" value="1" />
+                <float name="uoffset" value="-4"/>
+                <float name="voffset" value="-2"/>
+                <float name="uscale" value="8"/>
+                <float name="vscale" value="4"/>
+            </texture>
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale value="0.5" />
+            <translate x="-0.75" />
+        </transform>
+
+    </shape>
+
+    <shape type="heightfield" id="heightfield-1">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        <integer name="width" value="256" />
+        <integer name="height" value="256" />
+        <texture type="checkerboard">
+            <float name="uoffset" value="-4"/>
+            <float name="voffset" value="-2"/>
+            <float name="uscale" value="8"/>
+            <float name="vscale" value="4"/>
+        </texture>
+
+        <transform name="toWorld">
+            <scale value="0.5" />
+            <translate x="+0.75" />
+        </transform>
+
+    </shape>
+
+</scene>
