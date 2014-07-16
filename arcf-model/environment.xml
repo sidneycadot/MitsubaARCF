@@ -5,7 +5,7 @@
     <!-- environment light -->
 
     <emitter type="constant">
-        <spectrum name="radiance" value="1.0"/>
+        <spectrum name="radiance" value="0.1"/>
     </emitter>
 
     <!-- floor -->
@@ -46,7 +46,7 @@
                         <string name="filename" value="brick.png"/>
                         <string name="wrapMode" value="repeat"/>
                         <float name="uscale" value="50"/>
-                        <float name="vscale" value="10"/>
+                        <float name="vscale" value="12.5"/>
                         <float name="uoffset" value="0"/>
                         <float name="voffset" value="0"/>
                     </texture>
@@ -54,27 +54,83 @@
             </bsdf>
 
             <transform name="toWorld">
-                <scale x="5" y="1" z="1"/>
+                <scale value="0.5"/>
+                <scale x="10" y="2.5" z="1"/>
+                <translate y="+0.25"/>
             </transform>
         </shape>
     </shape>
 
-    <shape type="rectangle" id="painting">
-        <bsdf type="diffuse">
-            <texture name="reflectance" type="bitmap">
-                <string name="filename" value="jigsaw.jpg"/>
-                <string name="wrapMode" value="repeat"/>
-                <float name="uscale" value="1"/>
-                <float name="vscale" value="-1"/>
-                <float name="uoffset" value="0"/>
-                <float name="voffset" value="0"/>
-            </texture>
-        </bsdf>
+    <shape type="shapegroup" id="framed-painting">
 
+        <shape type="rectangle">
+            <bsdf type="diffuse">
+                <texture name="reflectance" type="bitmap">
+                    <string name="filename" value="jigsaw.jpg"/>
+                    <string name="wrapMode" value="repeat"/>
+                    <float name="uscale" value="1"/>
+                    <float name="vscale" value="-1"/>
+                    <float name="uoffset" value="0"/>
+                    <float name="voffset" value="0"/>
+                </texture>
+            </bsdf>
+
+            <transform name="toWorld">
+                <scale x="2272" y="1704" z="1"/> <!-- pixel size -->
+                <scale value="0.0002651848591549295774647887323943661"/> <!-- real-life painting is 1205 mm wide-->
+            </transform>
+        </shape>
+
+        <shape type="cube">
+            <bsdf type="diffuse">
+                <rgb name="reflectance" value="#000000"/>
+            </bsdf>
+            <transform name="toWorld">
+                <scale value="0.5"/>
+                <scale x="1.245" y="0.02" z="0.01"/>
+                <translate y="0.461875"/>
+            </transform>
+        </shape>
+
+        <shape type="cube">
+            <bsdf type="diffuse">
+                <rgb name="reflectance" value="#000000"/>
+            </bsdf>
+            <transform name="toWorld">
+                <scale value="0.5"/>
+                <scale x="1.245" y="0.02" z="0.01"/>
+                <translate y="-0.461875"/>
+            </transform>
+        </shape>
+
+        <shape type="cube">
+            <bsdf type="diffuse">
+                <rgb name="reflectance" value="#000000"/>
+            </bsdf>
+            <transform name="toWorld">
+                <scale value="0.5"/>
+                <scale x="0.02" y="0.90375" z="0.01"/>
+                <translate x="-0.612500"/>
+            </transform>
+        </shape>
+
+        <shape type="cube">
+            <bsdf type="diffuse">
+                <rgb name="reflectance" value="#000000"/>
+            </bsdf>
+            <transform name="toWorld">
+                <scale value="0.5"/>
+                <scale x="0.02" y="0.90375" z="0.01"/>
+                <translate x="+0.612500"/>
+            </transform>
+        </shape>
+
+    </shape>
+
+    <shape type="instance">
+        <ref id="framed-painting"/>
         <transform name="toWorld">
-            <scale x="2272" y="1704" z="1"/>
-            <scale value="0.0002651848591549295774647887323943661" /><!-- real-life painting is 1205 mm wide-->
-            <translate x="0" y="0" z="-4.995"/>
+            <translate x="0" y="0" z="-4.985"/>
             <rotate y="1" angle="90"/>
         </transform>
     </shape>
@@ -93,8 +149,8 @@
 
         <transform name="toWorld">
             <scale x="496" y="1024" z="1"/>
-            <scale value="0.00087890625" /><!-- door is 180 cm high-->
-            <translate x="-3" y="-0.10" z="-4.995"/>
+            <scale value="0.0009765625"/> <!-- door is 200 cm high-->
+            <translate x="-3" y="0" z="-4.990"/>
             <rotate y="1" angle="-90"/>
         </transform>
     </shape>
