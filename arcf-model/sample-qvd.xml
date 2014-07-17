@@ -4,15 +4,17 @@
 
     <!-- sample_under_test -->
 
-    <shape type="rectangle" id="diffuser front surface">
+    <default name="diffuser.ior" value="1.4"/>
+
+    <shape type="disk" id="qvd diffuser front surface">
 
         <bsdf type="roughdielectric">
-            <float name="intIOR" value="1.4" />
+            <float name="intIOR" value="$diffuser.ior" />
         </bsdf>
 
         <transform name="toWorld">
             <scale value="0.5"/>
-            <scale x="0.100" y="0.060"/>
+            <scale value="0.10"/>
             <!-- sample transformations -->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />
@@ -21,15 +23,15 @@
 
     </shape>
 
-    <shape type="rectangle" id="diffuser back surface">
+    <shape type="disk" id="qvd diffuser back surface">
 
-        <bsdf type="diffuse">
-            <spectrum name="reflectance" value="1"/>
+        <bsdf type="roughconductor">
+            <string name="material" value="Al"/>
         </bsdf>
 
         <transform name="toWorld">
             <scale value="0.5"/>
-            <scale x="0.100" y="0.060"/> <!-- 100 x 60 mm -->
+            <scale value="0.10"/>
             <translate z="-0.005"/>
             <!-- sample transformations -->
             <rotate z="1" angle="$meris.high_motor_angle"   />
@@ -39,13 +41,33 @@
 
     </shape>
 
+    <shape type="cylinder" id="qvd diffuser side">
+
+        <point name="p0" x="0" y="0" z="-0.005"/>
+        <point name="p1" x="0" y="0" z="0"/>
+        <float name="radius" value="0.05"/>
+
+        <bsdf type="roughdielectric">
+            <float name="intIOR" value="$diffuser.ior" />
+        </bsdf>
+
+        <transform name="toWorld">
+            <!-- sample transformations -->
+            <rotate z="1" angle="$meris.high_motor_angle"   />
+            <rotate x="1" angle="$meris.middle_motor_angle" />
+            <rotate y="1" angle="$meris.low_motor_angle"    />
+        </transform>
+
+    </shape>
+
+    <!--
     <sensor type="perspective" id="above sample">
 
         <float name="fov" value="120"/>
 
         <transform name="toWorld">
             <lookat origin="0.0,0.0,0.001" target="0,0,1" up="0,1,0"/>
-            <!-- sample transformations -->
+            <!- sample transformations ->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />
             <rotate y="1" angle="$meris.low_motor_angle"    />
@@ -62,5 +84,6 @@
         </film>
 
     </sensor>
+    -->
 
 </scene>

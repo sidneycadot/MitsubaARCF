@@ -28,6 +28,28 @@
         </bsdf>
 
         <transform name="toWorld">
+
+            <!-<rotate y="1" angle="180"/>->
+
+            <scale value="0.01"/>
+            <translate z="+0.002"/>
+
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+    -->
+
+    <!--
+    <shape type="rectangle" id="detector field limiter">
+
+        <bsdf type="arcf_fieldfocus">
+            <float name="angle" value="2.0"/>
+        </bsdf>
+
+        <transform name="toWorld">
             <scale value="0.01"/> <!- 20mm x 20mm ->
             <translate z="+0.002"/>
             <!- detector transform ->
@@ -39,34 +61,20 @@
     </shape>
     -->
 
-    <!--
-    <shape type="rectangle" id="detector field limiter">
-        <bsdf type="arcf_fieldfocus">
-            <float name="angle" value="2.0"/>
-        </bsdf>
-        <transform name="toWorld">
-            <scale value="0.01"/>
-            <translate z="+0.002"/>
-            <rotate y="1" angle="180"/>
-            <translate z="$detector.distance"/>
-            <rotate y="1" angle="$detector.motor_angle"/>
-        </transform>
-    </shape>
-    -->
-
     <!-- (+z) side of detector; detector front surface (aperture) -->
 
+    <!--
     <shape type="rectangle" id="detector front surface (with aperture)">
 
         <bsdf type="mask">
 
             <ref id="detector.outside-bsdf"/>
 
-            <!-- NOTE: given a fixed object,
+            <!- NOTE: given a fixed object,
                  the texture is moved in the direction (-uoffset, -voffset);
                  after that, the texture is scaled by (1/uscale, 1/vscale).
                  In other words, everything is in the least convenient order
-                 when trying to move a texture in position. -->
+                 when trying to move a texture in position. ->
 
             <texture name="opacity" type="arcf_aperture">
                 <float name="ubar" value="0.0"/>
@@ -82,14 +90,15 @@
         </bsdf>
 
         <transform name="toWorld">
-            <scale value="0.01"/> <!-- 20mm x 20mm -->
-            <!-- detector transform -->
+            <scale value="0.01"/> <!- 20mm x 20mm ->
+            <!- detector transform ->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
         </transform>
 
     </shape>
+            -->
 
     <!--irradiance detector surface -->
 
@@ -125,7 +134,7 @@
 
     <sensor type="perspective" id="inside detector">
 
-        <float name="fov" value="25"/>
+        <float name="fov" value="15"/>
 
         <transform name="toWorld">
             <translate z="-0.038"/>
@@ -136,13 +145,40 @@
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="32"/>
+            <integer name="sampleCount" value="256"/>
         </sampler>
 
         <film type="hdrfilm">
             <boolean name="banner" value="false"/>
             <integer name="width"  value="640"/>
             <integer name="height" value="640"/>
+            <rfilter type="gaussian"/>
+        </film>
+
+    </sensor>
+
+    <!-- camera inside the detector housing ; orthographic, looking out through the aperture hole. -->
+
+    <sensor type="orthographic" id="inside detector (ORTHO)">
+
+        <transform name="toWorld">
+            <scale value="0.01"/>
+            <translate z="-0.038"/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="256"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <boolean name="banner" value="false"/>
+            <integer name="width"  value="640"/>
+            <integer name="height" value="640"/>
+            <rfilter type="box"/>
         </film>
 
     </sensor>
