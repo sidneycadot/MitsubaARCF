@@ -4,28 +4,21 @@
 
     <!-- select models -->
 
-    <default name="sample-model"        value="spectralon" />
-    <default name="monochromator-model" value="erik" />
+    <default name="sample-model"        value="qvd" />   <!-- "spectralon", qvd", or "none" -->
+    <default name="monochromator-model" value="erik" />  <!-- "hole", "tube", or "erik" -->
+    <default name="environment-model"   value="none" />  <!-- "full" or "none" -->
 
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
     <default name="detector.motor_angle" value="90.000" />
 
-    <bsdf type="diffuse" id="detector.outside-bsdf.old">
+    <bsdf type="diffuse" id="detector.outside-bsdf">
         <!--<spectrum name="reflectance" value="0"/>-->
         <!-- peculiar: if I make this black, we don't see the scene anymore from inside the diffuser.
              TODO: figure out why this is the case.
         -->
-        <rgb name="reflectance" value="#ffff00"/>
-    </bsdf>
-
-    <bsdf type="roughconductor" id="detector.outside-bsdf">
-        <!--<spectrum name="reflectance" value="0"/>-->
-        <!-- peculiar: if I make this black, we don't see the scene anymore from inside the diffuser.
-             TODO: figure out why this is the case.
-        -->
-        <string name="material" value="none"/>
+        <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
     <default name="monochromator.irradiance"  value="1,1,0" />
@@ -33,12 +26,12 @@
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
-    <bsdf type="diffuse" id="monochromator.outside-bsdf.old">
-        <rgb name="reflectance" value="#ff00ff"/>
-    </bsdf>
-
-    <bsdf type="roughconductor" id="monochromator.outside-bsdf">
-        <string name="material" value="none"/>
+    <bsdf type="diffuse" id="monochromator.outside-bsdf">
+        <!--<spectrum name="reflectance" value="0"/>-->
+        <!-- peculiar: if we make this black, we don't see the scene anymore from inside the diffuser.
+             TODO: figure out why this is the case.
+        -->
+        <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
     <default name="meris.high_motor_angle"   value="0" />
@@ -53,7 +46,7 @@
     <include filename="detector.xml"/>
     <include filename="monochromator-$monochromator-model.xml"/>
     <include filename="sample-$sample-model.xml"/>
-    <include filename="environment.xml"/>
+    <include filename="environment-$environment-model.xml"/>
 
     <!-- monochromator beam inhomogeneity mask -->
     <!--
@@ -84,21 +77,19 @@
     </shape>
     -->
 
-    <integrator type="bdpt">
-        <!--<integer name="rrDepth" value="12"/>-->
-    </integrator>
+    <integrator type="bdpt" />
 
+    <!--
     <sensor type="perspective" id="overview">
 
         <float name="fov" value="45"/>
 
         <transform name="toWorld">
-            <!--<lookat origin="0.20,0.20,1.20" target="0,0,0" up="0,1,0"/>-->
-            <lookat origin="0.25,0.015,-0.01" target="5,-0,-3" up="0,1,0"/>
+            <lookat origin="3,0,1" target="0,0,0" up="0,1,0"/>
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="16"/>
+            <integer name="sampleCount" value="8"/>
         </sampler>
 
         <film type="hdrfilm">
@@ -108,5 +99,6 @@
         </film>
 
     </sensor>
+    -->
 
 </scene>

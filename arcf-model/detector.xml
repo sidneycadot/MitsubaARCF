@@ -2,45 +2,7 @@
 
 <scene version="0.5.0">
 
-    <!--
-    <shape type="rectangle" id="detector front surface (thin dielectric)">
-
-        <bsdf type="thindielectric" />
-
-        <transform name="toWorld">
-            <scale value="0.01"/> <!- 20mm x 20mm ->
-            <!- detector transform ->
-            <rotate y="1" angle="180"/>
-            <translate z="$detector.distance"/>
-            <rotate y="1" angle="$detector.motor_angle"/>
-        </transform>
-
-    </shape>
-    -->
-
     <!-- (+z) side of detector; field limiter surface -->
-
-    <!--
-    <shape type="rectangle" id="detector field limiter">
-
-        <bsdf type="arcf_fieldfocus">
-            <float name="angle" value="2.0"/>
-        </bsdf>
-
-        <transform name="toWorld">
-
-            <!-<rotate y="1" angle="180"/>->
-
-            <scale value="0.01"/>
-            <translate z="+0.002"/>
-
-            <rotate y="1" angle="180"/>
-            <translate z="$detector.distance"/>
-            <rotate y="1" angle="$detector.motor_angle"/>
-        </transform>
-
-    </shape>
-    -->
 
     <!--
     <shape type="rectangle" id="detector field limiter">
@@ -98,10 +60,11 @@
         </transform>
 
     </shape>
-            -->
+    -->
 
     <!--irradiance detector surface -->
 
+    <!--
     <shape type="rectangle">
 
         <sensor type="irradiancemeter" id="detector irradiance measurement">
@@ -120,15 +83,16 @@
         </sensor>
 
         <transform name="toWorld">
-            <scale value="0.0095"/> <!-- 19mm x 19mm -->
+            <scale value="0.0095"/> <!- 19mm x 19mm ->
             <translate z="-0.038"/>
-            <!-- detector transform -->
+            <!- detector transform ->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
         </transform>
 
     </shape>
+    -->
 
     <!-- camera inside the detector housing, looking out through the aperture hole. -->
 
@@ -145,13 +109,13 @@
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="256"/>
+            <integer name="sampleCount" value="1024"/>
         </sampler>
 
         <film type="hdrfilm">
             <boolean name="banner" value="false"/>
-            <integer name="width"  value="640"/>
-            <integer name="height" value="640"/>
+            <integer name="width"  value="600"/>
+            <integer name="height" value="600"/>
             <rfilter type="gaussian"/>
         </film>
 
@@ -159,19 +123,20 @@
 
     <!-- camera inside the detector housing ; orthographic, looking out through the aperture hole. -->
 
+    <!--
     <sensor type="orthographic" id="inside detector (ORTHO)">
 
         <transform name="toWorld">
             <scale value="0.01"/>
             <translate z="-0.038"/>
-            <!-- detector transform -->
+            <!- detector transform ->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="256"/>
+            <integer name="sampleCount" value="8"/>
         </sampler>
 
         <film type="hdrfilm">
@@ -182,6 +147,7 @@
         </film>
 
     </sensor>
+    -->
 
     <!-- (-z) side of detector; outer box -->
 

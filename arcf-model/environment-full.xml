@@ -5,7 +5,7 @@
     <!-- environment light -->
 
     <emitter type="constant">
-        <spectrum name="radiance" value="0"/>
+        <spectrum name="radiance" value="1"/>
     </emitter>
 
     <!-- floor -->
@@ -127,7 +127,6 @@
 
     </shape>
 
-    <!--
     <shape type="instance">
         <ref id="framed-painting"/>
         <transform name="toWorld">
@@ -150,7 +149,7 @@
 
         <transform name="toWorld">
             <scale x="496" y="1024" z="1"/>
-            <scale value="0.0009765625"/> <!- door is 200 cm high->
+            <scale value="0.0009765625"/> <!-- door is 200 cm high-->
             <translate x="-3" y="0" z="-4.990"/>
             <rotate y="1" angle="-90"/>
         </transform>
@@ -201,6 +200,5 @@
             <translate x="-5" y="-1" z="-5"/>
         </transform>
     </shape>
-    -->
 
 </scene>
