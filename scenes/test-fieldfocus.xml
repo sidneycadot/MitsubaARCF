@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <integrator type="ppm">
+        <integer name="maxPasses" value="10"/>
+    </integrator>
+
+    <!--
+   <integrator type="bdpt"/>
+   -->
+
+    <default name="detector.size" value="0.5"/>
+
+    <!--
+    <emitter type="constant">
+        <spectrum name="radiance" value="1e-10"/>
+    </emitter>
+    -->
+
+    <!--
+    <sensor type="perspective" id="overview">
+
+        <float name="fov" value="45"/>
+
+        <transform name="toWorld">
+            <lookat origin="0,2,-5" target="0,0,0" up="0,1,1"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="8"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <integer name="width"            value="960"     />
+            <integer name="height"           value="600"     />
+            <string  name="fileFormat"       value="openexr" />
+            <string  name="pixelFormat"      value="rgb"     />
+            <string  name="componentFormat"  value="float32" />
+            <boolean name="attachLog"        value="true"    />
+            <boolean name="banner"           value="false"   />
+            <boolean name="highQualityEdges" value="false"   />
+            <rfilter type="gaussian"/>
+        </film>
+
+    </sensor>
+    -->
+
+    <shape type="disk">
+
+        <emitter type="arcf_source">
+            <spectrum name="irradiance" value="1"/>
+        </emitter>
+
+        <transform name="toWorld">
+            <scale value="0.5"/>
+            <scale value="$detector.size"/>
+            <rotate y="1" angle="-90"/>
+            <translate x="5" z="5"/>
+        </transform>
+    </shape>
+
+    <!-- diffuser facing the front of the cube -->
+    <shape type="rectangle">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+        <transform name="toWorld">
+            <scale x="4" y="1" z="1"/>
+            <rotate y="1" angle="135"/>
+            <translate z="5"/>
+        </transform>
+    </shape>
+
+    <shape type="rectangle"> <!-- field focusser at the front of the box -->
+        <!--
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="1,0,0"/>
+        </bsdf>
+        -->
+        <bsdf type="arcf_fieldfocus">
+            <float name="angle" value="2"/>
+        </bsdf>
+        <transform name="toWorld">
+            <translate z="1"/>
+            <scale value="$detector.size"/>
+        </transform>
+    </shape>
+
+    <shape type="rectangle"> <!-- irradiance meter at the back of the box -->
+
+        <transform name="toWorld">
+            <translate z="-1"/>
+            <scale value="$detector.size"/>
+        </transform>
+
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+
+        <sensor type="irradiancemeter">
+            <film type="mfilm">
+                <integer name="width" value="256"/>
+                <integer name="height" value="256"/>
+                <integer name="digits" value="20"/>
+                <string  name="fileFormat" value="mathematica"/>
+                <string  name="variable" value="detector" />
+                <boolean name="highQualityEdges" value="false"/>
+                <rfilter type="box"/>
+            </film>
+            <sampler type="independent">
+                <integer name="sampleCount" value="256"/>
+            </sampler>
+        </sensor>
+
+    </shape>
+
+    <shape type="rectangle">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+        <transform name="toWorld">
+            <rotate x="1" angle="90"/>
+            <translate y="1"/>
+            <scale value="$detector.size"/>
+        </transform>
+    </shape>
+
+    <shape type="rectangle">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+        <transform name="toWorld">
+            <rotate x="1" angle="-90"/>
+            <translate y="-1"/>
+            <scale value="$detector.size"/>
+        </transform>
+    </shape>
+
+    <shape type="rectangle">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+        <transform name="toWorld">
+            <rotate y="1" angle="-90"/>
+            <translate x="1"/>
+            <scale value="$detector.size"/>
+        </transform>
+    </shape>
+
+    <shape type="rectangle">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+        <transform name="toWorld">
+            <rotate y="-1" angle="-90"/>
+            <translate x="-1"/>
+            <scale value="$detector.size"/>
+        </transform>
+    </shape>
+
+</scene>
