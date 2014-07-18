@@ -2,11 +2,15 @@
 
 <scene version="0.5.0">
 
+    <integrator type="bdpt" />
+
     <!-- select models -->
 
-    <default name="sample-model"        value="qvd" />   <!-- "spectralon", qvd", or "none" -->
-    <default name="monochromator-model" value="erik" />  <!-- "hole", "tube", or "erik" -->
-    <default name="environment-model"   value="none" />  <!-- "full" or "none" -->
+    <default name="sample-model"        value="qvd"  />  <!-- "spectralon", qvd", or "none" -->
+    <default name="monochromator-model" value="erik" />  <!-- "hole", "tube", or "erik"     -->
+    <default name="environment-model"   value="none" />  <!-- "full" or "none"              -->
+
+    <default name="detector.angular_diameter_of_field" value="179.900"/>
 
     <!-- Geometry variables -->
 
@@ -14,23 +18,17 @@
     <default name="detector.motor_angle" value="90.000" />
 
     <bsdf type="diffuse" id="detector.outside-bsdf">
-        <!--<spectrum name="reflectance" value="0"/>-->
-        <!-- peculiar: if I make this black, we don't see the scene anymore from inside the diffuser.
-             TODO: figure out why this is the case.
-        -->
+        <!-- NOTE: if we make this fully black, we don't see the scene anymore from inside the detector.
+             TODO: figure out why this is the case. (Possibly a Mitsuba bug.) -->
         <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
-    <default name="monochromator.irradiance"  value="1,1,0" />
+    <default name="monochromator.irradiance"  value="1"     />
     <default name="monochromator.radius"      value="0.010" />
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
     <bsdf type="diffuse" id="monochromator.outside-bsdf">
-        <!--<spectrum name="reflectance" value="0"/>-->
-        <!-- peculiar: if we make this black, we don't see the scene anymore from inside the diffuser.
-             TODO: figure out why this is the case.
-        -->
         <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
@@ -77,8 +75,6 @@
     </shape>
     -->
 
-    <integrator type="bdpt" />
-
     <!--
     <sensor type="perspective" id="overview">
 
@@ -93,9 +89,15 @@
         </sampler>
 
         <film type="hdrfilm">
-            <boolean name="banner" value="false"/>
-            <integer name="width" value="960"/>
-            <integer name="height" value="540"/>
+            <integer name="width"            value="960"     />
+            <integer name="height"           value="600"     />
+            <string  name="fileFormat"       value="openexr" />
+            <string  name="pixelFormat"      value="rgb"     />
+            <string  name="componentFormat"  value="float32" />
+            <boolean name="attachLog"        value="true"    />
+            <boolean name="banner"           value="false"   />
+            <boolean name="highQualityEdges" value="false"   />
+            <rfilter type="gaussian"/>
         </film>
 
     </sensor>

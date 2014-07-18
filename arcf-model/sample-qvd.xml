@@ -4,7 +4,10 @@
 
     <!-- sample_under_test -->
 
-    <default name="diffuser.ior" value="1.4"/>
+    <default name="diffuser.ior"       value="1.4"  />
+    <default name="diffuser.diameter"  value="0.15" />
+    <default name="diffuser.thickness" value="0.005"/>
+    <default name="diffuser.material"  value="Al"/>
 
     <shape type="disk" id="qvd diffuser front surface">
 
@@ -14,7 +17,7 @@
 
         <transform name="toWorld">
             <scale value="0.5"/>
-            <scale value="0.10"/>
+            <scale value="$diffuser.diameter"/>
             <!-- sample transformations -->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />
@@ -26,13 +29,15 @@
     <shape type="disk" id="qvd diffuser back surface">
 
         <bsdf type="roughconductor">
-            <string name="material" value="Al"/>
+            <string name="material" value="$diffuser.material"/>
         </bsdf>
 
         <transform name="toWorld">
             <scale value="0.5"/>
-            <scale value="0.10"/>
-            <translate z="-0.005"/>
+            <scale value="$diffuser.diameter"/>
+            <rotate y="1" angle="180"/>
+            <translate z="$diffuser.thickness"/>
+            <rotate y="1" angle="180"/>
             <!-- sample transformations -->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />
@@ -43,15 +48,14 @@
 
     <shape type="cylinder" id="qvd diffuser side">
 
-        <point name="p0" x="0" y="0" z="-0.005"/>
-        <point name="p1" x="0" y="0" z="0"/>
-        <float name="radius" value="0.05"/>
-
         <bsdf type="roughdielectric">
             <float name="intIOR" value="$diffuser.ior" />
         </bsdf>
 
         <transform name="toWorld">
+            <translate z="-1"/>
+            <scale x="0.5" y="0.5" z="1" />
+            <scale x="$diffuser.diameter" y="$diffuser.diameter" z="$diffuser.thickness"/>
             <!-- sample transformations -->
             <rotate z="1" angle="$meris.high_motor_angle"   />
             <rotate x="1" angle="$meris.middle_motor_angle" />

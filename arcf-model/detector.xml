@@ -8,7 +8,7 @@
     <shape type="rectangle" id="detector field limiter">
 
         <bsdf type="arcf_fieldfocus">
-            <float name="angle" value="2.0"/>
+            <float name="angle" value="$detector.angular_diameter_of_field"/>
         </bsdf>
 
         <transform name="toWorld">
@@ -64,41 +64,47 @@
 
     <!--irradiance detector surface -->
 
-    <!--
     <shape type="rectangle">
 
-        <sensor type="irradiancemeter" id="detector irradiance measurement">
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+
+        <sensor type="irradiancemeter" id="detector CCD irradiance measurement">
 
             <film type="mfilm">
-                <integer name="digits" value="20"/>
-                <integer name="width"  value="256"/>
-                <integer name="height" value="256"/>
-                <string name="fileFormat" value="mathematica"/>
+                <integer name="width"            value="256"         />
+                <integer name="height"           value="256"         />
+                <string  name="fileFormat"       value="mathematica" />
+                <integer name="digits"           value="30"          />
+                <string  name="variable"         value="detector"    />
+                <string  name="pixelFormat"      value="luminance"   />
+                <boolean name="highQualityEdges" value="false"       />
+                <rfilter type="box"/>
             </film>
 
             <sampler type="independent">
-                <integer name="sampleCount" value="65536"/>
+                <integer name="sampleCount" value="256"/>
             </sampler>
 
         </sensor>
 
         <transform name="toWorld">
-            <scale value="0.0095"/> <!- 19mm x 19mm ->
+            <scale value="0.0095"/> <!-- 19mm x 19mm -->
             <translate z="-0.038"/>
-            <!- detector transform ->
+            <!-- detector transform -->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
         </transform>
 
     </shape>
-    -->
 
     <!-- camera inside the detector housing, looking out through the aperture hole. -->
 
     <sensor type="perspective" id="inside detector">
 
-        <float name="fov" value="15"/>
+        <float name="fov" value="20"/>
 
         <transform name="toWorld">
             <translate z="-0.038"/>
@@ -109,14 +115,32 @@
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="1024"/>
+            <integer name="sampleCount" value="512"/>
         </sampler>
 
+        <!--
         <film type="hdrfilm">
-            <boolean name="banner" value="false"/>
-            <integer name="width"  value="600"/>
-            <integer name="height" value="600"/>
+            <integer name="width"            value="800"     />
+            <integer name="height"           value="800"     />
+            <string  name="fileFormat"       value="openexr" />
+            <string  name="pixelFormat"      value="rgb"     />
+            <string  name="componentFormat"  value="float32" />
+            <boolean name="attachLog"        value="true"    />
+            <boolean name="banner"           value="false"   />
+            <boolean name="highQualityEdges" value="false"   />
             <rfilter type="gaussian"/>
+        </film>
+        -->
+
+        <film type="mfilm">
+            <integer name="width"            value="800"         />
+            <integer name="height"           value="800"         />
+            <string  name="fileFormat"       value="matlab"      />
+            <integer name="digits"           value="25"          />
+            <string  name="variable"         value="detector"    />
+            <string  name="pixelFormat"      value="luminance"   />
+            <boolean name="highQualityEdges" value="false"       />
+            <rfilter type="box"/>
         </film>
 
     </sensor>
@@ -140,10 +164,15 @@
         </sampler>
 
         <film type="hdrfilm">
-            <boolean name="banner" value="false"/>
-            <integer name="width"  value="640"/>
-            <integer name="height" value="640"/>
-            <rfilter type="box"/>
+            <integer name="width"            value="800"     />
+            <integer name="height"           value="800"     />
+            <string  name="fileFormat"       value="openexr" />
+            <string  name="pixelFormat"      value="rgb"     />
+            <string  name="componentFormat"  value="float32" />
+            <boolean name="attachLog"        value="true"    />
+            <boolean name="banner"           value="false"   />
+            <boolean name="highQualityEdges" value="false"   />
+            <rfilter type="gaussian"/>
         </film>
 
     </sensor>
