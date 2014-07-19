@@ -2,15 +2,27 @@
 
 <scene version="0.5.0">
 
+    <!--
     <integrator type="ppm">
         <integer name="maxPasses" value="10"/>
     </integrator>
+    -->
+
+    <integrator type="irrcache">
+        <integrator type="photonmapper">
+        </integrator>
+    </integrator>
 
     <!--
-   <integrator type="bdpt"/>
-   -->
+    <integrator type="photonmapper">
+    </integrator>
+    -->
 
-    <default name="detector.size" value="0.5"/>
+    <!--
+    <integrator type="bdpt"/>
+    -->
+
+    <default name="detector.size" value="0.01"/>
 
     <!--
     <emitter type="constant">
@@ -53,8 +65,7 @@
         </emitter>
 
         <transform name="toWorld">
-            <scale value="0.5"/>
-            <scale value="$detector.size"/>
+            <scale value="0.02"/>
             <rotate y="1" angle="-90"/>
             <translate x="5" z="5"/>
         </transform>
@@ -109,7 +120,7 @@
                 <rfilter type="box"/>
             </film>
             <sampler type="independent">
-                <integer name="sampleCount" value="256"/>
+                <integer name="sampleCount" value="10000"/>
             </sampler>
         </sensor>
 

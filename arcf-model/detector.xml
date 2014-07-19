@@ -25,18 +25,17 @@
 
     <!-- (+z) side of detector; detector front surface (aperture) -->
 
-    <!--
     <shape type="rectangle" id="detector front surface (with aperture)">
 
         <bsdf type="mask">
 
             <ref id="detector.outside-bsdf"/>
 
-            <!- NOTE: given a fixed object,
+            <!-- NOTE: given a fixed object,
                  the texture is moved in the direction (-uoffset, -voffset);
                  after that, the texture is scaled by (1/uscale, 1/vscale).
                  In other words, everything is in the least convenient order
-                 when trying to move a texture in position. ->
+                 when trying to move a texture in position. -->
 
             <texture name="opacity" type="arcf_aperture">
                 <float name="ubar" value="0.0"/>
@@ -52,31 +51,35 @@
         </bsdf>
 
         <transform name="toWorld">
-            <scale value="0.01"/> <!- 20mm x 20mm ->
-            <!- detector transform ->
+            <scale value="0.01"/> <!-- 20mm x 20mm -->
+            <!-- detector transform -->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
         </transform>
 
     </shape>
-    -->
 
-    <!--irradiance detector surface -->
+    <!-- (-z) side of detector; irradiance meter (inside) and outer box (outside) -->
+
+    <!-- combine the backside and the detector. -->
 
     <shape type="rectangle">
 
-        <bsdf type="diffuse">
-            <spectrum name="reflectance" value="0"/>
+        <bsdf type="twosided">
+            <bsdf type="diffuse">
+                <spectrum name="reflectance" value="0"/>
+            </bsdf>
+            <ref id="detector.outside-bsdf"/>
         </bsdf>
 
-        <sensor type="irradiancemeter" id="detector CCD irradiance measurement">
+        <sensor type="irradiancemeter" id="detector surface irradiance measurement">
 
             <film type="mfilm">
                 <integer name="width"            value="256"         />
                 <integer name="height"           value="256"         />
                 <string  name="fileFormat"       value="mathematica" />
-                <integer name="digits"           value="30"          />
+                <integer name="digits"           value="25"          />
                 <string  name="variable"         value="detector"    />
                 <string  name="pixelFormat"      value="luminance"   />
                 <boolean name="highQualityEdges" value="false"       />
@@ -90,8 +93,8 @@
         </sensor>
 
         <transform name="toWorld">
-            <scale value="0.0095"/> <!-- 19mm x 19mm -->
-            <translate z="-0.038"/>
+            <scale value="0.01"/> <!-- 20mm x 20mm -->
+            <translate z="-0.040 "/>
             <!-- detector transform -->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
@@ -115,10 +118,9 @@
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="512"/>
+            <integer name="sampleCount" value="16"/>
         </sampler>
 
-        <!--
         <film type="hdrfilm">
             <integer name="width"            value="800"     />
             <integer name="height"           value="800"     />
@@ -130,8 +132,8 @@
             <boolean name="highQualityEdges" value="false"   />
             <rfilter type="gaussian"/>
         </film>
-        -->
 
+        <!--
         <film type="mfilm">
             <integer name="width"            value="800"         />
             <integer name="height"           value="800"         />
@@ -142,25 +144,25 @@
             <boolean name="highQualityEdges" value="false"       />
             <rfilter type="box"/>
         </film>
+        -->
 
     </sensor>
 
     <!-- camera inside the detector housing ; orthographic, looking out through the aperture hole. -->
 
-    <!--
     <sensor type="orthographic" id="inside detector (ORTHO)">
 
         <transform name="toWorld">
             <scale value="0.01"/>
             <translate z="-0.038"/>
-            <!- detector transform ->
+            <!-- detector transform -->
             <rotate y="1" angle="180"/>
             <translate z="$detector.distance"/>
             <rotate y="1" angle="$detector.motor_angle"/>
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="8"/>
+            <integer name="sampleCount" value="16"/>
         </sampler>
 
         <film type="hdrfilm">
@@ -176,25 +178,6 @@
         </film>
 
     </sensor>
-    -->
-
-    <!-- (-z) side of detector; outer box -->
-
-    <shape type="rectangle" id="detector backside">
-
-        <ref id="detector.outside-bsdf"/>
-
-        <transform name="toWorld">
-            <rotate x="1" angle="180"/>
-            <scale value="0.01"/>
-            <translate z="-0.040"/>
-            <!-- detector transform -->
-            <rotate y="1" angle="180"/>
-            <translate z="$detector.distance"/>
-            <rotate y="1" angle="$detector.motor_angle"/>
-        </transform>
-
-    </shape>
 
     <!-- (-x) side of detector -->
 

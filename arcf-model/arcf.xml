@@ -2,15 +2,101 @@
 
 <scene version="0.5.0">
 
-    <integrator type="bdpt" />
+    <!--
+
+        Notes on integrators
+        ====================
+
+        Unusable:
+
+        - "ao" is not usable.
+        - "direct" cannot be used because our light path will contain indirect paths
+          (if only because of the detector aperture plane).
+        - "path" cannot be used, because our scene contains an opacity mask (for the aperture texture).
+          See remark in documentation, Section 8.10, "Choosing an integrator",
+          point #1, last sentence.
+          In radiance config, it does not honor the aperture mask.
+        - "volpath_simple" : does not render the "irradiance" and "irradiance" configurations correctly.
+        - "volpath" : does not render the "irradiance" and "radiance" configurations correctly.
+        - "photonmapper" : does not render the "irradiance" configuration correctly.
+        - "ppm" : does not render the "irradiance" configuration correctly.
+                  Radiance shows some data, but looks bad.
+                  Note that we need to decrease the sample count to approx. 2 to 4, in the sensor's sampler.
+        - "sppm" : does not render the "irradiance" configuration correctly.
+                  Radiance shows some data, in the right aperture shape. But quite bad.
+                  Note that this ignores the sample count as specified in the sensor's sampler.
+
+        Usable:
+        - "path" appears qualitatively to work for the radiance configuration.
+        - "bdpt" : renders the "irradiance" scene correctly.
+            The "radiance" scene looks qualitatively correct (without the field limiter).
+            Once the field limiter is in place, it doesn't work anymore.
+        - "pssmlt": works only if we set 'directSamples' to -1 (irradiance)
+                radiance works irrespective of directSamples. The value is way off, however.
+        - "mlt": works if we disable directSamples, lensPerturbation, multiChainPerturbation, causticPerturbation.
+                  and DISABLE manifoldPerturbation (the default).
+                  In "radiance" configuration, we can enable manifoldPerturbation, but then it doesn't honor the aperture mask.
+        - "erpt": works if we disable directSamples, lensPerturbation, multiChainPerturbation, causticPerturbation,
+                  but ENABLE manifoldPerturbation.
+                  It sort-of-works in radiance, but we get an incorrect value.
+        - "ptracer" works only if we enable "bruteForce", when rendering the "irradiance" configuration.
+                 the "radiance" configuration can be rendered with either setting.
+    -->
+
+    <!-- The "bdpt" integrator, without any options, works fine the irradiance measurement -->
+    <!-- The "path" integrator, without any options, works fine the radiance measurement -->
+    <integrator type="bdpt">
+    </integrator>
+
+    <!--
+    <integrator type="bdpt">
+    </integrator>
+    -->
+
+    <!--
+    <integrator type="photonmapper">
+    </integrator>
+    -->
+
+    <!--
+    <integrator type="pssmlt">
+        <integer name="directSamples" value="-1"/>
+    </integrator>
+    -->
+
+    <!--
+    <integrator type="mlt">
+        <integer name="directSamples" value="-1"/>
+        <boolean name="lensPerturbation" value="false"/>
+        <boolean name="multiChainPerturbation" value="false"/>
+        <boolean name="causticPerturbation" value="false"/>
+        <boolean name="manifoldPerturbation" value="false"/>
+    </integrator>
+    -->
+
+    <!--
+    <integrator type="erpt">
+        <integer name="directSamples" value="-1"/>
+        <boolean name="lensPerturbation" value="false"/>
+        <boolean name="multiChainPerturbation" value="false"/>
+        <boolean name="causticPerturbation" value="false"/>
+        <boolean name="manifoldPerturbation" value="true"/>
+    </integrator>
+    -->
+
+    <!--
+    <integrator type="ptracer">
+        <boolean name="bruteForce" value="false"/>
+    </integrator>
+    -->
 
     <!-- select models -->
 
-    <default name="sample-model"        value="qvd"  />  <!-- "spectralon", qvd", or "none" -->
+    <default name="sample-model"        value="spectralon" />  <!-- "spectralon", qvd", or "none" -->
     <default name="monochromator-model" value="erik" />  <!-- "hole", "tube", or "erik"     -->
     <default name="environment-model"   value="none" />  <!-- "full" or "none"              -->
 
-    <default name="detector.angular_diameter_of_field" value="179.900"/>
+    <default name="detector.angular_diameter_of_field" value="2.000"/>
 
     <!-- Geometry variables -->
 
@@ -24,7 +110,7 @@
     </bsdf>
 
     <default name="monochromator.irradiance"  value="1"     />
-    <default name="monochromator.radius"      value="0.010" />
+    <default name="monochromator.diameter"    value="0.008" />
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
@@ -32,19 +118,19 @@
         <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
-    <default name="meris.high_motor_angle"   value="0" />
-    <default name="meris.middle_motor_angle" value="0" />
+    <default name="meris.high_motor_angle"   value="0"   />
+    <default name="meris.middle_motor_angle" value="0"   />
     <default name="meris.low_motor_angle"    value="+45" />
 
     <!-- include stuff -->
 
     <include filename="colors.xml"/>
     <include filename="axes.xml"/>
+    <include filename="environment-$environment-model.xml"/>
 
-    <include filename="detector.xml"/>
     <include filename="monochromator-$monochromator-model.xml"/>
     <include filename="sample-$sample-model.xml"/>
-    <include filename="environment-$environment-model.xml"/>
+    <include filename="detector.xml"/>
 
     <!-- monochromator beam inhomogeneity mask -->
     <!--

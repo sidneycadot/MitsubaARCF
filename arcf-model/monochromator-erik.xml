@@ -11,7 +11,8 @@
         </emitter>
 
         <transform name="toWorld">
-            <scale value="$monochromator.radius"/>
+            <scale value="0.5"/>
+            <scale value="$monochromator.diameter"/>
             <!-- monochromator transform -->
             <rotate y="1" angle="180"/>
             <translate z="$monochromator.distance"/>
@@ -19,6 +20,7 @@
 
     </shape>
 
+    <!--
     <shape type="cylinder" id="monochromator cylinder">
 
         <point name="p0" x="0" y="0" z="0"/>
@@ -29,7 +31,7 @@
 
         <transform name="toWorld">
             <rotate y="1" angle="180"/>
-            <!-- monochromator transform -->
+            <!- monochromator transform ->
             <rotate y="1" angle="180"/>
             <translate z="$monochromator.distance"/>
         </transform>
@@ -40,21 +42,22 @@
 
         <ref id="monochromator.outside-bsdf"/>
 
-        <!--
+        <!-
         <emitter type="area">
             <spectrum name="radiance" value="1e3"/>
         </emitter>
-        -->
+        ->
 
         <transform name="toWorld">
             <scale value="$monochromator.radius"/>
             <translate z="$monochromator.tube_length"/>
             <rotate y="1" angle="180"/>
-            <!-- monochromator transform -->
+            <!- monochromator transform ->
             <rotate y="1" angle="180"/>
             <translate z="$monochromator.distance"/>
         </transform>
 
     </shape>
+    -->
 
 </scene>
