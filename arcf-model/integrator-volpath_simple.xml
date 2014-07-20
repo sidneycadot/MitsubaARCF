@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.4. Simple volumetric path tracer (volpath_simple)
+
+            Parameter                  Type                Description
+
+            maxDepth                   integer             Specifies the longest path depth in the generated output
+                                                            image (where -1 corresponds to ∞). A value of 1 will only
+                                                            render directly visible light sources. 2 will lead to single-
+                                                            bounce (direct-only) illumination, and so on.
+                                                            (Default: -1)
+            rrDepth                    integer             Specifies the minimum path depth, after which the imple-
+                                                            mentation will start to use the “russian roulette” path
+                                                            termination criterion.
+                                                            (Default: 5)
+            strictNormals              boolean             Be strict about potential inconsistencies involving shading
+                                                            normals? See page 154 for details.
+                                                            (Default: no, i.e. false)
+            hideEmitters               boolean             Hide directly visible emitters? See page 149 for details.
+                                                            (Default: no, i.e. false)
+
+        This plugin provides a basic volumetric path tracer that can be used to compute approximate solu-
+        tions of the radiative transfer equation. This particular integrator is named “simple” because it does
+        not make use of multiple importance sampling. This results in a potentially faster execution time.
+        On the other hand, it also means that this plugin will likely not perform well when given a scene
+        that contains highly glossy materials. In this case, please use volpath or one of the bidirectional
+        techniques.
+        This integrator has special support for index-matched transmission events (i.e. surface scattering
+        events that do not change the direction of light). As a consequence, participating media enclosed by
+        a stencil shape (see Section 8.1 for details) are rendered considerably more efficiently when this shape
+        has no (footnote) BSDF assigned to it (as compared to, say, a dielectric or roughdielectric BSDF).
+
+        Remarks:
+
+            * This integrator performs poorly when rendering participating media that have a different index of
+                refraction compared to the surrounding medium.
+            * This integrator has difficulties rendering scenes that contain relatively glossy materials (volpath
+                is preferable in this case).
+            * This integrator has poor convergence properties when rendering caustics and similar effects. In
+                this case, bdpt or one of the photon mappers may be preferable.
+
+        (footnote)
+
+            this is what signals to Mitsuba that the boundary is index-matched and does not interact with light in any way. Alter-
+            natively, the mask and thindielectric BSDF can be used to specify index-matched boundaries that involve some
+            amount of interaction.
+
+    -->
+
+    <integrator type="volpath_simple">
+        <integer name="maxDepth" value="-1"/>
+        <integer name="rrDepth" value="5"/>
+        <boolean name="strictNormals" value="true"/>
+        <boolean name="hideEmitters" value="false"/>
+    </integrator>
+
+</scene>

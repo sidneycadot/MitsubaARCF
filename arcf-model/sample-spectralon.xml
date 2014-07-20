@@ -11,6 +11,12 @@
             <spectrum name="reflectance" value="1"/>
         </bsdf>
 
+        <!--
+        <medium name="interior" type="homogeneous">
+            <string name="material" value="spectralon" />
+        </medium>
+        -->
+
         <transform name="toWorld">
             <translate z="-1" />
             <scale value="0.5"/>

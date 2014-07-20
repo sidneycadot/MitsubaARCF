@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.2. Direct illumination integrator (direct)
+
+        Parameter               Type               Description
+        shadingSamples          integer            This convenience parameter can be used to set both
+                                                    emitterSamples and bsdfSamples at the same time.
+        emitterSamples          integer            Optional more fine-grained parameter: specifies the number
+                                                    of samples that should be generated using the direct
+                                                    illumination strategies implemented by the scene’s emitters
+                                                    (Default: set to the value of shadingSamples)
+        bsdfSamples             integer            Optional more fine-grained parameter: specifies the num-
+                                                    ber of samples that should be generated using the BSDF
+                                                    sampling strategies implemented by the scene’s surfaces (De-
+                                                    fault: set to the value of shadingSamples)
+        strictNormals           boolean            Be strict about potential inconsistencies involving shading
+                                                    normals? See page 154 for details. (Default: no, i.e. false)
+        hideEmitters            boolean            Hide directly visible emitters? See page 149 for details.
+                                                    (Default: no, i.e. false)
+
+        This integrator implements a direct illumination technique that makes use of multiple importance
+        sampling: for each pixel sample, the integrator generates a user-specifiable number of BSDF and
+        emitter samples and combines them using the power heuristic. Usually, the BSDF sampling technique
+        works very well on glossy objects but does badly everywhere else (Figure 33a), while the opposite is
+        true for the emitter sampling technique (Figure 33b). By combining these approaches, one can obtain
+        a rendering technique that works well in both cases (Figure 33c).
+
+        The number of samples spent on either technique is configurable, hence it is also possible to turn
+        this plugin into an emitter sampling-only or BSDF sampling-only integrator.
+
+        For best results, combine the direct illumination integrator with the low-discrepancy sample
+        generator (ldsampler). Generally, the number of pixel samples of the sample generator can be kept
+        relatively low (e.g. sampleCount=4), whereas the shadingSamples parameter of this integrator
+        should be increased until the variance in the output renderings is acceptable.
+
+        Remarks:
+
+        * This integrator does not handle participating media or indirect illumination.
+
+    -->
+
+    <integrator type="direct">
+        <integer name="emitterSamples" value="100"/>
+        <integer name="bsdfSamples"    value="100"/>
+        <boolean name="strictNormals"  value="true"/>
+        <boolean name="hideEmitters"   value="false"/>
+    </integrator>
+
+</scene>

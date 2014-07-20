@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.9. Stochastic progressive photon mapping integrator (sppm)
+
+        Parameter               Type                Description
+        maxDepth                integer             Specifies the longest path depth in the generated output im-
+                                                    age (where -1 corresponds to ∞). A value of 1 will only
+                                                    render directly visible light sources. 2 will lead to single-
+                                                    bounce (direct-only) illumination, and so on. (Default: -1)
+        photonCount             integer             Number of photons to be shot per iteration
+                                                    (Default: 250000)
+        initialRadius           float               Initial radius of gather points in world space units.
+                                                    (Default: 0, i.e. decide automatically)
+        alpha                   float               Radius reduction parameter alpha from the paper
+                                                    (Default: 0.7)
+        granularity             integer             Granularity of photon tracing work units for the purpose of
+                                                    parallelization (in # of shot particles)
+                                                    (Default: 0, i.e. decide automatically)
+        rrDepth                 integer             Specifies the minimum path depth, after which the imple-
+                                                    mentation will start to use the “russian roulette” path termi-
+                                                    nation criterion.
+                                                    (Default: 5)
+        maxPasses               integer             Maximum number of passes to render (where -1 corre-
+                                                    sponds to rendering until stopped manually).
+                                                    (Default: -1)
+
+        This plugin implements stochastic progressive photon mapping by Hachisuka et al. [13]. This
+        algorithm is an extension of progressive photon mapping (ppm) that improves convergence when
+        rendering scenes involving depth-of-field, motion blur, and glossy reflections.
+        Note that the implementation of sppm in Mitsuba ignores the sampler configuration—hence, the
+        usual steps of choosing a sample generator and a desired number of samples per pixel are not nec-
+        essary. As with ppm, once started, the rendering process continues indefinitely until it is manually
+        stopped.
+
+        Remarks:
+            • Due to the data dependencies of this algorithm, the parallelization is limited to to the local machine
+                (i.e. cluster-wide renderings are not implemented)
+            • This integrator does not handle participating media
+            • This integrator does not currently work with subsurface scattering models.
+
+    -->
+
+    <integrator type="sppm">
+        <integer name="maxDepth" value="-1"/>
+        <integer name="photonCount" value="2500"/>
+        <float   name="initialRadius" value="0"/>
+        <float   name="alpha" value="0.7"/>
+        <integer name="granularity" value="0"/>
+        <integer name="rrDepth" value="5"/>
+        <integer name="maxPasses" value="5"/>
+    </integrator>
+
+</scene>
