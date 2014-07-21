@@ -1,0 +1,4 @@
+
+8.10.1: "from all direction" --> "from all directions".
+
+8.10.12: "maxChains" parameter is of type integer, not float.
