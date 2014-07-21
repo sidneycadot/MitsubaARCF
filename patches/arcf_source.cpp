@@ -113,20 +113,16 @@ public:
         return m_power;
     }
 
-    // EDD: OK ? Check in what circumstances pRec.measure != EArea
     Spectrum evalPosition(const PositionSamplingRecord& pRec) const
     {
-//      return (pRec.measure == EArea) ? m_normalIrradiance : Spectrum(0.0f);
         return (pRec.measure == EArea) ? m_normalIrradiance : Spectrum(0.0f);
     }
 
-    // EDD: OK ? Check in what circumstances pRec.measure != EArea
     Float pdfPosition(const PositionSamplingRecord& pRec) const
     {
         return (pRec.measure == EArea) ? m_shape->pdfPosition(pRec) : 0.0f;
     }
 
-    // EDD: OK
     Spectrum sampleDirection(DirectionSamplingRecord& dRec,
                              PositionSamplingRecord&  pRec,
                              const Point2&            sample,
@@ -139,25 +135,23 @@ public:
         return Spectrum(1.0f);
     }
 
-    // EDD: OK
     Spectrum evalDirection(const DirectionSamplingRecord& dRec,
                            const PositionSamplingRecord&  pRec) const
     {
         return Spectrum((dRec.measure == EDiscrete) ? 1.0f : 0.0f);
     }
 
-    // EDD: OK
     Float pdfDirection(const DirectionSamplingRecord& dRec,
                        const PositionSamplingRecord&  pRec) const
     {
         return (dRec.measure == EDiscrete) ? 1.0f : 0.0f;
     }
 
-    // EDD: OK
     Spectrum eval(const Intersection& its,
                   const Vector&       d) const
     {
-        if (dot(its.shFrame.n, d) < 1.0)
+        // TODO: [EDD] Check if we should use Epsilon (Depends on precision) instead of DeltaEpsilon
+        if (std::abs(dot(its.shFrame.n, d) - 1) <= DeltaEpsilon)
         {
             return Spectrum(0.0f);
         }
@@ -165,7 +159,6 @@ public:
         return m_normalIrradiance;
     }
 
-    // EDD: OK
     Spectrum sampleRay(Ray&          ray,
                        const Point2& spatialSample,
                        const Point2& directionalSample,
@@ -181,7 +174,6 @@ public:
         return m_power;
     }
 
-    // EDD: ?
     Spectrum sampleDirect(DirectSamplingRecord& dRec,
                           const Point2&         sample) const
     {
@@ -192,23 +184,30 @@ public:
            for 'refN' is intentional -- those sampling requests that specify
            a reference point within a medium or on a transmissive surface
            will set dRec.refN = 0, hence they should always be accepted. */
-        if (dot(dRec.d, dRec.n)    > -1 ||
-            dot(dRec.d, dRec.refN) <  0 ||
+        if (dot(dRec.d, dRec.refN) <  0                       ||
+            std::abs(dot(dRec.d, dRec.n) + 1) >= DeltaEpsilon ||
             dRec.pdf == 0)
         {
             dRec.pdf = 0.0f;
             return Spectrum(0.0f);
         }
 
+/*
+        dRec.p       = ;
+        dRec.n       = ;
+        dRec.d       = ;
+        dRec.dist    = ;
+        dRec.uv      = ;
+        dRec.measure = EDiscrete;
+*/
         return m_normalIrradiance / dRec.pdf;
     }
 
-    // EDD: ?
     Float pdfDirect(const DirectSamplingRecord& dRec) const
     {
         // Check that the emitter and receiver are oriented correctly with respect to each other.
-        if (dot(dRec.d, dRec.n)    > -1 ||
-            dot(dRec.d, dRec.refN) <  0 ||
+        if (dot(dRec.d, dRec.refN) <  0                       ||
+            std::abs(dot(dRec.d, dRec.n) + 1) >= DeltaEpsilon ||
             dRec.pdf == 0)
         {
             return 0.0f;
