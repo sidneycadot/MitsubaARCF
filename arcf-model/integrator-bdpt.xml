@@ -70,10 +70,10 @@
     -->
 
     <integrator type="bdpt">
-        <integer name="maxDepth" value="-1"/>
-        <boolean name="lightImage" value="true"/>
+        <integer name="maxDepth"     value="-1"/>
+        <boolean name="lightImage"   value="true"/>
         <boolean name="sampleDirect" value="true"/>
-        <integer name="rrDepth" value="5"/>
+        <integer name="rrDepth"      value="5"/>
     </integrator>
 
 </scene>

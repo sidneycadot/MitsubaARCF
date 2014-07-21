@@ -16,12 +16,12 @@
 
     <default name="sample-model"        value="spectralon" />  <!-- "spectralon", qvd", or "none" -->
     <default name="monochromator-model" value="erik"       />  <!-- "hole", "tube", or "erik"     -->
-    <default name="environment-model"   value="full"       />  <!-- "full" or "none"              -->
+    <default name="environment-model"   value="none"       />  <!-- "full" or "none"              -->
 
-    <default name="integrator-type"     value="direct"     />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper -->
+    <default name="integrator-type"     value="bdpt"       />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper -->
 
     <default name="detector.fov_diameter" value="0.200"/>
-    <default name="detector.sample_count" value="256"/>
+    <default name="detector.sample_count" value="16"/>
 
     <!-- Geometry variables -->
 
@@ -29,7 +29,7 @@
     <default name="detector.motor_angle" value="90.000" />
 
     <default name="monochromator.irradiance"  value="1,1,0" />
-    <default name="monochromator.diameter"    value="1.000" />
+    <default name="monochromator.diameter"    value="0.020" />
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
@@ -46,15 +46,20 @@
 
     <include filename="integrator-$integrator-type.xml"/>
 
-    <!--
     <include filename="monochromator-$monochromator-model.xml"/>
-    -->
 
+    <!--
     <emitter type="spot">
         <spectrum name="intensity" value = "1,1,0" />
+        <float name="cutoffAngle" value="0.95484125387218869786251529"/>
+        <float name="beamWidth" value="0.95484125387218869786251529"/>
         <transform name="toWorld">
+            <!- monochromator transform ->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
         </transform>
     </emitter>
+    -->
 
     <include filename="sample-$sample-model.xml"/>
     <include filename="detector.xml"/>

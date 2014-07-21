@@ -66,16 +66,16 @@
     -->
 
     <integrator type="erpt">
-        <integer name="maxDepth" value="-1"/>
-        <float name="numChains" value="1"/>
-        <float name="maxChains" value="0"/>
-        <integer name="chainLength" value="1"/>
-        <integer name="directSamples" value="16"/>
-        <boolean name="lensPerturbation" value="true"/>
-        <boolean name="multiChainPerturbation" value="true"/>
-        <boolean name="causticPerturbation" value="true"/>
-        <boolean name="manifoldPerturbation" value="false"/>
-        <float   name="lambda" value="50"/>
+        <integer name="maxDepth"               value="-1"/>
+        <float   name="numChains"              value="1"/>
+        <integer name="maxChains"              value="0"/>
+        <integer name="chainLength"            value="1"/>
+        <integer name="directSamples"          value="-1"/>
+        <boolean name="lensPerturbation"       value="false"/>
+        <boolean name="multiChainPerturbation" value="false"/>
+        <boolean name="causticPerturbation"    value="false"/>
+        <boolean name="manifoldPerturbation"   value="true"/>
+        <float   name="lambda"                 value="50"/>
     </integrator>
 
 </scene>

@@ -52,10 +52,10 @@
     -->
 
     <integrator type="volpath_simple">
-        <integer name="maxDepth" value="-1"/>
-        <integer name="rrDepth" value="5"/>
+        <integer name="maxDepth"      value="-1"/>
+        <integer name="rrDepth"       value="5"/>
         <boolean name="strictNormals" value="true"/>
-        <boolean name="hideEmitters" value="false"/>
+        <boolean name="hideEmitters"  value="false"/>
     </integrator>
 
 </scene>

@@ -60,18 +60,18 @@
     -->
 
     <integrator type="photonmapper">
-        <integer name="directSamples" value="16"/>
-        <integer name="glossySamples" value="32"/>
-        <integer name="maxDepth" value="-1"/>
-        <integer name="globalPhotons" value="32"/>
-        <integer name="causticPhotons" value="32"/>
-        <integer name="volumePhotons" value="32"/>
-        <float   name="globalLookupRadius" value="0.05"/>
+        <integer name="directSamples"       value="16"/>         <!-- spotlight invisible if -1 -->
+        <integer name="glossySamples"       value="32"/>
+        <integer name="maxDepth"            value="-1"/>
+        <integer name="globalPhotons"       value="250000"/>
+        <integer name="causticPhotons"      value="250000"/>
+        <integer name="volumePhotons"       value="250000"/>
+        <float   name="globalLookupRadius"  value="0.05"/>
         <float   name="causticLookupRadius" value="0.0125"/>
-        <integer name="lookupSize" value="120"/>
-        <integer name="granularity" value="0"/>
-        <boolean name="hideEmitters" value="false"/>
-        <integer name="rrDepth" value="5"/>
+        <integer name="lookupSize"          value="120"/>
+        <integer name="granularity"         value="0"/>
+        <boolean name="hideEmitters"        value="false"/>
+        <integer name="rrDepth"             value="5"/>
     </integrator>
 
 </scene>

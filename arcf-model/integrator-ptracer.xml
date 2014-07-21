@@ -47,10 +47,10 @@
     -->
 
     <integrator type="ptracer">
-        <integer name="maxDepth" value="-1"/>
-        <integer name="rrDepth" value="5"/>
+        <integer name="maxDepth"    value="-1"/>
+        <integer name="rrDepth"     value="5"/>
         <integer name="granularity" value="200000"/>
-        <boolean name="bruteForce" value="false"/>
+        <boolean name="bruteForce"  value="false"/>
     </integrator>
 
 </scene>

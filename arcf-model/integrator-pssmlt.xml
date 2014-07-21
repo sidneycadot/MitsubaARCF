@@ -48,6 +48,7 @@
         to amortize the cost of the search. This can significantly improve the convergence rate of difficult
         input. Scenes that were already relatively easy to render usually don’t benefit much from PSSMLT,
         since the MCMC data management causes additional computational overheads.
+
         An interesting aspect of PSSMLT is that it performs this exploration of light paths by perturbing the
         "random numbers" that were initially used to construct the path. Subsequent regeneration of the path
         using the perturbed numbers yields a new path in a slightly different configuration, and this process
@@ -55,6 +56,7 @@
         method powerful: in particular, it is possible to use PSSMLT as a layer on top of an existing method
         to create a new "metropolized" version of the rendering algorithm that is enhanced with a certain
         degree of adaptiveness as described earlier.
+
         The PSSMLT implementation in Mitsuba can operate on top of either a simple unidirectional vol-
         umetric path tracer or a fully-fledged bidirectional path tracer with multiple importance sampling,
         and this choice is controlled by the bidirectional flag. The unidirectional path tracer is generally
@@ -65,15 +67,18 @@
         that must be applied to obtain proper scene radiance values. The implementation in Mitsuba relies
         on an additional Monte Carlo estimator to recover this scale factor. By default, it uses 100K samples
         (controlled by the luminanceSamples parameter), which should be adequate for most applications.
+
         The second caveat is that the amount of computational expense associated with a pixel in the output
         image is roughly proportional to its intensity. This means that when a bright object (e.g. the sun) is
         visible in a rendering, most resources are committed to rendering the sun disk at the cost of increased
         variance everywhere else. Since this is usually not desired, the twoStage parameter can be used to
         enable Two-stage MLT in this case.
+
         In this mode of operation, the renderer first creates a low-resolution version of the output image
         to determine the approximate distribution of luminance values. The second stage then performs the
         actual rendering, while using the previously collected information to ensure that the amount of time
         spent rendering each pixel is uniform.
+
         The third caveat is that, while PSMLT can work with scenes that are extremely difficult for other
         methods to handle, it is not particularly efficient when rendering simple things such as direct illumi-
         nation (which is more easily handled by a brute-force type algorithm). By default, the implementation
@@ -85,13 +90,13 @@
     -->
 
     <integrator type="pssmlt">
-        <boolean name="bidirectional" value="true"/>
-        <integer name="maxDepth" value="-1"/>
-        <integer name="directSamples" value="16"/>
-        <integer name="rrDepth" value="5"/>
+        <boolean name="bidirectional"    value="true"/>
+        <integer name="maxDepth"         value="-1"/>
+        <integer name="directSamples"    value="-1"/>
+        <integer name="rrDepth"          value="5"/>
         <integer name="luminanceSamples" value="100000"/>
-        <boolean name="twoStage" value="false"/>
-        <float   name="pLarge" value="0.3"/>
+        <boolean name="twoStage"         value="false"/>
+        <float   name="pLarge"           value="0.3"/>
     </integrator>
 
 </scene>

@@ -7,41 +7,49 @@
         8.10.11. Path Space Metropolis Light Transport (mlt)
 
             Parameter                Type                Description
+
             maxDepth                 integer             Specifies the longest path depth in the generated output im-
                                                         age (where -1 corresponds to ∞). A value of 1 will only
                                                         render directly visible light sources. 2 will lead to single-
-                                                        bounce (direct-only) illumination, and so on. (Default: -1)
+                                                        bounce (direct-only) illumination, and so on.
+                                                         (Default: -1)
             directSamples            integer             By default, the implementation renders direct illumina-
                                                         tion component separately using the direct plugin, which
                                                         uses low-discrepancy number sequences for superior per-
                                                         formance (in other words, it is not handled by MLT). This
                                                         parameter specifies the number of samples allocated to that
                                                         method. To force MLT to be responsible for the direct illu-
-                                                        mination component as well, set this to -1. (Default: 16)
+                                                        mination component as well, set this to -1.
+                                                         (Default: 16)
             luminanceSamples         integer             MLT-type algorithms create output images that are only rel-
                                                         ative. The algorithm can e.g. determine that a certain pixel
                                                         is approximately twice as bright as another one, but the ab-
                                                         solute scale is unknown. To recover it, this plugin computes
                                                         the average luminance arriving at the sensor by generating
-                                                        a number of samples. (Default: 100000 samples)
-            twoStage                 boolean             Use two-stage MLT? See pssmlt for details.(Default: false)
+                                                        a number of samples.
+                                                        (Default: 100000 samples)
+            twoStage                 boolean             Use two-stage MLT? See pssmlt for details.
+                                                        (Default: false)
             bidirectionalMutation    boolean            These parameters can be used to pick the individual muta-
             ,                                           tion and perturbation strategies that will be used to explore
             [lens,multiChain,                            path space. By default, the original set by Veach and Guibas
             caustic,manifold]                           is enabled (i.e. everything except the manifold perturba-
             Perturbation                                 tion). It is possible to extend this integrator with additional
                                                         custom perturbations strategies if needed.
-            lambda                   float               Jump size of the manifold perturbation (Default: 50)
+            lambda                   float               Jump size of the manifold perturbation
+                                                         (Default: 50)
 
         Metropolis Light Transport (MLT) is a seminal rendering technique proposed by Veach and Guibas
         [46], which applies the Metropolis-Hastings algorithm to the path-space formulation of light trans-
         port. Please refer to the pssmlt page for a general description of MLT-type algorithms and a list of
         caveats that also apply to this plugin.
+
         Like pssmlt, this integrator explores the space of light paths, searching with preference for those
         that carry a significant amount of energy from an emitter to the sensor. The main difference is that
         PSSMLT does this exploration by piggybacking on another rendering technique and “manipulating”
         the random number stream that drives it, whereas MLT does not use such an indirection: it operates
         directly on the actual light paths.
+
         This means that the algorithm has access to considerably more information about the problem
         to be solved, which allows it to perform a directed exploration of certain classes of light paths. The
         main downside is that the implementation is rather complex, which may make it more susceptible
@@ -78,16 +86,16 @@
     -->
 
     <integrator type="mlt">
-        <integer name="maxDepth" value="-1"/>
-        <integer name="directSamples" value="16"/>
-        <integer name="luminanceSamples" value="100000"/>
-        <boolean name="twoStage" value="false"/>
-        <boolean name="bidirectionalMutation" value="true"/>
-        <boolean name="lensPerturbation" value="true"/>
-        <boolean name="multiChainPerturbation" value="true"/>
-        <boolean name="causticPerturbation" value="true"/>
-        <boolean name="manifoldPerturbation" value="false"/>
-        <float   name="lambda" value="50"/>
+        <integer name="maxDepth"               value="-1"/>
+        <integer name="directSamples"          value="-1"/>
+        <integer name="luminanceSamples"       value="100000"/>
+        <boolean name="twoStage"               value="true"/>
+        <boolean name="bidirectionalMutation"  value="true"/>
+        <boolean name="lensPerturbation"       value="false"/>
+        <boolean name="multiChainPerturbation" value="false"/>
+        <boolean name="causticPerturbation"    value="false"/>
+        <boolean name="manifoldPerturbation"   value="true"/>
+        <float   name="lambda"                 value="50"/>
     </integrator>
 
 </scene>
