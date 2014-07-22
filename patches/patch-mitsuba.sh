@@ -11,8 +11,8 @@ if [ ! -f ${MITSUBADIR}/SConstruct ] ; then
 fi
 
 ### Patch the "mfilm" implementation for Mathematica output.
-
-patch -p1 < ${PATCHDIR}/mfilm_mathematica_fix.patch
+#patch -p1 < ${PATCHDIR}/mfilm_mathematica_fix.patch
+# --> Included in Mitsuba as per 22-07-2014.
 
 ### Add arcf_source emitter.
 
