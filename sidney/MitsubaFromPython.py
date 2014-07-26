@@ -86,5 +86,7 @@ def main():
 
     print(Statistics.getInstance().getStats())
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
+
+print(dir(mitsuba.core))

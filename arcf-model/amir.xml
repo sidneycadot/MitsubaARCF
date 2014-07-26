@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <bsdf type="diffuse" id="detector.outside-bsdf">
+        <!-- NOTE: if we make this fully black, we don't see the scene anymore from inside the detector.
+             TODO: figure out why this is the case. (Possibly a Mitsuba bug.) -->
+        <spectrum name="reflectance" value="1e-20"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="monochromator.outside-bsdf">
+        <spectrum name="reflectance" value="1e-20"/>
+    </bsdf>
+
+    <!--
+    <emitter type="constant">
+        <spectrum name="irradiance" value="0.05"/>
+    </emitter>
+    -->
+
+    <!-- select models -->
+
+    <default name="sample-model"        value="qvd" />  <!-- "spectralon", qvd", or "none" -->
+    <default name="monochromator-model" value="erik"       />  <!-- "hole", "tube", or "erik"     -->
+    <default name="environment-model"   value="full"       />  <!-- "full" or "none"              -->
+
+    <default name="integrator-type"     value="bdpt"       />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper, ... -->
+
+    <default name="detector.fov_diameter" value="0.200"/>
+    <default name="detector.sample_count" value="16"/>
+
+    <!-- Geometry variables -->
+
+    <default name="detector.distance"    value="0.400"  />
+    <default name="detector.motor_angle" value="70.000" />
+
+    <default name="monochromator.irradiance"  value="1e6" />
+    <!--<default name="monochromator.diameter"    value="0.020" />-->
+    <default name="monochromator.diameter"    value="0.0001" />
+    <default name="monochromator.tube_length" value="0.040" />
+    <default name="monochromator.distance"    value="0.600" />
+
+
+    <default name="meris.high_motor_angle"   value="0"   />
+    <default name="meris.middle_motor_angle" value="0"   />
+    <default name="meris.low_motor_angle"    value="+70" />
+
+    <!-- include stuff -->
+
+    <include filename="colors.xml"/>
+    <include filename="axes.xml"/>
+
+    <include filename="integrator-$integrator-type.xml"/>
+
+    <include filename="monochromator-$monochromator-model.xml"/>
+
+    <include filename="sample-$sample-model.xml"/>
+
+    <!-- camera inside the detector housing ; orthographic, looking out through the aperture hole. -->
+
+    <sensor type="orthographic" id="inside detector (ORTHO)">
+
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="0.040" y="0.040" z= "1"/> <!-- 40mm x 40mm -->
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="$detector.sample_count"/>
+        </sampler>
+
+        <film type="mfilm">
+            <integer name="width"            value="400"            />
+            <integer name="height"           value="400"            />
+            <string  name="fileFormat"       value="matlab"         />
+            <integer name="digits"           value="25"             />
+            <string  name="variable"         value="$variable-name" />
+            <string  name="pixelFormat"      value="luminance"      />
+            <boolean name="highQualityEdges" value="false"          />
+            <rfilter type="box"/>
+        </film>
+
+    </sensor>
+
+</scene>

@@ -12,13 +12,19 @@
         <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
+    <!--
+    <emitter type="constant">
+        <spectrum name="irradiance" value="0.05"/>
+    </emitter>
+    -->
+
     <!-- select models -->
 
-    <default name="sample-model"        value="spectralon" />  <!-- "spectralon", qvd", or "none" -->
+    <default name="sample-model"        value="qvd" />  <!-- "spectralon", qvd", or "none" -->
     <default name="monochromator-model" value="erik"       />  <!-- "hole", "tube", or "erik"     -->
-    <default name="environment-model"   value="none"       />  <!-- "full" or "none"              -->
+    <default name="environment-model"   value="full"       />  <!-- "full" or "none"              -->
 
-    <default name="integrator-type"     value="bdpt"       />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper -->
+    <default name="integrator-type"     value="bdpt"       />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper, ... -->
 
     <default name="detector.fov_diameter" value="0.200"/>
     <default name="detector.sample_count" value="16"/>
@@ -26,17 +32,18 @@
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
-    <default name="detector.motor_angle" value="90.000" />
+    <default name="detector.motor_angle" value="70.000" />
 
-    <default name="monochromator.irradiance"  value="1,1,0" />
-    <default name="monochromator.diameter"    value="0.020" />
+    <default name="monochromator.irradiance"  value="1e6,1e6,0" />
+    <!--<default name="monochromator.diameter"    value="0.020" />-->
+    <default name="monochromator.diameter"    value="0.0001" />
     <default name="monochromator.tube_length" value="0.040" />
     <default name="monochromator.distance"    value="0.600" />
 
 
     <default name="meris.high_motor_angle"   value="0"   />
     <default name="meris.middle_motor_angle" value="0"   />
-    <default name="meris.low_motor_angle"    value="+45" />
+    <default name="meris.low_motor_angle"    value="+70" />
 
     <!-- include stuff -->
 
@@ -93,7 +100,6 @@
     </shape>
     -->
 
-    <!--
     <sensor type="perspective" id="overview">
 
         <float name="fov" value="45"/>
@@ -119,6 +125,5 @@
         </film>
 
     </sensor>
-    -->
 
 </scene>

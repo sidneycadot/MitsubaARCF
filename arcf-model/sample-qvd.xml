@@ -1,18 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
+<!-- <?xml version='1.0' encoding='utf-8'?> -->
 
 <scene version="0.5.0">
 
     <!-- sample_under_test -->
 
-    <default name="diffuser.ior"       value="1.4"  />
+    <default name="diffuser.ior"       value="1.45"  />
     <default name="diffuser.diameter"  value="0.15" />
     <default name="diffuser.thickness" value="0.005"/>
+    <!--<default name="diffuser.qvd-alpha" value="0.1"/>-->
     <default name="diffuser.material"  value="Al"/>
 
     <shape type="disk" id="qvd diffuser front surface">
 
         <bsdf type="roughdielectric">
             <float name="intIOR" value="$diffuser.ior" />
+            <float name="alpha" value="$diffuser.qvd-alpha" />
         </bsdf>
 
         <transform name="toWorld">
@@ -30,6 +32,7 @@
 
         <bsdf type="roughconductor">
             <string name="material" value="$diffuser.material"/>
+            <float name="alpha" value="$diffuser.qvd-alpha" />
         </bsdf>
 
         <transform name="toWorld">
@@ -50,6 +53,7 @@
 
         <bsdf type="roughdielectric">
             <float name="intIOR" value="$diffuser.ior" />
+            <float name="alpha" value="$diffuser.qvd-alpha" />
         </bsdf>
 
         <transform name="toWorld">
