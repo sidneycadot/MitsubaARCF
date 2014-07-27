@@ -35,6 +35,7 @@ def makeScene():
 
     pmgr = PluginManager.getInstance()
 
+    # make shapes
     for i in range(100):
         shapeProps = Properties("sphere")
         shapeProps["center"] = Point(i, i, i)
@@ -44,12 +45,14 @@ def makeScene():
 
         scene.addChild(shape)
 
+    # make perspective sensor
     sensorProps = Properties("perspective")
     sensorProps["toWorld"] = Transform.lookAt(Point(0, 0, 10), Point(0, 0, 0), Vector(0, 1, 0))
     sensorProps["fov"] = 45.0
 
     sensor = pmgr.createObject(sensorProps)
 
+    # make film
     filmProps = Properties("ldrfilm")
     filmProps["width"]  = 640
     filmProps["height"] = 480
