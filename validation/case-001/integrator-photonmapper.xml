@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.7. Photon map integrator (photonmapper)
+
+        Parameter              Type             Description
+
+        directSamples          integer          Number of samples used for the direct illumination compo-
+                                                nent (Default: 16)
+        glossySamples          integer          Number of samples used for the indirect illumination com-
+                                                ponent of glossy materials (Default: 32)
+        maxDepth               integer          Specifies the longest path depth in the generated output im-
+                                                age (where -1 corresponds to ∞). A value of 1 will only
+                                                render directly visible light sources. 2 will lead to single-
+                                                bounce (direct-only) illumination, and so on. (Default: -1)
+        globalPhotons          integer          Number of photons that will be collected for the global pho-
+                                                ton map (Default: 250000)
+        causticPhotons         integer          Number of photons that will be collected for the caustic pho-
+                                                ton map (Default: 250000)
+        volumePhotons          integer          Number of photons that will be collected for the volumetric
+                                                photon map (Default: 250000)
+        globalLookupRadius     float            Maximum radius of photon lookups in the global photon
+                                                map (relative to the scene size) (Default: 0.05)
+        causticLookupRadius    float            Maximum radius of photon lookups in the caustic photon
+                                                map (relative to the scene size) (Default: 0.0125)
+        lookupSize             integer          Number of photons that should be fetched in photon map
+                                                queries (Default: 120)
+        granularity            integer          Granularity of photon tracing work units for the purpose of
+                                                parallelization (in # of shot particles) (Default: 0, i.e. decide
+                                                automatically)
+        hideEmitters           boolean          Hide directly visible emitters? See page 149 for details. (De-
+                                                fault: no, i.e. false)
+        rrDepth                integer          Specifies the minimum path depth, after which the imple-
+                                                mentation will start to use the “russian roulette” path termi-
+                                                nation criterion. (Default: 5)
+
+        This plugin implements the two-pass photon mapping algorithm as proposed by Jensen [21]. The
+        implementation partitions the illumination into three different classes (diffuse, caustic, and
+        volumetric), and builds a separate photon map for each class.
+
+        Following this, a standard recursive ray tracing pass is started which performs kernel density
+        estimation using these photon maps. Since the photon maps are visualized directly, the result will
+        appear "blotchy" (Figure 36) unless an extremely large number of photons is used. A simple remedy
+        is to combine the photon mapper with an irradiance cache, which performs final gathering to remove
+        these artifacts. Due to its caching nature, the rendering process will be faster as well.
+
+            <integrator type="irrcache">
+                <integrator type="photonmapper"/>
+            </integrator>
+
+        When the scene contains participating media, the Beam Radiance Estimate [20] by Jarosz et al. is
+        used to estimate the illumination due to volumetric scattering.
+
+        Remarks:
+
+            * Currently, only homogeneous participating media are supported by this implementation
+    -->
+
+    <integrator type="photonmapper">
+        <integer name="directSamples"       value="16"/>         <!-- spotlight invisible if -1 -->
+        <integer name="glossySamples"       value="32"/>
+        <integer name="maxDepth"            value="-1"/>
+        <integer name="globalPhotons"       value="250000"/>
+        <integer name="causticPhotons"      value="250000"/>
+        <integer name="volumePhotons"       value="250000"/>
+        <float   name="globalLookupRadius"  value="0.05"/>
+        <float   name="causticLookupRadius" value="0.0125"/>
+        <integer name="lookupSize"          value="120"/>
+        <integer name="granularity"         value="0"/>
+        <boolean name="hideEmitters"        value="false"/>
+        <integer name="rrDepth"             value="5"/>
+    </integrator>
+
+</scene>

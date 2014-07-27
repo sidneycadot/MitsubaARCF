@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.13. Adjoint particle tracer (ptracer)
+
+        Parameter              Type              Description
+        maxDepth               integer           Specifies the longest path depth in the generated output im-
+                                                    age (where -1 corresponds to ∞). A value of 1 will only
+                                                    render directly visible light sources. 2 will lead to single-
+                                                    bounce (direct-only) illumination, and so on. (Default: -1)
+        rrDepth                integer           Specifies the minimum path depth, after which the imple-
+                                                    mentation will start to use the “russian roulette” path termi-
+                                                    nation criterion. (Default: 5)
+        granularity            integer           Specifies the work unit granularity used to parallize the the
+                                                    particle tracing task. This should be set high enough so
+                                                    that accumulating partially exposed images (and potentially
+                                                    sending them over the network) is not the bottleneck.
+                                                    (Default: 200K particles per work unit, i.e. 200000)
+        bruteForce             boolean           If set to true, the integrator does not attempt to create con-
+                                                    nections to the sensor and purely relies on hitting it via ray
+                                                    tracing. This is mainly intended for debugging purposes.
+                                                    (Default: false)
+
+        This plugin implements a simple adjoint particle tracer. It does essentially the exact opposite of
+        the simple volumetric path tracer (volpath_simple): instead of tracing rays from the sensor and
+        attempting to connect them to the light source, this integrator shoots particles from the light source
+        and attempts to connect them to the sensor.
+        Usually, this is a relatively useless rendering technique due to its high variance, but there are some
+        cases where it excels. In particular, it does a good job on scenes where most scattering events are
+        directly visible to the camera.
+        When rendering with a finite-aperture sensor (e.g. thinlens) this integrator is able to intersect
+        the actual aperture, which allows it to handle certain caustic paths that would otherwise not be visible.
+        It also supports a specialized “brute force” mode, where the integrator does not attempt to create
+        connections to the sensor and purely relies on hitting it via ray tracing. This is one of the worst con-
+        ceivable rendering and not recommended for any applications. It is mainly included for debugging
+        purposes.
+        The number of traced particles is given by the number of “samples per pixel” of the sample generator
+        times the pixel count of the output image. For instance, 16 samples per pixel on a 512×512 image will
+        cause 4M particles to be generated.
+
+        Remarks:
+            • This integrator does not currently work with subsurface scattering models.
+
+    -->
+
+    <integrator type="ptracer">
+        <integer name="maxDepth"    value="-1"/>
+        <integer name="rrDepth"     value="5"/>
+        <integer name="granularity" value="200000"/>
+        <boolean name="bruteForce"  value="false"/>
+    </integrator>
+
+</scene>

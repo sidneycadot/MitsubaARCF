@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <bsdf type="diffuse" id="detector.outside-bsdf">
+        <spectrum name="reflectance" value="0"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="monochromator.outside-bsdf">
+        <spectrum name="reflectance" value="0"/>
+    </bsdf>
+
+    <!-- select models -->
+
+    <default name="integrator-type" value="bdpt"   />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper", ... -->
+    <default name="monochromator-type" value="erik"   />  <!-- "erik" or "spotlight", ... -->
+
+    <default name="detector.sample_count" value="256"/>
+
+    <!-- Geometry variables -->
+
+    <default name="detector.distance"    value="0.400"  />
+    <default name="detector.motor_angle" value="90.000" />
+
+    <default name="monochromator.irradiance"  value="1,1,0" />
+    <default name="monochromator.diameter"    value="0.020" />
+    <default name="monochromator.tube_length" value="0.008" />
+    <default name="monochromator.distance"    value="0.600" />
+
+
+    <default name="meris.high_motor_angle"   value="0"   />
+    <default name="meris.middle_motor_angle" value="0"   />
+    <default name="meris.low_motor_angle"    value="45" />
+
+    <!-- include stuff -->
+
+    <include filename="integrator-$integrator-type.xml"/>
+    <include filename="monochromator-$monochromator-type.xml"/>
+
+
+    <!-- spectralon diffuser model -->
+
+    <shape type="cube" id="spectralon diffuser">
+
+        <bsdf type="diffuse">
+            <!-- we model spectralon as a perfect diffuser -->
+            <spectrum name="reflectance" value="1"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <translate z="-1" />
+            <scale value="0.5"/>
+            <scale x="0.100" y="0.060" z="0.005"/> <!-- 100 x 60 mm x 5mm -->
+            <!-- sample transformations -->
+            <rotate z="1" angle="$meris.high_motor_angle"   />
+            <rotate x="1" angle="$meris.middle_motor_angle" />
+            <rotate y="1" angle="$meris.low_motor_angle"    />
+        </transform>
+
+    </shape>
+
+    <include filename="detector.xml"/>
+
+</scene>

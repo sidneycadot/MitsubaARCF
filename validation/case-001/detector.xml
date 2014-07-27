@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!-- (-z) side of detector; outer box (outside) -->
+
+    <shape type="rectangle">
+
+        <bsdf type="twosided">
+            <bsdf type="diffuse">
+                <spectrum name="reflectance" value="0"/>
+            </bsdf>
+            <ref id="detector.outside-bsdf"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="0.020" y="0.020" z= "1"/> <!-- 20mm x 20mm -->
+            <translate z="-0.040 "/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+
+    <!-- camera inside the detector housing ; orthographic, looking out through the aperture hole. -->
+
+    <sensor type="orthographic" id="inside detector (ORTHO)">
+
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="0.020" y="0.020" z= "1"/> <!-- 20mm x 20mm -->
+            <translate z="-0.038"/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="$detector.sample_count"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <integer name="width"            value="256"     />
+            <integer name="height"           value="256"     />
+            <string  name="fileFormat"       value="openexr" />
+            <string  name="pixelFormat"      value="rgb"     />
+            <string  name="componentFormat"  value="float32" />
+            <boolean name="attachLog"        value="true"    />
+            <boolean name="banner"           value="false"   />
+            <boolean name="highQualityEdges" value="false"   />
+            <rfilter type="gaussian"/>
+        </film>
+
+    </sensor>
+
+    <!-- (-x) side of detector -->
+
+    <shape type="rectangle">
+
+        <ref id="detector.outside-bsdf"/>
+
+        <transform name="toWorld">
+            <rotate y="1" angle="-90"/>
+            <scale x="0.01" y="0.01" z="0.021"/>
+            <translate x="-0.01" z="-0.019"/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+
+    <!-- (+x) side of detector -->
+
+    <shape type="rectangle">
+
+        <ref id="detector.outside-bsdf"/>
+
+        <transform name="toWorld">
+            <rotate y="1" angle="+90"/>
+            <scale x="0.01" y="0.01" z="0.021"/>
+            <translate x="+0.01" z="-0.019"/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+
+    <!-- (-y) side of detector -->
+
+    <shape type="rectangle">
+
+        <ref id="detector.outside-bsdf"/>
+
+        <transform name="toWorld">
+            <rotate x="1" angle="+90"/>
+            <scale x="0.01" y="0.01" z="0.021"/>
+            <translate y="-0.01" z="-0.019"/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+
+    <!-- (+y) side of detector -->
+
+    <shape type="rectangle">
+
+        <ref id="detector.outside-bsdf"/>
+
+        <transform name="toWorld">
+            <rotate x="1" angle="-90"/>
+            <scale x="0.01" y="0.01" z="0.021"/>
+            <translate y="+0.01" z="-0.019"/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+    </shape>
+
+</scene>
