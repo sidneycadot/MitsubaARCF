@@ -11,5 +11,4 @@ Running a radiance simulation
 
 The "bdpt" integrator works well for this case.
 
-rm -f arcf.m arcf-radiance.m && time mitsuba -Dsample-model=none -Ddetector.motor_angle=180 arcf.xml && mv arcf.m arcf-radiance.m && ./extract_power.py arcf-irradiance.m
-
+rm -f arcf.m arcf-radiance.m && time mitsuba -Dsample-model=none -Ddetector.motor_angle=180 arcf.xml && mv arcf.m arcf-radiance.m && ./extract_power.py arcf-radiance.m

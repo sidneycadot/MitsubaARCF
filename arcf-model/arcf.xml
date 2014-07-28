@@ -5,11 +5,11 @@
     <bsdf type="diffuse" id="detector.outside-bsdf">
         <!-- NOTE: if we make this fully black, we don't see the scene anymore from inside the detector.
              TODO: figure out why this is the case. (Possibly a Mitsuba bug.) -->
-        <spectrum name="reflectance" value="0,1,0"/>
+        <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
     <bsdf type="diffuse" id="monochromator.outside-bsdf">
-        <spectrum name="reflectance" value="1,0,0"/>
+        <spectrum name="reflectance" value="1e-20"/>
     </bsdf>
 
     <!--
@@ -20,21 +20,21 @@
 
     <!-- select models -->
 
-    <default name="sample-model"        value="spectralon" />  <!-- "spectralon", qvd", or "none" -->
+    <default name="sample-model"        value="none" />  <!-- "spectralon", qvd", or "none" -->
     <default name="monochromator-model" value="erik" />  <!-- "hole", "tube", or "erik"     -->
-    <default name="environment-model"   value="none" />  <!-- "full" or "none"              -->
+    <default name="environment-model"   value="full" />  <!-- "full" or "none"              -->
 
-    <default name="integrator-type"     value="bdpt"   />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper", ... -->
+    <default name="integrator-type"     value="bdpt" />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper", ... -->
 
-    <default name="detector.fov_diameter" value="2"/>
+    <default name="detector.fov_diameter" value="2.0"/> <!-- degrees -->
     <default name="detector.sample_count" value="512"/>
 
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
-    <default name="detector.motor_angle" value="90.000" />
+    <default name="detector.motor_angle" value="180.000" />
 
-    <default name="monochromator.irradiance"  value="1" />
+    <default name="monochromator.irradiance"  value="1,1,0" />
     <default name="monochromator.diameter"    value="0.050" />
     <default name="monochromator.tube_length" value="0.100" />
     <default name="monochromator.distance"    value="0.600" />
@@ -70,7 +70,6 @@
     <include filename="detector.xml"/>
 
     <!-- monochromator beam inhomogeneity mask -->
-    <!--
     <shape type="rectangle">
 
         <bsdf type="mask">
@@ -78,7 +77,7 @@
             <texture name="opacity" type="bitmap">
                 <string name="filename" value="testmask-negated.png"/>
                 <string name="wrapMode" value="zero"/>
-                <!- uscale == -1. uoffset=+1 ->
+                <!-- uscale == -1. uoffset=+1 -->
                 <float name="uscale" value="+1"/>
                 <float name="vscale" value="-1"/>
                 <float name="uoffset" value="0"/>
@@ -96,9 +95,7 @@
             <translate z="0.55"/>
         </transform>
     </shape>
-    -->
 
-    <!--
     <sensor type="perspective" id="overview">
 
         <float name="fov" value="45"/>
@@ -124,6 +121,5 @@
         </film>
 
     </sensor>
-    -->
 
 </scene>
