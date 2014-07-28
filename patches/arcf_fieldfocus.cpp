@@ -21,6 +21,8 @@
 #include <mitsuba/hw/basicshader.h>
 #include <mitsuba/core/warp.h>
 
+#define DeltaEpsilon (1e-6)
+
 using namespace mitsuba;
 
 namespace arcf
