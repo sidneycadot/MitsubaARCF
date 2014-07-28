@@ -4,11 +4,9 @@
 
     <!-- monochromator light source (Erik's area_source) -->
 
-    <shape type="disk" id="monochromator front (emitter)">
+    <emitter type="arcf_collimated_disk" id="monochromator front (emitter)">
 
-        <emitter type="arcf_source">
-            <spectrum name="irradiance" value="$monochromator.irradiance" />
-        </emitter>
+        <spectrum name="irradiance" value="$monochromator.irradiance" />
 
         <transform name="toWorld">
             <scale x="0.5" y="0.5" z="1"/>
@@ -18,7 +16,7 @@
             <translate z="$monochromator.distance"/>
         </transform>
 
-    </shape>
+    </emitter>
 
     <shape type="cylinder" id="monochromator cylinder">
 

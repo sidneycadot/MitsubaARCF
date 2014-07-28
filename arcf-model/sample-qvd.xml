@@ -7,7 +7,8 @@
     <default name="diffuser.ior"       value="1.45"  />
     <default name="diffuser.diameter"  value="0.15" />
     <default name="diffuser.thickness" value="0.005"/>
-    <!--<default name="diffuser.qvd-alpha" value="0.1"/>-->
+    <default name="diffuser.qvd-alpha"  value="0.114"/>
+
     <default name="diffuser.material"  value="Al"/>
 
     <shape type="disk" id="qvd diffuser front surface">

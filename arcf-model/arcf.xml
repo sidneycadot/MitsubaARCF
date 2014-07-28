@@ -5,45 +5,44 @@
     <bsdf type="diffuse" id="detector.outside-bsdf">
         <!-- NOTE: if we make this fully black, we don't see the scene anymore from inside the detector.
              TODO: figure out why this is the case. (Possibly a Mitsuba bug.) -->
-        <spectrum name="reflectance" value="1e-20"/>
+        <spectrum name="reflectance" value="0,1,0"/>
     </bsdf>
 
     <bsdf type="diffuse" id="monochromator.outside-bsdf">
-        <spectrum name="reflectance" value="1e-20"/>
+        <spectrum name="reflectance" value="1,0,0"/>
     </bsdf>
 
     <!--
     <emitter type="constant">
-        <spectrum name="irradiance" value="0.05"/>
+        <spectrum name="irradiance" value="1e-9"/>
     </emitter>
     -->
 
     <!-- select models -->
 
-    <default name="sample-model"        value="qvd" />  <!-- "spectralon", qvd", or "none" -->
-    <default name="monochromator-model" value="erik"       />  <!-- "hole", "tube", or "erik"     -->
-    <default name="environment-model"   value="full"       />  <!-- "full" or "none"              -->
+    <default name="sample-model"        value="spectralon" />  <!-- "spectralon", qvd", or "none" -->
+    <default name="monochromator-model" value="erik" />  <!-- "hole", "tube", or "erik"     -->
+    <default name="environment-model"   value="none" />  <!-- "full" or "none"              -->
 
-    <default name="integrator-type"     value="bdpt"       />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper, ... -->
+    <default name="integrator-type"     value="bdpt"   />  <!-- "direct", "path", "volpath_simple", "volpath", "bdpt", "photonmapper", ... -->
 
-    <default name="detector.fov_diameter" value="0.200"/>
-    <default name="detector.sample_count" value="16"/>
+    <default name="detector.fov_diameter" value="2"/>
+    <default name="detector.sample_count" value="512"/>
 
     <!-- Geometry variables -->
 
     <default name="detector.distance"    value="0.400"  />
-    <default name="detector.motor_angle" value="70.000" />
+    <default name="detector.motor_angle" value="90.000" />
 
-    <default name="monochromator.irradiance"  value="1e6,1e6,0" />
-    <!--<default name="monochromator.diameter"    value="0.020" />-->
-    <default name="monochromator.diameter"    value="0.0001" />
-    <default name="monochromator.tube_length" value="0.040" />
+    <default name="monochromator.irradiance"  value="1" />
+    <default name="monochromator.diameter"    value="0.050" />
+    <default name="monochromator.tube_length" value="0.100" />
     <default name="monochromator.distance"    value="0.600" />
 
 
     <default name="meris.high_motor_angle"   value="0"   />
     <default name="meris.middle_motor_angle" value="0"   />
-    <default name="meris.low_motor_angle"    value="+70" />
+    <default name="meris.low_motor_angle"    value="45" />
 
     <!-- include stuff -->
 
@@ -52,18 +51,17 @@
     <include filename="environment-$environment-model.xml"/>
 
     <include filename="integrator-$integrator-type.xml"/>
-
     <include filename="monochromator-$monochromator-model.xml"/>
 
     <!--
     <emitter type="spot">
-        <spectrum name="intensity" value = "1,1,0" />
-        <float name="cutoffAngle" value="0.95484125387218869786251529"/>
-        <float name="beamWidth" value="0.95484125387218869786251529"/>
+        <spectrum name="intensity" value = "1" />
+        <float name="cutoffAngle" value="0.1"/>
+        <float name="beamWidth" value="0.1"/>
         <transform name="toWorld">
             <!- monochromator transform ->
             <rotate y="1" angle="180"/>
-            <translate z="$monochromator.distance"/>
+            <translate z="10.0"/>
         </transform>
     </emitter>
     -->
@@ -100,6 +98,7 @@
     </shape>
     -->
 
+    <!--
     <sensor type="perspective" id="overview">
 
         <float name="fov" value="45"/>
@@ -109,7 +108,7 @@
         </transform>
 
         <sampler type="independent">
-            <integer name="sampleCount" value="8"/>
+            <integer name="sampleCount" value="16"/>
         </sampler>
 
         <film type="hdrfilm">
@@ -125,5 +124,6 @@
         </film>
 
     </sensor>
+    -->
 
 </scene>

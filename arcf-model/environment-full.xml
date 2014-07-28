@@ -5,7 +5,7 @@
     <!-- environment light -->
 
     <emitter type="constant">
-        <spectrum name="radiance" value="0.01"/>
+        <spectrum name="radiance" value="1"/>
     </emitter>
 
     <!-- floor -->

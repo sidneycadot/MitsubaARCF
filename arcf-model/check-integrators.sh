@@ -3,9 +3,9 @@
 rm -rf integrators
 mkdir integrators
 
-ALL12="direct path volpath_simple volpath bdpt photonmapper ppm sppm pssmlt mlt erpt ptracer"
+INTEGRATORS="direct path volpath_simple volpath bdpt photonmapper ppm sppm pssmlt mlt erpt ptracer"
 
-for integrator in $ALL12
+for integrator in $INTEGRATORS
 do
     if [ $integrator = erpt ] ; then
         samplecount=4
@@ -16,4 +16,4 @@ do
     mv arcf.exr integrators/$integrator.exr
 done
 
-montage -label %t `echo $ALL12 | tr ' ' '\n' | sed 's/\(.*\)/integrators\/\1.exr/'` montage.png
+montage -label %t `echo $INTEGRATORS | tr ' ' '\n' | sed 's/\(.*\)/integrators\/\1.exr/'` montage.png

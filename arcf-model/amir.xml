@@ -9,7 +9,7 @@
     </bsdf>
 
     <bsdf type="diffuse" id="monochromator.outside-bsdf">
-        <spectrum name="reflectance" value="1e-20"/>
+        <spectrum name="reflectance" value="1,0,0"/>
     </bsdf>
 
     <!--
@@ -36,8 +36,8 @@
 
     <default name="monochromator.irradiance"  value="1e6" />
     <!--<default name="monochromator.diameter"    value="0.020" />-->
-    <default name="monochromator.diameter"    value="0.0001" />
-    <default name="monochromator.tube_length" value="0.040" />
+    <default name="monochromator.diameter"    value="0.02" />
+    <default name="monochromator.tube_length" value="0.20" />
     <default name="monochromator.distance"    value="0.600" />
 
 
