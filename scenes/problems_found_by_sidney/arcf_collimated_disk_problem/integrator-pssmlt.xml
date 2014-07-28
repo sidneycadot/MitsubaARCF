@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.10. Primary Sample Space Metropolis Light Transport (pssmlt)
+
+        Parameter              Type              Description
+        bidirectional          boolean           PSSMLT works in conjunction with another rendering tech-
+                                                    nique that is endowed with Markov Chain-based sample
+                                                    generation. Two choices are available (Default: true):
+                                                        * true: Operate on top of a fully-fleged bidirectional
+                                                        path tracer with multiple importance sampling.
+                                                        * false: Rely on a unidirectional volumetric path
+                                                        tracer (i.e. volpath)
+        maxDepth               integer           Specifies the longest path depth in the generated output im-
+                                                    age (where -1 corresponds to ∞). A value of 1 will only
+                                                    render directly visible light sources. 2 will lead to single-
+                                                    bounce (direct-only) illumination, and so on. (Default: -1)
+        directSamples          integer           By default, this plugin renders the direct illumination com-
+                                                    ponent separately using an optimized direct illumination
+                                                    sampling strategy that uses low-discrepancy number se-
+                                                    quences for superior performance (in other words, it is not
+                                                    rendered by PSSMLT). This parameter specifies the number
+                                                    of samples allocated to that method. To force PSSMLT to be
+                                                    responsible for the direct illumination component as well,
+                                                    set this parameter to -1. (Default: 16)
+        rrDepth                integer           Specifies the minimum path depth, after which the imple-
+                                                    mentation will start to use the "russian roulette" path termi-
+                                                    nation criterion. (Default: 5)
+        luminanceSamples       integer           MLT-type algorithms create output images that are only rel-
+                                                    ative. The algorithm can e.g. determine that a certain pixel
+                                                    is approximately twice as bright as another one, but the ab-
+                                                    solute scale is unknown. To recover it, this plugin computes
+                                                    the average luminance arriving at the sensor by generating
+                                                    a number of samples. (Default: 100000 samples)
+        twoStage               boolean           Use two-stage MLT? See below for details. (Default: false)
+        pLarge                 float             Rate at which the implementation tries to replace the cur-
+                                                    rent path with a completely new one. Usually, there is little
+                                                    need to change this. (Default: 0.3)
+
+        Primary Sample Space Metropolis Light Transport (PSSMLT) is a rendering technique developed
+        by Kelemen et al. [26] which is based on Markov Chain Monte Carlo (MCMC) integration. In con-
+        trast to simple methods like path tracing that render images by performing a naïve and memoryless
+        random search for light paths, PSSMLT actively searches for relevant light paths (as is the case for
+        other MCMC methods). Once such a path is found, the algorithm tries to explore neighboring paths
+        to amortize the cost of the search. This can significantly improve the convergence rate of difficult
+        input. Scenes that were already relatively easy to render usually don’t benefit much from PSSMLT,
+        since the MCMC data management causes additional computational overheads.
+
+        An interesting aspect of PSSMLT is that it performs this exploration of light paths by perturbing the
+        "random numbers" that were initially used to construct the path. Subsequent regeneration of the path
+        using the perturbed numbers yields a new path in a slightly different configuration, and this process
+        repeats over and over again. The path regeneration step is fairly general and this is what makes the
+        method powerful: in particular, it is possible to use PSSMLT as a layer on top of an existing method
+        to create a new "metropolized" version of the rendering algorithm that is enhanced with a certain
+        degree of adaptiveness as described earlier.
+
+        The PSSMLT implementation in Mitsuba can operate on top of either a simple unidirectional vol-
+        umetric path tracer or a fully-fledged bidirectional path tracer with multiple importance sampling,
+        and this choice is controlled by the bidirectional flag. The unidirectional path tracer is generally
+        much faster, but it produces lower-quality samples. Depending on the input, either may be preferable.
+
+        Caveats: There are a few general caveats about MLT-type algorithms that are good to know. The
+        first one is that they only render "relative" output images, meaning that there is a missing scale factor
+        that must be applied to obtain proper scene radiance values. The implementation in Mitsuba relies
+        on an additional Monte Carlo estimator to recover this scale factor. By default, it uses 100K samples
+        (controlled by the luminanceSamples parameter), which should be adequate for most applications.
+
+        The second caveat is that the amount of computational expense associated with a pixel in the output
+        image is roughly proportional to its intensity. This means that when a bright object (e.g. the sun) is
+        visible in a rendering, most resources are committed to rendering the sun disk at the cost of increased
+        variance everywhere else. Since this is usually not desired, the twoStage parameter can be used to
+        enable Two-stage MLT in this case.
+
+        In this mode of operation, the renderer first creates a low-resolution version of the output image
+        to determine the approximate distribution of luminance values. The second stage then performs the
+        actual rendering, while using the previously collected information to ensure that the amount of time
+        spent rendering each pixel is uniform.
+
+        The third caveat is that, while PSMLT can work with scenes that are extremely difficult for other
+        methods to handle, it is not particularly efficient when rendering simple things such as direct illumi-
+        nation (which is more easily handled by a brute-force type algorithm). By default, the implementation
+        in Mitsuba therefore delegates this to such a method (with the desired quality being controlled by the
+        directSamples parameter). In very rare cases when direct illumination paths are very difficult to
+        find, it is preferable to disable this separation so that PSSMLT is responsible for everything. This can
+        be accomplished by setting directSamples=-1.
+
+    -->
+
+    <integrator type="pssmlt">
+        <boolean name="bidirectional"    value="true"/>
+        <integer name="maxDepth"         value="-1"/>
+        <integer name="directSamples"    value="-1"/>
+        <integer name="rrDepth"          value="5"/>
+        <integer name="luminanceSamples" value="100000"/>
+        <boolean name="twoStage"         value="false"/>
+        <float   name="pLarge"           value="0.3"/>
+    </integrator>
+
+</scene>

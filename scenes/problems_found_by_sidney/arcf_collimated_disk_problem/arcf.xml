@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!-- integrator -->
+
+    <default name="integrator-type" value="bdpt" />
+
+    <include filename="integrator-$integrator-type.xml"/>
+
+    <!-- monochromator light source (Erik's arcf_collimated_disk) -->
+
+    <default name="monochromator.irradiance"  value="1,1,0" />
+    <default name="monochromator.diameter"    value="0.050" />
+    <default name="monochromator.distance"    value="0.600" />
+
+    <emitter type="arcf_collimated_disk" id="monochromator front (emitter)">
+
+        <spectrum name="irradiance" value="$monochromator.irradiance" />
+
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="$monochromator.diameter" y="$monochromator.diameter" z="1"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </emitter>
+
+    <!-- detector -->
+
+    <default name="detector.distance"    value="0.400"  />
+    <default name="detector.motor_angle" value="180.000" />
+    <default name="detector.sample_count" value="512"/>
+
+    <sensor type="orthographic" id="inside detector (ORTHO)">
+
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="0.020" y="0.020" z= "1"/> <!-- 20mm x 20mm -->
+            <translate z="-0.038"/>
+            <!-- detector transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$detector.distance"/>
+            <rotate y="1" angle="$detector.motor_angle"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="$detector.sample_count"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <integer name="width"            value="256"     />
+            <integer name="height"           value="256"     />
+            <string  name="fileFormat"       value="openexr" />
+            <string  name="pixelFormat"      value="rgb"     />
+            <string  name="componentFormat"  value="float32" />
+            <boolean name="attachLog"        value="true"    />
+            <boolean name="banner"           value="false"   />
+            <boolean name="highQualityEdges" value="false"   />
+            <rfilter type="box"/>
+        </film>
+
+        <!--
+        <film type="mfilm">
+            <integer name="width"            value="256"         />
+            <integer name="height"           value="256"         />
+            <string  name="fileFormat"       value="mathematica" />
+            <integer name="digits"           value="25"          />
+            <string  name="variable"         value="detector"    />
+            <string  name="pixelFormat"      value="luminance"   />
+            <boolean name="highQualityEdges" value="false"       />
+            <rfilter type="box"/>
+        </film>
+        -->
+
+    </sensor>
+
+</scene>

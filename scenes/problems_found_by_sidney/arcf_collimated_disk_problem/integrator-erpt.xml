@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.12. Energy redistribution path tracing (erpt)
+
+        Parameter                 Type                 Description
+        maxDepth                  integer              Specifies the longest path depth in the generated output im-
+                                                        age (where -1 corresponds to ∞). A value of 1 will only
+                                                        render directly visible light sources. 2 will lead to single-
+                                                        bounce (direct-only) illumination, and so on. (Default: -1)
+        numChains                 float                On average, how many Markov Chains should be started
+                                                        per pixel?
+                                                        (Default: 1)
+        maxChains                 float                How many Markov Chains should be started at most (per
+                                                        pixel)
+                                                        (Default: 0, i.e. this feature is not used)
+        chainLength               integer              Specifies the number of perturbation steps that are executed
+                                                        per Markov Chain
+                                                        (Default: 1).
+        directSamples             integer              By default, the implementation renders direct illumina-
+                                                        tion component separately using the direct plugin, which
+                                                        uses low-discrepancy number sequences for superior per-
+                                                        formance (in other words, it is not handled by ERPT). This
+                                                        parameter specifies the number of samples allocated to that
+                                                        method. To force MLT to be responsible for the direct illu-
+                                                        mination component as well, set this to -1. (Default: 16)
+        [lens,multiChain, boolean                      These parameters can be used to pick the individual pertur-
+        caustic,manifold]                               bation strategies that will be used to explore path space. By
+        Perturbation                                    default, the original set by Veach and Guibas is enabled (i.e.
+                                                        everything except the manifold perturbation).
+        lambda                    float                Jump size of the manifold perturbation
+                                                       (Default: 50)
+
+
+        Energy Redistribution Path Tracing (ERPT) by Cline et al. [5] combines Path Tracing with the
+        perturbation strategies of Metropolis Light Transport.
+        An initial set of seed paths is generated using a standard bidirectional path tracer, and for each one,
+        a MLT-style Markov Chain is subsequently started and executed for some number of steps. This has
+        the effect of redistributing the energy of the individual samples over a larger area, hence the name of
+        this method.
+
+        This is often a good choice when a (bidirectional) path tracer produces mostly reasonable
+        results except that it finds certain important types of light paths too rarely. ERPT can
+        then explore all of the neighboring paths as well, to prevent the original sample from
+        showing up as a "bright pixel" in the output image.
+
+        This plugin shares all the perturbation strategies of the mlt plugin, and the same rules for selecting
+        them apply. In contrast to the original paper by Cline et al., the Mitsuba implementation uses a
+        bidirectional (rather than an unidirectional) bidirectional path tracer to create seed paths.
+        Also, since they add bias to the output, this plugin does not use the image post-processing filters
+        proposed by the authors.
+
+        The mechanism for selecting Markov Chain seed paths deserves an explanation: when commencing work
+        on a pixel in the output image, the integrator first creates a pool of seed path candidates. The
+        size of this pool is given by the samplesPerPixel parameter of the sample generator. This should
+        be large enough so that the integrator has a representative set of light paths to work with.
+
+        Subsequently, one or more of these candidates are chosen (determined by numChains and
+        maxChains parameter). For each one, a Markov Chain is created that has an initial
+        configuration matching the seed path. It is simulated for chainLength iterations,
+        and each intermediate state is recorded in the output image.
+
+    -->
+
+    <integrator type="erpt">
+        <integer name="maxDepth"               value="-1"/>
+        <float   name="numChains"              value="1"/>
+        <integer name="maxChains"              value="0"/>
+        <integer name="chainLength"            value="1"/>
+        <integer name="directSamples"          value="-1"/>
+        <boolean name="lensPerturbation"       value="false"/>
+        <boolean name="multiChainPerturbation" value="false"/>
+        <boolean name="causticPerturbation"    value="false"/>
+        <boolean name="manifoldPerturbation"   value="true"/>
+        <float   name="lambda"                 value="50"/>
+    </integrator>
+
+</scene>

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.8. Progressive photon mapping integrator (ppm)
+
+        Parameter               Type                Description
+
+        maxDepth                integer             Specifies the longest path depth in the generated output im-
+                                                    age (where -1 corresponds to ∞). A value of 1 will only
+                                                    render directly visible light sources. 2 will lead to single-
+                                                    bounce (direct-only) illumination, and so on. (Default: -1)
+        photonCount             integer             Number of photons to be shot per iteration (Default:
+                                                    250000)
+        initialRadius           float               Initial radius of gather points in world space units. (Default:
+                                                    0, i.e. decide automatically)
+        alpha                   float               Radius reduction parameter alpha from the paper (Default: 0.7)
+        granularity             integer             Granularity of photon tracing work units for the purpose of
+                                                    parallelization (in # of shot particles) (Default: 0, i.e. decide
+                                                    automatically)
+        rrDepth                 integer             Specifies the minimum path depth, after which the imple-
+                                                    mentation will start to use the “russian roulette” path termi-
+                                                    nation criterion. (Default: 5)
+        maxPasses               integer             Maximum number of passes to render (where -1 corre-
+                                                    sponds to rendering until stopped manually). (Default: -1)
+
+        This plugin implements the progressive photon mapping algorithm by Hachisuka et al. [14]. Pro-
+        gressive photon mapping is a variant of photon mapping that alternates between photon shooting and
+        gathering passes that involve a relatively small (e.g. 250K) numbers of photons that are subsequently
+        discarded.
+        This is done in a way such that the variance and bias of the resulting output vanish as the number of
+        passes tends to infinity. The progressive nature of this method enables renderings with an effectively
+        arbitrary number of photons without exhausting the available system memory.
+        The desired sample count specified in the sample generator configuration determines how many
+        photon query points are created per pixel. It should not be set too high, since the rendering time is
+        approximately proportional to this number. For good results, use between 2-4 samples along with the
+        ldsampler. Once started, the rendering process continues indefinitely until it is manually stopped.
+
+        Remarks:
+            * Due to the data dependencies of this algorithm, the parallelization is limited to to the local machine
+                (i.e. cluster-wide renderings are not implemented)
+            * This integrator does not handle participating media
+            * This integrator does not currently work with subsurface scattering models.
+    -->
+
+    <integrator type="ppm">
+        <integer name="maxDepth"      value="-1"/>
+        <integer name="photonCount"   value="5000"/>
+        <float   name="initialRadius" value="0"/>
+        <float   name="alpha"         value="0.7"/>
+        <integer name="granularity"   value="0"/>
+        <integer name="rrDepth"       value="5"/>
+        <integer name="maxPasses"     value="5"/>
+    </integrator>
+
+</scene>

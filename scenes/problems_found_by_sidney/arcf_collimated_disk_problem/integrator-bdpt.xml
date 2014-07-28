@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!--
+
+        8.10.6. Bidirectional path tracer (bdpt)
+
+            Parameter                 Type                Description
+
+            maxDepth                  integer             Specifies the longest path depth in the generated output im-
+                                                            age (where -1 corresponds to ∞). A value of 1 will only
+                                                            render directly visible light sources. 2 will lead to single-
+                                                            bounce (direct-only) illumination, and so on. (Default: -1)
+            lightImage                boolean             Include sampling strategies that connect paths traced from
+                                                            emitters directly to the camera? (i.e. what ptracer does)
+                                                            This improves the effectiveness of bidirectional path tracing
+                                                            but severely increases the local and remote communication
+                                                            overhead, since large light images must be transferred be-
+                                                            tween threads or over the network. See the text below for
+                                                            a more detailed explanation. (Default: include these strate-
+                                                            gies, i.e. true)
+            sampleDirect              boolean             Enable direct sampling strategies? This is a generalization
+                                                            of direct illumination sampling that works with both emit-
+                                                            ters and sensors. Usually a good idea. (Default: use direct
+                                                            sampling, i.e. true)
+            rrDepth                   integer             Specifies the minimum path depth, after which the imple-
+                                                            mentation will start to use the “russian roulette” path termi-
+                                                            nation criterion. (Default: 5)
+
+
+        This plugin implements a bidirectional path tracer (short: BDPT) with support for multiple importance
+            sampling, as proposed by Veach and Guibas [45].
+
+        A bidirectional path tracer computes radiance estimates by starting two separate random walks
+            from an emitter and a sensor. The resulting subpaths are connected at every possible interaction
+            vertex, creating a large number of complete paths of different lengths. These paths are then used to
+            estimate the amount of radiance that is transferred from the emitter to a pixel on the sensor.
+            Generally, some of the created paths will be undesirable, since they lead to high-variance radiance
+            estimates. To alleviate this situation, BDPT makes use of multiple importance sampling which, roughly
+            speaking, weights paths based on their predicted utility.
+            The bidirectional path tracer in Mitsuba is a complete implementation of the technique that han-
+            dles all sampling strategies, including those that involve direct interactions with the sensor. For this
+            purpose, finite-aperture sensors are explicitly represented by surfaces in the scene so that they can be
+            intersected by random walks started at emitters.
+            Bidirectional path tracing is a relatively “heavy” rendering technique—for the same number of
+            samples per pixel, it is easily 3-4 times slower than regular path tracing. However, it usually makes
+            up for this by producing considerably lower-variance radiance estimates (i.e. the output images have
+            less noise).
+            The code parallelizes over multiple cores and machines, but with one caveat: some of the BDPT
+            path sampling strategies are incompatble with the usual approach of rendering an image tile by tile,
+            since they can potentially contribute to any pixel on the screen. This means that each rendering
+            work unit must be associated with a full-sized image! When network render nodes are involved
+            or the resolution of this light image is very high, a bottleneck can arise where more work is spent
+            accumulating or transmitting these images than actual rendering.
+            There are two possible resorts should this situation arise: the first one is to reduce the number of
+            work units so that there is approximately one unit per core (and hence one image to transmit per core).
+            This can be done by increasing the block size in the GUI preferences or passing the -b parameter to
+            the mitsuba executable. The second option is to simply disable these sampling strategies at the cost
+            of reducing the effectiveness of bidirectional path tracing (particularly, when rendering caustics). For
+            this, set lightImage to false. When rendering an image of a reasonable resolution without network
+            nodes, this is not a big concern, hence these strategies are enabled by default.
+
+            Remarks:
+
+                * This integrator does not work with dipole-style subsurface scattering models.
+                * This integrator does not yet work with certain non-reciprocal BSDFs (i.e. bumpmap),
+                  but this will be addressed in the future.
+
+    -->
+
+    <integrator type="bdpt">
+        <integer name="maxDepth"     value="-1"/>
+        <boolean name="lightImage"   value="true"/>
+        <boolean name="sampleDirect" value="true"/>
+        <integer name="rrDepth"      value="5"/>
+    </integrator>
+
+</scene>
