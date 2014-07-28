@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<scene version="0.5.0">
+
+    <!-- monochromator amir -->
+
+    <emitter type="collimated">
+
+        <spectrum name="power" value="1,1,0"/>
+
+        <transform name="toWorld">
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.diameter"/>
+            <rotate y="1" angle="180"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </emitter>
+
+    <shape type="disk" id="monochromator front (beam widener)">
+
+        <bsdf type="arcf_fieldfocus">
+            <float name="angle" value="90"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.diameter"/>
+            <scale x="0.25" y="0.25" z="-0.5"/>
+            <scale x="$monochromator.diameter" y="$monochromator.diameter" z="1"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </shape>
+
+    <shape type="disk" id="monochromator front (beam collimator)">
+
+        <bsdf type="arcf_fieldfocus">
+            <float name="angle" value="179.9"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <rotate y="1" angle="180"/> <!-- need to invert this -->
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="$monochromator.diameter" y="$monochromator.diameter" z="1"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </shape>
+
+    <shape type="cylinder" id="monochromator cylinder">
+
+        <ref id="monochromator.outside-bsdf"/>
+
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="$monochromator.diameter" y="$monochromator.diameter" z="$monochromator.tube_length"/>
+            <rotate y="1" angle="180"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </shape>
+
+    <shape type="disk" id="monochromator_backside">
+
+        <ref id="monochromator.outside-bsdf"/>
+
+        <transform name="toWorld">
+            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="$monochromator.diameter" y="$monochromator.diameter" z="1"/>
+            <translate z="$monochromator.tube_length"/>
+            <rotate y="1" angle="180"/>
+            <!-- monochromator transform -->
+            <rotate y="1" angle="180"/>
+            <translate z="$monochromator.distance"/>
+        </transform>
+
+    </shape>
+
+</scene>
