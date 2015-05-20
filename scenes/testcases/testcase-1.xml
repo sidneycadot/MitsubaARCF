@@ -2,57 +2,169 @@
 
 <scene version="0.5.0">
 
+    <!--
     <emitter type="constant">
         <spectrum name="radiance" value="1"/>
     </emitter>
+    -->
 
-    <shape type="rectangle">
-        <bsdf type="diffuse">
-            <rgb name="reflectance" value="1,1,0"/>
+    <!--
+    <emitter type="point">
+        <spectrum name="intensity" value="0.2"/>
+        <point name="position" x="1" y="-1" z="1"/>
+    </emitter>
+    -->
+
+    <shape type="sphere" id="light at (1, 1, 1)">
+        <point name="center" x="1" y="1" z="1"/>
+        <float name="radius" value="0.05"/>
+        <emitter type="area">
+            <spectrum name="radiance" value="10"/>
+        </emitter>
+    </shape>
+
+    <shape type="sphere" id="light at (1, -1, 1)">
+        <point name="center" x="1" y="-1" z="1"/>
+        <float name="radius" value="0.05"/>
+        <emitter type="area">
+            <spectrum name="radiance" value="10"/>
+        </emitter>
+    </shape>
+
+    <shape type="sphere" id="light at (-1, 1, 1)">
+        <point name="center" x="-1" y="1" z="1"/>
+        <float name="radius" value="0.05"/>
+        <emitter type="area">
+            <spectrum name="radiance" value="10"/>
+        </emitter>
+    </shape>
+
+    <shape type="sphere" id="light at (-1, -1, 1)">
+        <point name="center" x="-1" y="-1" z="1"/>
+        <float name="radius" value="0.05"/>
+        <emitter type="area">
+            <spectrum name="radiance" value="10"/>
+        </emitter>
+    </shape>
+
+    <shape type="sphere" id="light at (0, 0, -1)">
+        <point name="center" x="0" y="0" z="-1"/>
+        <float name="radius" value="0.05"/>
+        <emitter type="area">
+            <spectrum name="radiance" value="10"/>
+        </emitter>
+    </shape>
+
+    <shape type="sphere" id="light at (0, 0, 4)">
+        <point name="center" x="0" y="0" z="4"/>
+        <float name="radius" value="0.05"/>
+        <emitter type="area">
+            <spectrum name="radiance" value="500"/>
+        </emitter>
+    </shape>
+
+    <shape type="rectangle" id="XY plane">
+        <bsdf type="twosided">
+            <bsdf type="diffuse">
+                <texture type="checkerboard" name="reflectance">
+                    <float name="uscale" value="4"/>
+                    <float name="vscale" value="4"/>
+                </texture>
+            </bsdf>
         </bsdf>
     </shape>
 
-    <shape type="sphere">
+    <shape type="rectangle" id="aperture plane">
+        <bsdf type="mask">
+
+            <bsdf type="twosided">
+                <bsdf type="diffuse">
+                    <rgb name="reflectance" value="1,0,1"/>
+                </bsdf>
+            </bsdf>
+
+            <texture type="arcf_aperture" name="opacity">
+                <float    name="uoffset" value="-5"/>
+                <float    name="voffset" value="-2.5"/>
+                <float    name="uscale"  value="10"/>
+                <float    name="vscale"  value="5"/>
+                <float    name="ubar"    value="0"/>
+                <float    name="vbar"    value="0.5"/>
+                <spectrum name="color0" value="0"/>
+                <spectrum name="color1" value="1"/>
+            </texture>
+        </bsdf>
+        <transform name="toWorld">
+            <translate x="0" y="0" z="2.0"/>
+        </transform>
+    </shape>
+
+    <shape type="sphere" id="sphere at (0, 0, 0)">
         <point name="center" x="0" y="0" z="0"/>
-        <float name="radius" value="0.1"/>
+        <float name="radius" value="0.05"/>
         <bsdf type="diffuse">
             <rgb name="reflectance" value="1,0,1"/>
         </bsdf>
     </shape>
 
-    <shape type="sphere">
-        <point name="center" x="1" y="0" z="0"/>
-        <float name="radius" value="0.1"/>
+    <shape type="cylinder" id="red cylinder (X direction)">
+        <point name="p0" x="0" y="0" z="0"/>
+        <point name="p1" x="1" y="0" z="0"/>
+        <float name="radius" value = "0.02"/>
         <bsdf type="diffuse">
             <rgb name="reflectance" value="1,0,0"/>
         </bsdf>
     </shape>
 
-    <shape type="sphere">
-        <point name="center" x="0" y="1" z="0"/>
-        <float name="radius" value="0.1"/>
+    <shape type="sphere" id="red sphere at (1, 0, 0)">
+        <point name="center" x="1" y="0" z="0"/>
+        <float name="radius" value="0.05"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="1,0,0"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder" id="green cylinder (Y direction)">
+        <point name="p0" x="0" y="0" z="0"/>
+        <point name="p1" x="0" y="1" z="0"/>
+        <float name="radius" value = "0.02"/>
         <bsdf type="diffuse">
             <rgb name="reflectance" value="0,1,0"/>
         </bsdf>
     </shape>
 
-    <shape type="sphere">
-        <point name="center" x="0" y="0" z="1"/>
-        <float name="radius" value="0.1"/>
+    <shape type="sphere" id="green sphere at (0, 1, 0)">
+        <point name="center" x="0" y="1" z="0"/>
+        <float name="radius" value="0.05"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0,1,0"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder" id="blue cylinder (Z direction)">
+        <point name="p0" x="0" y="0" z="0"/>
+        <point name="p1" x="0" y="0" z="1"/>
+        <float name="radius" value = "0.02"/>
         <bsdf type="diffuse">
             <rgb name="reflectance" value="0,0,1"/>
         </bsdf>
     </shape>
 
-<!--
-    <integrator type="path">
+    <shape type="sphere" id="blue sphere at (0, 0, 1)">
+        <point name="center" x="0" y="0" z="1"/>
+        <float name="radius" value="0.05"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0,0,1"/>
+        </bsdf>
+    </shape>
+
+    <integrator type="volpath">
     </integrator>
--->
 
     <sensor type="perspective">
 
         <transform name="toWorld">
-            <lookat origin="5,4,3" target="0,0,0" up="0,1,0"/>
+            <lookat origin="2,0,7" target="0,0,0" up="0,1,0"/>
         </transform>
 
         <float name="fov" value="45.0"/>
@@ -62,8 +174,10 @@
         </sampler>
 
         <film type="hdrfilm">
-            <integer name="width" value="640"/>
-            <integer name="height" value="480"/>
+            <integer name="width" value="1280"/>
+            <integer name="height" value="1024"/>
+            <string name="componentFormat" value="float32"/>
+            <boolean name="banner" value="false"/>
         </film>
 
     </sensor>

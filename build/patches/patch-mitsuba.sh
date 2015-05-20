@@ -14,44 +14,62 @@ fi
 #patch -p1 < ${PATCHDIR}/mfilm_mathematica_fix.patch
 # --> Included in Mitsuba as per 22-07-2014.
 
-### Add arcf_source emitter.
+# Add arcf_source emitter.
 
-# Copy the source file
+if false ; then
 
-cp ${PATCHDIR}/arcf_source.cpp ${MITSUBADIR}/src/emitters
+    # Copy the source file.
 
-# In the CMake and SCons build files, copy the line for the "area" emitter and add a line that replaces "area" with "arcf_source".
+    cp ${PATCHDIR}/arcf_source.cpp ${MITSUBADIR}/src/emitters
 
-sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
-sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/SConscript
+    # In the CMake and SCons build files, copy the line for the "area" emitter and add a line that replaces "area" with "arcf_source".
 
-### Add arcf_collimated_disk emitter.
+    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
+    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/SConscript
 
-# Copy the source file
+fi
 
-cp ${PATCHDIR}/arcf_collimated_disk.cpp ${MITSUBADIR}/src/emitters
+# Add arcf_collimated_disk emitter.
 
-# In the CMake and SCons build files, copy the line for the "area" emitter and add a line that replaces "area" with "arcf_collimated_disk".
+if false ; then
 
-sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
-sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/SConscript
+    # Copy the source file.
 
-### Add arcf_aperture texture.
+    cp ${PATCHDIR}/arcf_collimated_disk.cpp ${MITSUBADIR}/src/emitters
 
-# Copy the source file
+    # In the CMake and SCons build files, copy the line for the "area" emitter and add a line that replaces "area" with "arcf_collimated_disk".
 
-cp ${PATCHDIR}/arcf_aperture.cpp ${MITSUBADIR}/src/textures
+    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
+    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/SConscript
 
-# In the CMake and SCons build files, copy the line for the "checkerboard" texture and add a line that replaces "checkerboard" with "arcf_aperture".
+fi
 
-sed --in-place=.orig 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/CMakeLists.txt
-sed --in-place=.orig 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/SConscript
+# Add arcf_aperture texture.
 
-### Add arcf_fieldfocus bsdf.
+if true ; then
 
-cp ${PATCHDIR}/arcf_fieldfocus.cpp ${MITSUBADIR}/src/bsdfs
+    # Copy the source file.
 
-# In the CMake and SCons build files, copy the line for the "null" bsdf and add a line that replaces "null" with "arcf_fieldfocus".
+    cp ${PATCHDIR}/arcf_aperture.cpp ${MITSUBADIR}/src/textures
 
-sed --in-place=.orig 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/CMakeLists.txt
-sed --in-place=.orig 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/SConscript
+    # In the CMake and SCons build files, copy the line for the "checkerboard" texture and add a line that replaces "checkerboard" with "arcf_aperture".
+
+    sed --in-place=.orig 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/CMakeLists.txt
+    sed --in-place=.orig 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/SConscript
+
+fi
+
+# Add arcf_fieldfocus bsdf.
+
+if false ; then
+
+    # Copy the source file.
+
+    cp ${PATCHDIR}/arcf_fieldfocus.cpp ${MITSUBADIR}/src/bsdfs
+
+    # In the CMake and SCons build files, copy the line for the "null" bsdf and add a line that replaces "null" with "arcf_fieldfocus".
+
+    sed --in-place=.orig 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/CMakeLists.txt
+    sed --in-place=.orig 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/SConscript
+
+fi

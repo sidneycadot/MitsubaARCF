@@ -37,7 +37,7 @@ cd mitsuba
 
 echo "Applying ARCF patches ..."
 
-#../patches/patch-mitsuba.sh
+../patches/patch-mitsuba.sh
 
 # Make sure we have a proper 'config.py'
 
@@ -53,6 +53,6 @@ sed --in-place=.orig 's/-DSINGLE_PRECISION/-DDOUBLE_PRECISION/;s/-DMTS_SSE//;s/-
 
 echo "Executing SCONS build ..."
 
-time -f "PARJOBS = $PARJOBS build-time = %e seconds." scons -j $PARJOBS
+time -f "PARJOBS = $PARJOBS --> build-time = %e seconds." scons -j $PARJOBS
 
 cd ..
