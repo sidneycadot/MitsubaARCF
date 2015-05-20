@@ -4,7 +4,6 @@
 
     <!-- (+z) side of detector; field limiter surface; in front of the detector. -->
 
-    <!--
     <shape type="rectangle" id="detector field limiter">
 
         <bsdf type="arcf_fieldfocus">
@@ -22,7 +21,6 @@
         </transform>
 
     </shape>
-    -->
 
     <!-- (+z) side of detector; detector front surface (with aperture) -->
 
@@ -32,7 +30,6 @@
             In other words, everything is in the least convenient order
             when trying to move a texture in position. -->
 
-    <!--
     <shape type="rectangle" id="detector front surface (with aperture)">
 
         <bsdf type="mask">
@@ -62,7 +59,6 @@
         </transform>
 
     </shape>
-    -->
 
     <!-- (-z) side of detector; irradiance meter (inside) and outer box (outside) -->
 
