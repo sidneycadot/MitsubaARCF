@@ -2,6 +2,12 @@
 
 set -e
 
+if [ -z "$1" ] ; then
+    PARJOBS=4
+else
+    PARJOBS=$1
+fi
+
 # Fetch tip of the Mitsuba repository
 
 if [ ! -f tip.zip ] ; then
@@ -42,16 +48,20 @@ cp -r ../dependencies_macos dependencies
 
 # Apply ARCF patches
 
-../patches/patch-mitsuba.sh
+echo "Applying ARCF patches ..."
+
+#../patches/patch-mitsuba.sh
 
 # Make sure we have a proper 'config.py'
+
+echo "Making config.py ..."
 
 #cp build/config-macos10.9-gcc-x86_64.py config.py
 cp ../osx-config.py config.py
 
 # Do double-precision build instead of default single-precision build
 
-#sed -i 's/-DSINGLE_PRECISION/-DDOUBLE_PRECISION/;s/-DMTS_SSE//;s/-DMTS_HAS_COHERENT_RT//' config.py
+#sed --in-place=.orig 's/-DSINGLE_PRECISION/-DDOUBLE_PRECISION/;s/-DMTS_SSE//;s/-DMTS_HAS_COHERENT_RT//' config.py
 
 # Execute the build
 
@@ -66,6 +76,6 @@ echo "Executing SCONS build ..."
 # -- 7  07m59
 # -- 8  08m12
 
-time scons -j 4
+time scons -j $PARJOBS
 
 cd ..
