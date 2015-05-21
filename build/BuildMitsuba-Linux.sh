@@ -12,7 +12,7 @@ fi
 
 if [ ! -f tip.zip ] ; then
     echo "Fetching Mitsuba repository ..."
-    wget https://www.mitsuba-renderer.org/repos/mitsuba/archive/tip.zip
+    curl https://www.mitsuba-renderer.org/repos/mitsuba/archive/tip.zip -o tip.zip
 fi
 
 # Unpack "mitsuba" directory.
