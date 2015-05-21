@@ -67,6 +67,6 @@ cp ../osx-config.py config.py
 
 echo "Executing SCONS build ..."
 
-time -f "PARJOBS = $PARJOBS --> build-time = %e seconds." scons -j $PARJOBS
+../my-time ../`hostname`-report.txt scons -j $PARJOBS
 
 cd ..
