@@ -10,10 +10,6 @@ if [ ! -f ${MITSUBADIR}/SConstruct ] ; then
     exit 1
 fi
 
-### Patch the "mfilm" implementation for Mathematica output.
-#patch -p1 < ${PATCHDIR}/mfilm_mathematica_fix.patch
-# --> Included in Mitsuba as per 22-07-2014.
-
 # Add arcf_source emitter.
 
 if false ; then
@@ -24,8 +20,8 @@ if false ; then
 
     # In the CMake and SCons build files, copy the line for the "area" emitter and add a line that replaces "area" with "arcf_source".
 
-    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
-    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/SConscript
+    sed --in-place= 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
+    sed --in-place= 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_source\3arcf_source\4/' ${MITSUBADIR}/src/emitters/SConscript
 
 fi
 
@@ -39,8 +35,8 @@ if false ; then
 
     # In the CMake and SCons build files, copy the line for the "area" emitter and add a line that replaces "area" with "arcf_collimated_disk".
 
-    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
-    sed --in-place=.orig 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/SConscript
+    sed --in-place= 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/CMakeLists.txt
+    sed --in-place= 's/\(\(.*\)area\(.\+\)area\(\.cpp.*\)\)/\1\n\2arcf_collimated_disk\3arcf_collimated_disk\4/' ${MITSUBADIR}/src/emitters/SConscript
 
 fi
 
@@ -54,14 +50,14 @@ if true ; then
 
     # In the CMake and SCons build files, copy the line for the "checkerboard" texture and add a line that replaces "checkerboard" with "arcf_aperture".
 
-    sed --in-place=.orig 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/CMakeLists.txt
-    sed --in-place=.orig 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/SConscript
+    sed --in-place= 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/CMakeLists.txt
+    sed --in-place= 's/\(\(.*\)checkerboard\(.\+\)checkerboard\(\.cpp.*\)\)/\1\n\2arcf_aperture\3arcf_aperture\4/' ${MITSUBADIR}/src/textures/SConscript
 
 fi
 
 # Add arcf_fieldfocus bsdf.
 
-if false ; then
+if true ; then
 
     # Copy the source file.
 
@@ -69,7 +65,7 @@ if false ; then
 
     # In the CMake and SCons build files, copy the line for the "null" bsdf and add a line that replaces "null" with "arcf_fieldfocus".
 
-    sed --in-place=.orig 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/CMakeLists.txt
-    sed --in-place=.orig 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/SConscript
+    sed --in-place= 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/CMakeLists.txt
+    sed --in-place= 's/\(\(.*\)null\(.\+\)null\(\.cpp.*\)\)/\1\n\2arcf_fieldfocus\3arcf_fieldfocus\4/' ${MITSUBADIR}/src/bsdfs/SConscript
 
 fi

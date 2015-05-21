@@ -21,6 +21,7 @@
 #include <mitsuba/hw/basicshader.h>
 #include <mitsuba/core/warp.h>
 
+// TODO: [SC] this overrides an existing definition. Are we sure that is what we want?
 #define DeltaEpsilon (1e-6)
 
 using namespace mitsuba;
@@ -66,7 +67,7 @@ public:
 
         m_usesRayDifferentials = false;
 
-        // TODO: [SC] it seems more natural if the BSDF is configured first (abnalogous to constructor ordering).
+        // TODO: [SC] it seems more natural if the BSDF is configured first (analogous to constructor ordering).
         //            Are we sure this is ok?
 
         BSDF::configure();
@@ -116,7 +117,7 @@ public:
             Frame::cosTheta(bRec.wi) > m_cosFieldAngle &&
             std::abs(Frame::cosTheta(bRec.wo) + 1) <= DeltaEpsilon)
         {
-            return Warp::squareToUniformConePdf(m_cosFieldAngle) * Frame::cosTheta(bRec.wo);
+            return warp::squareToUniformConePdf(m_cosFieldAngle) * Frame::cosTheta(bRec.wo);
         }
 
         return 0.0f;
@@ -143,7 +144,7 @@ public:
         // When the BSDF acts as field decollimator
         if (std::abs(Frame::cosTheta(bRec.wi) + 1) <= DeltaEpsilon)
         {
-            bRec.wo  = Warp::squareToUniformCone(m_cosFieldAngle, sample);
+            bRec.wo  = warp::squareToUniformCone(m_cosFieldAngle, sample);
             bRec.sampledComponent = 1;
             bRec.sampledType = EDiffuseTransmission;
 
@@ -178,11 +179,11 @@ public:
         // TODO: [EDD] In theory, -1 <= cosTheta <= 1, so taking abs() is not required; Check if numerical precision allows this
         if (std::abs(Frame::cosTheta(bRec.wi) + 1) <= DeltaEpsilon)
         {
-            bRec.wo  = Warp::squareToUniformCone(m_cosFieldAngle, sample);
+            bRec.wo  = warp::squareToUniformCone(m_cosFieldAngle, sample);
             bRec.eta = 1.0f;
             bRec.sampledComponent = 1;
             bRec.sampledType = EDiffuseTransmission;
-            pdf = Warp::squareToUniformConePdf(m_cosFieldAngle) * Frame::cosTheta(bRec.wo);
+            pdf = warp::squareToUniformConePdf(m_cosFieldAngle) * Frame::cosTheta(bRec.wo);
 
             return Spectrum(1.0f);
         }
