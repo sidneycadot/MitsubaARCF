@@ -3,7 +3,7 @@
 set -e
 
 if [ -z "$1" ] ; then
-    PARJOBS=8
+    PARJOBS=`nproc`
 else
     PARJOBS=$1
 fi
@@ -53,6 +53,6 @@ sed --in-place=.orig 's/-DSINGLE_PRECISION/-DDOUBLE_PRECISION/;s/-DMTS_SSE//;s/-
 
 echo "Executing SCONS build ..."
 
-../my-time `hostname`-report.txt scons -j $PARJOBS
+../my-time ../`hostname`-report.txt scons -j $PARJOBS
 
 cd ..
