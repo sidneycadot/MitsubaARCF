@@ -138,9 +138,8 @@
         </sampler>
 
         <film type="hdrfilm">
-            <string name="label[10,10]" value="ARCF aperture with directional light towards -Z"/>
-            <integer name="width" value="1920"/>
-            <integer name="height" value="1200"/>
+            <integer name="width" value="640"/>
+            <integer name="height" value="480"/>
             <string name="componentFormat" value="float32"/>
             <boolean name="banner" value="false"/>
         </film>
