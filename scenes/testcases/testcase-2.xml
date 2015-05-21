@@ -15,11 +15,14 @@
         <bsdf type="twosided">
             <bsdf type="diffuse">
                 <texture type="checkerboard" name="reflectance">
-                    <float name="uscale" value="10"/>
-                    <float name="vscale" value="10"/>
+                    <float name="uscale" value="20"/>
+                    <float name="vscale" value="20"/>
                 </texture>
             </bsdf>
         </bsdf>
+        <transform name="toWorld">
+            <scale value="2"/>
+        </transform>
     </shape>
 
     <!-- (U,V) on the XY plane
@@ -58,12 +61,11 @@
             </texture>
         </bsdf>
         <transform name="toWorld">
-            <scale x="1" y="1" z="1"/>
             <translate x="0" y="0" z="2.0"/>
         </transform>
     </shape>
 
-    <shape type="sphere" id="sphere at (0, 0, 0)">
+    <shape type="sphere" id="magenta sphere at (0, 0, 0)">
         <point name="center" x="0" y="0" z="0"/>
         <float name="radius" value="0.05"/>
         <bsdf type="diffuse">

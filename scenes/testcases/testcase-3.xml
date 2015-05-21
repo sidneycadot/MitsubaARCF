@@ -6,18 +6,10 @@
         <spectrum name="radiance" value="0.05"/>
     </emitter>
 
-    <!--
-    <emitter type="constant">
-        <spectrum name="radiance" value="1"/>
+    <emitter type="directional">
+        <spectrum name="irradiance" value="1.0"/>
+        <vector name="direction" x="0.5" y="0.5" z="-1" />
     </emitter>
-    -->
-
-    <!--
-    <emitter type="point">
-        <spectrum name="intensity" value="0.2"/>
-        <point name="position" x="1" y="-1" z="1"/>
-    </emitter>
-    -->
 
     <shape type="rectangle" id="XY plane">
         <bsdf type="twosided">
@@ -30,6 +22,56 @@
         </bsdf>
         <transform name="toWorld">
             <scale value="2"/>
+        </transform>
+    </shape>
+
+    <!-- (U,V) on the XY plane
+
+              xooooooooooooox (uoffset + uscale, voffset + vscale)
+              x             x
+              x             x
+              x             x                   U is horizontal, V is vertical
+              x             x                   uscale
+              x             x
+              x             x
+              xooooooooooooox
+
+      (uoffset,voffset)
+
+    -->
+
+    <shape type="rectangle" id="aperture plane">
+        <bsdf type="mask">
+            <bsdf type="twosided">
+                <bsdf type="diffuse">
+                    <rgb name="reflectance" value="1,1,0"/>
+                </bsdf>
+            </bsdf>
+            <texture type="arcf_aperture" name="opacity">
+                <float    name="uoffset" value="-5"/>
+                <float    name="voffset" value="-5"/>
+                <float    name="uscale"  value="10"/>
+                <float    name="vscale"  value="10"/>
+                <float    name="ubar"    value="0"/>
+                <float    name="vbar"    value="0"/>
+                <spectrum name="color0" value="0"/>
+                <spectrum name="color1" value="1"/>
+            </texture>
+        </bsdf>
+        <transform name="toWorld">
+            <translate x="0" y="0" z="2.0"/>
+        </transform>
+    </shape>
+
+    <!-- unexpected behavior when this is enabled! -->
+    <shape type="rectangle" id="fieldfocus plane">
+
+        <bsdf type="arcf_fieldfocus">
+            <float name="angle" value="180"/>
+        </bsdf>
+
+        <transform name="toWorld">
+            <translate x="0" y="0" z="1.5"/>
         </transform>
     </shape>
 
@@ -92,7 +134,7 @@
         </bsdf>
     </shape>
 
-    <integrator type="path">
+    <integrator type="volpath">
     </integrator>
 
     <sensor type="perspective">
