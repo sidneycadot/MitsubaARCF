@@ -53,6 +53,6 @@ sed --in-place=.orig 's/-DSINGLE_PRECISION/-DDOUBLE_PRECISION/;s/-DMTS_SSE//;s/-
 
 echo "Executing SCONS build ..."
 
-time -f "PARJOBS = $PARJOBS --> build-time = %e seconds." scons -j $PARJOBS
+../my-time `hostname`-report.txt scons -j $PARJOBS
 
 cd ..
