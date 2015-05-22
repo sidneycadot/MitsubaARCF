@@ -64,6 +64,7 @@
     </shape>
 
     <!-- unexpected behavior when this is enabled! -->
+    <!--
     <shape type="rectangle" id="fieldfocus plane">
 
         <bsdf type="arcf_fieldfocus">
@@ -74,6 +75,7 @@
             <translate x="0" y="0" z="1.5"/>
         </transform>
     </shape>
+    -->
 
     <shape type="sphere" id="magenta sphere at (0, 0, 0)">
         <point name="center" x="0" y="0" z="0"/>
@@ -134,13 +136,14 @@
         </bsdf>
     </shape>
 
-    <integrator type="volpath">
+    <integrator type="pssmlt">
     </integrator>
 
     <sensor type="perspective">
 
         <transform name="toWorld">
-            <lookat origin="6,1.5,4" target="0,0,1" up="0,1,0"/>
+            <!--<lookat origin="6,1.5,4" target="0,0,1" up="0,1,0"/>-->
+            <lookat origin="0,0,5" target="0,0,1" up="0,1,0"/>
         </transform>
 
         <float name="fov" value="45.0"/>
