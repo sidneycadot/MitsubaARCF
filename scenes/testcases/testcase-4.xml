@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<scene version="0.5.0">
+
+    <emitter type="constant">
+        <spectrum name="radiance" value="0.05"/>
+    </emitter>
+
+    <emitter type="spot">
+        <spectrum name="intensity" value="100.0"/>
+        <transform name="toWorld">
+            <lookat origin ="0,0,3" target="0,0,0"/>
+        </transform>
+        <vector name="direction" x="0.5" y="0.5" z="-1" />
+    </emitter>
+
+    <shape type="rectangle" id="XY plane">
+        <bsdf type="twosided">
+            <bsdf type="diffuse">
+                <texture type="checkerboard" name="reflectance">
+                    <float name="uscale" value="20"/>
+                    <float name="vscale" value="20"/>
+                </texture>
+            </bsdf>
+        </bsdf>
+        <transform name="toWorld">
+            <scale value="2"/>
+        </transform>
+    </shape>
+
+    <!-- (U,V) on the XY plane
+
+              xooooooooooooox (uoffset + uscale, voffset + vscale)
+              x             x
+              x             x
+              x             x                   U is horizontal, V is vertical
+              x             x                   uscale
+              x             x
+              x             x
+              xooooooooooooox
+
+      (uoffset,voffset)
+
+    -->
+
+    <!-- unexpected behavior when this is enabled! -->
+    <shape type="cube" id="glass plane">
+
+        <bsdf type="roughdielectric">
+        </bsdf>
+
+        <transform name="toWorld">
+            <scale x="1" y="1" z="0.01"/>
+            <translate x="0" y="0" z="1.5"/>
+        </transform>
+    </shape>
+
+    <shape type="sphere" id="magenta sphere at (0, 0, 0)">
+        <point name="center" x="0" y="0" z="0"/>
+        <float name="radius" value="0.05"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="1,0,1"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder" id="red cylinder (X direction)">
+        <point name="p0" x="0" y="0" z="0"/>
+        <point name="p1" x="1" y="0" z="0"/>
+        <float name="radius" value = "0.02"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="1,0,0"/>
+        </bsdf>
+    </shape>
+
+    <shape type="sphere" id="red sphere at (1, 0, 0)">
+        <point name="center" x="1" y="0" z="0"/>
+        <float name="radius" value="0.05"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="1,0,0"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder" id="green cylinder (Y direction)">
+        <point name="p0" x="0" y="0" z="0"/>
+        <point name="p1" x="0" y="1" z="0"/>
+        <float name="radius" value = "0.02"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0,1,0"/>
+        </bsdf>
+    </shape>
+
+    <shape type="sphere" id="green sphere at (0, 1, 0)">
+        <point name="center" x="0" y="1" z="0"/>
+        <float name="radius" value="0.05"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0,1,0"/>
+        </bsdf>
+    </shape>
+
+    <shape type="cylinder" id="blue cylinder (Z direction)">
+        <point name="p0" x="0" y="0" z="0"/>
+        <point name="p1" x="0" y="0" z="1"/>
+        <float name="radius" value = "0.02"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0,0,1"/>
+        </bsdf>
+    </shape>
+
+    <shape type="sphere" id="blue sphere at (0, 0, 1)">
+        <point name="center" x="0" y="0" z="1"/>
+        <float name="radius" value="0.05"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0,0,1"/>
+        </bsdf>
+    </shape>
+
+    <integrator type="volpath">
+    </integrator>
+
+    <sensor type="perspective">
+
+        <transform name="toWorld">
+            <lookat origin="6,1.5,4" target="0,0,1" up="0,1,0"/>
+        </transform>
+
+        <float name="fov" value="45.0"/>
+
+        <sampler type="independent">
+            <integer name="sampleCount" value="32"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <integer name="width" value="640"/>
+            <integer name="height" value="480"/>
+            <string name="componentFormat" value="float32"/>
+            <boolean name="banner" value="false"/>
+        </film>
+
+    </sensor>
+
+</scene>
